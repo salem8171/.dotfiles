@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Youtube Cli
+Exec=tmux-terminal youtube mpsyt

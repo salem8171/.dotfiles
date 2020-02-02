@@ -1,0 +1,8 @@
+#!/bin/bash
+
+path="~/.local/share/applications/"
+cd ~/.local/share/applications/
+file=`fd .desktop --type file --max-depth=1 |
+  fzf --height=23 --layout=reverse --preview-window=":70%"\
+  --preview="bat --color=always --style="numbers,header" {}"`
+  [[ $file ]] && normal-terminal "$EDITOR $path$file"

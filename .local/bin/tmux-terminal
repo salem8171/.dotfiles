@@ -1,0 +1,5 @@
+#!/bin/bash
+
+session=$1
+shift
+$TERMINAL -e "zsh -c 'tmux attach -t $session || tmux new-session -s $session $@'"

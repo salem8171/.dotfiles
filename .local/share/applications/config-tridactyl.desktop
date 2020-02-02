@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Config Tridactyl
+Exec=normal-terminal "$EDITOR ~/.config/tridactyl/tridactylrc"
+# Description=

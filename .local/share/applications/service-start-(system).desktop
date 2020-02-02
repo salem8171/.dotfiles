@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Service start (system)
+Exec=popup-terminal "fsystemctl start"

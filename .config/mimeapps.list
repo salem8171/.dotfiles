@@ -1,0 +1,36 @@
+[Default Applications]
+application/pdf=org.pwmt.zathura-pdf-poppler.desktop
+
+image/gif=vimiv.desktop
+image/gif=vimiv.desktop
+image/jpeg=vimiv.desktop
+image/png=vimiv.desktop
+
+text/plain=nvim.desktop
+text/x-c++src=nvim.desktop
+
+video/mp4=vlc.desktop
+video/ogg=vlc.desktop
+video/x-flv=vlc.desktop
+video/x-ms-wmv=vlc.desktop
+video/x-ogm+ogg=vlc.desktop
+video/x-theora+ogg=vlc.desktop
+
+text/x-ms-regedit=nvim.desktop
+
+x-scheme-handler/postman=Postman.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+x-scheme-handler/ftp=firefox.desktop
+x-scheme-handler/chrome=firefox.desktop
+text/html=firefox.desktop
+application/x-extension-htm=firefox.desktop
+application/x-extension-html=firefox.desktop
+application/x-extension-shtml=firefox.desktop
+application/xhtml+xml=firefox.desktop
+application/x-extension-xhtml=firefox.desktop
+application/x-extension-xht=firefox.desktop
+
+inode/directory=ranger.desktop
+
+[Added Associations]

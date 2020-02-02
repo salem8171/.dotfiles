@@ -1,0 +1,16 @@
+#!/bin/bash
+
+temp=`mktemp`
+cat << EOF > $temp
+#!/bin/bash
+
+
+EOF
+$EDITOR\
+  --cmd "cd ~/.local/bin"\
+  --cmd "set ft=sh"\
+  --cmd "read $temp"\
+  --cmd "goto"\
+  --cmd "delete"\
+  --cmd "goto 14"
+rm $temp

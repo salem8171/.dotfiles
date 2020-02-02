@@ -1,0 +1,8 @@
+[Unit]
+Description=Remmina VNC session for %i
+
+[Service]
+ExecStart=remmina -c %h/.local/share/remmina/%i.remmina
+
+[Install]
+RequiredBy=default.target

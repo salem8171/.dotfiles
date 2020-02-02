@@ -1,0 +1,8 @@
+[Unit]
+Description="X11 vnc server deamon"
+
+[Service]
+ExecStart=x11vnc -usepw 
+
+[Install]
+RequiredBy=default.target

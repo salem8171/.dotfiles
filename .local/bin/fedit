@@ -1,0 +1,4 @@
+#!/bin/bash
+
+file=$(fd --hidden --no-ignore | fzf --layout=reverse --height=15)
+[[ -f $file ]] && $EDITOR $file || [[ -d $file ]] && cd $file && $EDITOR .

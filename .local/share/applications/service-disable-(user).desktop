@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Service disable (user)
+Exec=popup-terminal "fsystemctl disable --user"

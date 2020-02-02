@@ -1,0 +1,3 @@
+#!/bin/bash
+
+$TERMINAL -T "popup-terminal" -e "zsh -c '$@'"

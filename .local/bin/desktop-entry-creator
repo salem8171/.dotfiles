@@ -1,0 +1,21 @@
+#!/bin/bash
+
+temp=`mktemp`
+
+cat << EOF > $temp
+[Desktop Entry]
+Type=Application
+Name=
+Exec=
+# Description=
+EOF
+
+$EDITOR\
+  --cmd "cd ~/.local/share/applications"\
+  --cmd "set ft=desktop"\
+  --cmd "read $temp"\
+  --cmd "goto"\
+  --cmd "delete"\
+  --cmd "goto 38"
+
+rm $temp

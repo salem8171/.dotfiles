@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Yay Remove
+Exec=popup-terminal yr

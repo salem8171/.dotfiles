@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Service stop (system)
+Exec=popup-terminal "fsystemctl stop"

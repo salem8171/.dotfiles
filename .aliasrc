@@ -1,0 +1,55 @@
+# vim: set ft=bash :
+
+alias ls='ls --color=auto'
+alias grep='grep --colour=auto'
+alias egrep='egrep --colour=auto'
+alias fgrep='fgrep --colour=auto'
+
+alias df='dfc'
+alias free='free -m'
+alias ll='ls -hl'
+
+alias desktop-mac=74:27:ea:6b:91:c3
+alias wake-desktop="wol 74:27:ea:6b:91:c3"
+alias poweroff-desktop="ssh salem-desktop-pc.local poweroff"
+alias ssh-desktop="ssh salem-desktop-pc.local"
+alias barrier-desktop="barrierctl connect salem-desktop-pc.local"
+alias barrier-desktop-disconnect="barrierctl disconnect salem-desktop-pc.local"
+
+ghc () { git clone git@github.com:$@ }
+glc () { git clone git@gitlab.com:$@ }
+# alias gc="git add . && git commit"
+# alias gpush="git push"
+# alias gpull="git pull"
+# alias gco="git checkout"
+# alias gb="git branch"
+# alias gs="git status"
+# alias gl="git log --oneline"
+
+alias nmr="nmcli device wifi rescan"
+alias nmc="nmcli device wifi connect"
+alias nml="nmcli device wifi list"
+alias nmt="nmtui"
+
+alias sstart="sudo systemctl start"
+alias sstop="sudo systemctl stop"
+alias sstatus="systemctl status"
+alias senable="sudo systemctl enable"
+alias sedit="sudo systemctl edit --force --full"
+alias srestart="sudo systemctl restart"
+
+alias sstartu="systemctl start --user"
+alias sstopu="systemctl stop --user"
+alias sstatusu="systemctl status --user"
+alias senableu="systemctl enable --user"
+alias seditu="systemctl edit --user --force --full"
+alias srestartu="systemctl restart --user"
+
+alias v="$EDITOR"
+alias sv="sudo -E $EDITOR"
+# alias fv="fedit"
+alias r=". ranger"
+alias h="htop" 
+
+alias pg="ping google.com"
+alias :q="exit"

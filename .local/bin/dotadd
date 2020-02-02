@@ -1,0 +1,9 @@
+#!/bin/bash
+
+prefix=$HOME/.dotfiles
+source=`readlink -f $1`
+destination=`echo $source | sed "s#$HOME#$prefix#"`
+
+echo $source " -> " $destination
+mkdir -p `dirname $destination`
+ln -f $source $destination

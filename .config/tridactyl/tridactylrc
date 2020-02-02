@@ -1,0 +1,36 @@
+" General Settings
+js tri.config.set("update", {"lastchecktime": 1580041551608})
+set configversion 1.8
+
+" make tridactyl forget about configs not present in this file
+sanitise tridactyllocal tridactylsync
+
+" set tridactyl's iframe theme
+set theme dark
+
+" disable current mode indicator
+set modeindicator false
+
+" set homepage
+set newtab file:///home/salem/.mozilla/homepage.html
+
+" open the config file directly from browser
+command tridactylrc !s "normal-terminal" "nvim ~/.config/tridactyl/tridactylrc"
+
+" make tridactyl work on more web pages like raw github
+jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{urls:["<all_urls>"],types:["main_frame"]},["blocking","responseHeaders"])
+
+" links open in new windows instead of tabs
+bind F hint -w
+
+quickmark m mail.google.com
+quickmark a https://9anime.ru/user/watchlist
+quickmark y youtube.com
+quickmark g github.com
+
+js tri.config.set("autocontain", "facebook\.com", "facebook")
+js tri.config.set("autocontain", "youtube\.com", "youtube")
+js tri.config.set("autocontain", "mail\.google\.com", "work")
+js tri.config.set("autocontain", "drive\.google\.com", "work")
+
+" vim: set filetype=vim:

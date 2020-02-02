@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Create Script
+Exec=normal-terminal script-creator

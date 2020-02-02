@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Service enable (user)
+Exec=popup-terminal "fsystemctl enable --now --user"

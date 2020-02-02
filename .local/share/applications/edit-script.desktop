@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Edit Script
+Exec=popup-terminal edit-script

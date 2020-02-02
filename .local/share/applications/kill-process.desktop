@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Kill Process
+Exec=popup-terminal fkill

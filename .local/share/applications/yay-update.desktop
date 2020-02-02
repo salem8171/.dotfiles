@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Yay Update
+Exec=popup-terminal yu
