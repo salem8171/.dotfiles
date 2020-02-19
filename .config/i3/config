@@ -163,7 +163,7 @@ mode "Resize" {
 bindsym $mod+r mode "Resize"
 
 mode "Open" {
-  bindsym f exec firefox, mode "default"
+  bindsym f exec popup-terminal ffirefox, mode "default"
   bindsym r exec normal-terminal ranger, mode "default"
   bindsym d exec normal-terminal "ranger /home/salem/Downloads", mode "default"
   bindsym t exec i3-sensible-terminal, mode "default"

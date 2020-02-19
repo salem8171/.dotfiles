@@ -52,4 +52,5 @@ alias r=". ranger"
 alias h="htop" 
 
 alias pg="ping google.com"
+alias serve="python -m http.server"
 alias :q="exit"

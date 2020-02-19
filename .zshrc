@@ -130,18 +130,10 @@ BULLETTRAIN_DIR_EXTENDED=0
 BULLETTRAIN_PROMPT_ORDER=(
   time
   status
-  # custom
   context
   dir
-  # screen
-  # perl
-  # ruby
   virtualenv
-  # nvm
   aws
-  # go
-  # rust
-  # elixir
   git
   cmd_exec_time
 )

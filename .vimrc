@@ -10,111 +10,69 @@ Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
 Plug 'https://github.com/junegunn/fzf'
 Plug 'https://github.com/junegunn/fzf.vim'
 Plug 'https://github.com/iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
-Plug 'https://github.com/wgwoods/vim-systemd-syntax'
 Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/mcmartelle/vim-monokai-bold'
-" Plug 'https://github.com/sickill/vim-monokai'
 Plug 'https://github.com/francoiscabrol/ranger.vim'
 Plug 'https://github.com/rbgrouleff/bclose.vim'
+Plug 'https://github.com/SirVer/ultisnips'
+Plug 'https://github.com/honza/vim-snippets'
+Plug 'https://github.com/Yggdroot/indentLine'
+" Plug 'https://github.com/wgwoods/vim-systemd-syntax'
+" Plug 'https://github.com/OmniSharp/omnisharp-vim'
+" Plug 'https://github.com/sickill/vim-monokai'
 " Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 " Plug 'https://github.com/fisadev/vim-ctrlp-cmdpalette'
 " Plug 'https://github.com/kana/vim-smartinput'
 " Plug 'https://github.com/scrooloose/syntastic'
 " Plug 'https://github.com/valloric/youcompleteme'
 " Plug 'https://github.com/mattn/emmet-vim'
-Plug 'https://github.com/SirVer/ultisnips'
-Plug 'https://github.com/honza/vim-snippets'
-Plug 'https://github.com/Yggdroot/indentLine'
 
 " coc extensions
-Plug 'https://github.com/neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}  
-Plug 'https://github.com/coc-extensions/coc-omnisharp', {'do': 'yarn install --frozen-lockfile'}  
-Plug 'https://github.com/neoclide/coc-stylelint', {'do': 'yarn install --frozen-lockfile'}  
-Plug 'https://github.com/bmatcuk/coc-stylelintplus', {'do': 'yarn install --frozen-lockfile'}  
-Plug 'https://github.com/neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-java', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
 Plug 'https://github.com/neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/iamcco/coc-angular', {'do': 'npm install --no-package-lock'}
-Plug 'https://github.com/iamcco/coc-vimlsp', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/fannheyward/coc-xml', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/yatli/coc-powershell', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/yatli/coc-omnisharp', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/fannheyward/coc-marketplace', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-tslint', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/voldikss/coc-template', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/fannheyward/coc-sql', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/iamcco/coc-gitignore', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/voldikss/coc-github', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/josa42/coc-docker', {'do': 'yarn install --frozen-lockfile'}
+Plug 'https://github.com/neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+Plug 'https://github.com/neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 Plug 'https://github.com/neoclide/coc-pairs', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/coc-extensions/coc-omnisharp', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-stylelint', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/bmatcuk/coc-stylelintplus', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-java', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/iamcco/coc-angular', {'do': 'npm install --no-package-lock'}
+" Plug 'https://github.com/iamcco/coc-vimlsp', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/fannheyward/coc-xml', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/yatli/coc-powershell', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/fannheyward/coc-marketplace', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-tslint', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/voldikss/coc-template', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/fannheyward/coc-sql', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/iamcco/coc-gitignore', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/voldikss/coc-github', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/josa42/coc-docker', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/yatli/coc-omnisharp', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'https://github.com/jberglinds/coc-jira-complete', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'https://github.com/balta2ar/coc-jira', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'https://github.com/neoclide/coc-yank', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'https://github.com/fannheyward/coc-terminal', {'do': 'npm install --no-package-lock'}
 call plug#end()
 
-" let g:coc_global_extensions=[
-"   \ 'coc-omnisharp',
-"   \ 'coc-stylelint',
-"   \ 'coc-json',
-"   \ 'coc-tsserver',
-"   \ 'coc-html',
-"   \ 'coc-css',
-"   \ 'coc-java',
-"   \ 'coc-yaml',
-"   \ 'coc-python',
-"   \ 'coc-highlight',
-"   \ 'coc-emmet',
-"   \ 'coc-snippets',
-"   \ 'coc-lists',
-"   \ 'coc-git',
-"   \ 'coc-angular',
-"   \ 'coc-vimlsp',
-"   \ 'coc-xml',
-"   \ 'coc-omnisharp',
-"   \ 'coc-markdownlint',
-"   \ 'coc-explorer',
-"   \ 'coc-marketplace',
-"   \ 'coc-tslint',
-"   \ 'coc-tslint-plugin',
-"   \ 'coc-utils',
-"   \ 'coc-terminal',
-"   \ 'coc-template',
-"   \ 'coc-tag',
-"   \ 'coc-syntax',
-"   \ 'coc-stylelintplus',
-"   \ 'coc-sql',
-"   \ 'coc-gitignore',
-"   \ 'coc-github',
-"   \ 'coc-eslint',
-"   \ 'coc-docker',
-"   \ 'coc-ccls',
-"   \ 'coc-pairs',
-"   \ 'coc-prettier'
-"   \ ]
-
-" \ 'coc-jira-complete',
-" \ 'coc-ultisnips',
-" \ 'coc-yank',
+" let g:coc_global_extensions=[]
 
 filetype plugin on
 syntax on
 colorscheme monokai-bold
-" colorscheme monokai
 
 " line numbers
 set number relativenumber
@@ -140,19 +98,26 @@ set noshowmode
 " disable line wrapping
 set nowrap
 
+" disable search highlight
+set nohlsearch
+
 " clipboard
-" set clipboard^=unnamedplus
 inoremap <c-v> <c-r>+
 vnoremap <c-c> "+y
 vnoremap <c-v> "+p
 vnoremap <c-x> "+d
 
 " show help panes in vertical split
-" autocmd FileType help wincmd L
 cabbrev h vert h
 
 " natural splits
 set splitbelow splitright
+
+" Cursor line highlight
+set cursorline
+
+" Disable comment insertion on new line
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " use alt for splitting windows in a similiar way to i3
 nnoremap <A-/> <c-w>v
@@ -189,20 +154,22 @@ endif
 " set wildmode=list:longest,full
 
 " edit .virmrc on the fly
-command! Vimrc :edit ~/.vimrc
-
-" Explorer
-" nnoremap ge :CocCommand explorer --toggle --width=31<CR>
+command! -nargs=0 Vimrc :edit ~/.vimrc
 
 " terminal
 if has("nvim")
   nnoremap <leader>t :15split +term<cr>i
+  nnoremap <leader>vt :vsplit +term<cr>i
   tnoremap <leader><esc> <c-\><c-n>
 else
   " nnoremap gt <Plug>(coc-terminal-toggle)
   " nnoremap gt :terminal ++rows=12 zsh -c "tmux attach -t vim \|\| tmux new-session -s vim"<CR>
   nnoremap <leader>t :term ++rows=15<CR>
 endif
+
+" buffers
+nnoremap <tab> :bn<cr>
+nnoremap <s-tab> :bp<cr>
 
 """ Ranger """
 " disable mapped shortcut for bclose (dependancy for ranger)
@@ -244,7 +211,7 @@ command! Files :call fzf#run(fzf#wrap({'source': 'fd --hidden --no-ignore'}))
 nnoremap <leader>of :Files<CR>
 
 " open a directory
-command! Directories :call fzf#run(fzf#wrap({'source': 'fd --hidden --no-ignore --type d', 'sink': 'cd '}))
+command! Directories :call fzf#run(fzf#wrap({'source': 'fd . $HOME --hidden --no-ignore --type d', 'sink': 'cd '}))
 nnoremap <leader>od :Directories<CR>
 
 " open a recently opened file
@@ -292,7 +259,7 @@ let g:NERDDefaultAlign = 'left'
 " let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
 
 " Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
+let g:NERDCommentEmptyLines = 0
 
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
@@ -310,6 +277,9 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 """ end of UltiSnip """
+
+" OmniSharp
+let g:OmniSharp_server_stdio = 1
 
 """ coc """
 
@@ -460,6 +430,16 @@ call coc#config('languageserver', {
       \    }
       \  }
       \})
+
+" omnisharp lsp configuration
+call coc#config('languageserver', {
+      \  'omnisharp': {
+      \    "command": "mono",
+      \    "args": [ "/opt/omnisharp-roslyn-stdio/OmniSharp.exe", "-lsp" ],
+      \    "filetypes": ["cs"],
+      \  }
+      \})
+      " \    "rootPatterns": ["*.sln", ".git/"],
 
 """ end of coc """
 

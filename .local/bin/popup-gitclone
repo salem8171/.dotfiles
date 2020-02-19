@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd ~
+popup-terminal "git clone $@ || { echo Press ENTER to continue && read }"

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+HIST_QUERY="SELECT DISTINCT place.url \
+  FROM moz_historyvisits as hist, moz_places as place \
+  WHERE hist.place_id == place.id \
+  ORDER BY hist.visit_date DESC;"
+
+BOOKMARK_QUERY="SELECT DISTINCT place.url \
+  FROM moz_bookmarks as bmark, moz_places as place \
+  WHERE bmark.fk == place.id;"
+
+db=`mktemp`
+find $HOME/.mozilla/firefox/ -name places.sqlite |
+  head -1 |
+  xargs -I {} cp {} $db
+
+get_history() {
+  sqlite3 $db "$HIST_QUERY"
+}
+
+get_bookmarks() {
+  sqlite3 $db "$BOOKMARK_QUERY"
+}
+
+choice=`cat <(get_history) | fzf --height=23 --reverse --bind 'enter:print-query,tab:replace-query'`
+if [ $choice ]; then nohup firefox $choice &>/dev/null & fi
+
+rm -rf $db

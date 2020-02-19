@@ -17,6 +17,9 @@ set newtab file:///home/salem/.mozilla/homepage.html
 " open the config file directly from browser
 command tridactylrc !s "normal-terminal" "nvim ~/.config/tridactyl/tridactylrc"
 
+" popup git clone
+bind gc composite get_current_url | ! popup-gitclone
+
 " make tridactyl work on more web pages like raw github
 jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{urls:["<all_urls>"],types:["main_frame"]},["blocking","responseHeaders"])
 
