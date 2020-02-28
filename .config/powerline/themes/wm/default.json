@@ -78,22 +78,6 @@
     ],
     "left": [
       {
-        "function": "powerline.segments.common.generic.generic_growable",
-        "name": "power",
-        "args": {
-          "channel_name": "power",
-          "segments_short": [
-            [ "", ["power"] ]
-          ],
-          "segments_long": [
-            [ "", ["power"] ],
-            [ "", ["power:logout", "power"] ],
-            [ "", ["power:poweroff", "power"] ],
-            [ "", ["power:reboot", "power"] ]
-          ]
-        }
-      },
-      {
         "function": "powerline.segments.common.net.internal_ip",
         "args": {
           "format": "{addr}/{cidr}",

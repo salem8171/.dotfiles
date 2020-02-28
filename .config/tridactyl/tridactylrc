@@ -14,9 +14,6 @@ set modeindicator false
 " set homepage
 set newtab file:///home/salem/.mozilla/homepage.html
 
-" open the config file directly from browser
-command tridactylrc !s "normal-terminal" "nvim ~/.config/tridactyl/tridactylrc"
-
 " popup git clone
 bind gc composite get_current_url | ! popup-gitclone
 
@@ -31,9 +28,9 @@ quickmark a https://9anime.ru/user/watchlist
 quickmark y youtube.com
 quickmark g github.com
 
-js tri.config.set("autocontain", "facebook\.com", "facebook")
-js tri.config.set("autocontain", "youtube\.com", "youtube")
-js tri.config.set("autocontain", "mail\.google\.com", "work")
-js tri.config.set("autocontain", "drive\.google\.com", "work")
+" js tri.config.set("autocontain", "facebook\.com", "facebook")
+" js tri.config.set("autocontain", "youtube\.com", "youtube")
+" js tri.config.set("autocontain", "mail\.google\.com", "work")
+" js tri.config.set("autocontain", "drive\.google\.com", "work")
 
 " vim: set filetype=vim:

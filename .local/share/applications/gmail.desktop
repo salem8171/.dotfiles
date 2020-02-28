@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Gmail
+Exec=firefox mail.google.com
+# Description=

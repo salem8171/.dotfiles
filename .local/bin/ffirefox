@@ -23,6 +23,12 @@ get_bookmarks() {
 }
 
 choice=`cat <(get_history) | fzf --height=23 --reverse --bind 'enter:print-query,tab:replace-query'`
-if [ $choice ]; then nohup firefox $choice &>/dev/null & fi
+if [ "$choice" ]; then 
+  if [[ "$choice" == *"."* ]]; then
+    nohup firefox --new-window "$choice" &>/dev/null & 
+  else
+    nohup firefox --search "$choice" &>/dev/null & 
+  fi
+fi
 
 rm -rf $db

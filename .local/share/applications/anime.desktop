@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Anime
+Exec=firefox https://9anime.ru/user/watchlist
+# Description=

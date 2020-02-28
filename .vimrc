@@ -6,7 +6,8 @@ Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'https://github.com/scrooloose/nerdcommenter'
-Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
+Plug 'https://github.com/neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'https://github.com/junegunn/fzf'
 Plug 'https://github.com/junegunn/fzf.vim'
 Plug 'https://github.com/iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
@@ -18,6 +19,7 @@ Plug 'https://github.com/rbgrouleff/bclose.vim'
 Plug 'https://github.com/SirVer/ultisnips'
 Plug 'https://github.com/honza/vim-snippets'
 Plug 'https://github.com/Yggdroot/indentLine'
+Plug 'https://github.com/thaerkh/vim-workspace'
 " Plug 'https://github.com/wgwoods/vim-systemd-syntax'
 " Plug 'https://github.com/OmniSharp/omnisharp-vim'
 " Plug 'https://github.com/sickill/vim-monokai'
@@ -33,7 +35,7 @@ Plug 'https://github.com/neoclide/coc-snippets', {'do': 'yarn install --frozen-l
 Plug 'https://github.com/neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
 Plug 'https://github.com/neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 Plug 'https://github.com/neoclide/coc-pairs', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/coc-extensions/coc-omnisharp', {'do': 'yarn install --frozen-lockfile'}
+Plug 'https://github.com/coc-extensions/coc-omnisharp', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'https://github.com/neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'https://github.com/neoclide/coc-stylelint', {'do': 'yarn install --frozen-lockfile'}
 " Plug 'https://github.com/bmatcuk/coc-stylelintplus', {'do': 'yarn install --frozen-lockfile'}
@@ -83,8 +85,8 @@ set mouse=nvi
 " comfirm saving before quitting
 set confirm
 
-" remap default leader to ,
-let mapleader = ","
+" remap default leader to space
+let mapleader = " "
 
 " indentation settings
 set expandtab
@@ -100,6 +102,9 @@ set nowrap
 
 " disable search highlight
 set nohlsearch
+
+" show the effects of commands (like substitute) as you type
+set inccommand=split
 
 " clipboard
 inoremap <c-v> <c-r>+
@@ -143,10 +148,10 @@ nnoremap <AS-l> :vertical resize +1<cr>
 nnoremap <AS-k> :resize -1<cr>
 nnoremap <AS-j> :resize +1<cr>
 if has("nvim")
-  tnoremap <AS-h> :vertical resize -1<cr>
-  tnoremap <AS-l> :vertical resize +1<cr>
-  tnoremap <AS-k> :resize -1<cr>
-  tnoremap <AS-j> :resize +1<cr>
+  tnoremap <AS-h> <c-\><c-n>:vertical resize -1<cr>
+  tnoremap <AS-l> <c-\><c-n>:vertical resize +1<cr>
+  tnoremap <AS-k> <c-\><c-n>:resize -1<cr>
+  tnoremap <AS-j> <c-\><c-n>:resize +1<cr>
 endif
 
 " commands tab completion
@@ -281,6 +286,17 @@ let g:UltiSnipsEditSplit="vertical"
 " OmniSharp
 let g:OmniSharp_server_stdio = 1
 
+""" Workspace """
+" don't create tabs when reopening session
+let g:workspace_create_new_tabs = 0  " enabled = 1 (default), disabled = 0
+
+" save all sessions in sessions folder instead of inside the workspace
+let g:workspace_session_directory = $HOME . '/.vim/sessions/'
+
+" mapping for toggling workspace
+nnoremap <leader>w :ToggleWorkspace<CR>
+""" end of Workspace """
+
 """ coc """
 
 " If hidden is not set, TextEdit might fail.
@@ -382,8 +398,8 @@ omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
 " Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-nmap <silent> <C-d> <Plug>(coc-range-select)
-xmap <silent> <C-d> <Plug>(coc-range-select)
+" nmap <silent> <C-d> <Plug>(coc-range-select)
+" xmap <silent> <C-d> <Plug>(coc-range-select)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
@@ -432,13 +448,13 @@ call coc#config('languageserver', {
       \})
 
 " omnisharp lsp configuration
-call coc#config('languageserver', {
-      \  'omnisharp': {
-      \    "command": "mono",
-      \    "args": [ "/opt/omnisharp-roslyn-stdio/OmniSharp.exe", "-lsp" ],
-      \    "filetypes": ["cs"],
-      \  }
-      \})
+" call coc#config('languageserver', {
+"       \  'omnisharp': {
+"       \    "command": "mono",
+"       \    "args": [ "/opt/omnisharp-roslyn-stdio/OmniSharp.exe", "-lsp" ],
+"       \    "filetypes": ["cs"],
+"       \  }
+"       \})
       " \    "rootPatterns": ["*.sln", ".git/"],
 
 """ end of coc """
