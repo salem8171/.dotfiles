@@ -16,15 +16,22 @@ alias ssh-desktop="ssh salem-desktop-pc.local"
 alias barrier-desktop="barrierctl connect salem-desktop-pc.local"
 alias barrier-desktop-disconnect="barrierctl disconnect salem-desktop-pc.local"
 
-ghc () { git clone git@github.com:$@ }
-glc () { git clone git@gitlab.com:$@ }
-# alias gc="git add . && git commit"
-# alias gpush="git push"
-# alias gpull="git pull"
-# alias gco="git checkout"
-# alias gb="git branch"
-# alias gs="git status"
-# alias gl="git log --oneline"
+ghclone () { git clone git@github.com:$@ }
+glclone () { git clone git@gitlab.com:$@ }
+alias gclone="git clone"
+alias gadd="git add"
+alias gcommit="git commit"
+alias gpush="git push"
+alias gpull="git pull"
+alias gcheckout="git checkout"
+alias gbranch="git branch"
+alias gstatus="git status"
+alias glog="git log --oneline"
+alias gfetch="git fetch"
+alias gclean="git clean -fd"
+alias gstash="git stash"
+alias greset="git reset"
+alias gdiff="git diff"
 
 alias nmr="nmcli device wifi rescan"
 alias nmc="nmcli device wifi connect"
@@ -47,7 +54,6 @@ alias srestartu="systemctl restart --user"
 
 alias v="$EDITOR"
 alias sv="sudo -E $EDITOR"
-# alias fv="fedit"
 alias r=". ranger"
 alias h="htop" 
 

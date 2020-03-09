@@ -1,3 +1,4 @@
 #!/bin/bash
 
-$TERMINAL -e "zsh -c '$@'"
+# $TERMINAL -e "zsh -c '$@'"
+$TERMINAL -e "zsh -c 'tmux new-session $@'"

@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=Tutanota Mail
-Exec=firefox mail.tutanota.com
+Exec=firefox --new-window mail.tutanota.com
 # Description=

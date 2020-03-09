@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Config terminalrc
+Exec=normal-terminal "$EDITOR ~/.config/xfce4/terminal/terminalrc"
+# Description=

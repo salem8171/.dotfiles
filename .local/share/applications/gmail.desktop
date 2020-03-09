@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=Gmail
-Exec=firefox mail.google.com
+Exec=firefox --new-window mail.google.com
 # Description=

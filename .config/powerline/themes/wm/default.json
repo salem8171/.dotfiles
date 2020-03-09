@@ -60,6 +60,12 @@
         "priority": 40
       },
       {
+        "function": "powerline.segments.common.bat.battery",
+        "args": {
+          "format": "{status} {capacity:3.0%}"
+        }
+      },
+      {
         "function": "powerline.segments.common.time.date",
         "args": {
           "format": "%m-%d"

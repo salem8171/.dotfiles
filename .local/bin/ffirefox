@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/zsh
+source ~/.zshrc
 
 HIST_QUERY="SELECT DISTINCT place.url \
   FROM moz_historyvisits as hist, moz_places as place \
@@ -23,11 +24,11 @@ get_bookmarks() {
 }
 
 choice=`cat <(get_history) | fzf --height=23 --reverse --bind 'enter:print-query,tab:replace-query'`
-if [ "$choice" ]; then 
+if [ "$choice" ]; then
   if [[ "$choice" == *"."* ]]; then
-    nohup firefox --new-window "$choice" &>/dev/null & 
+    nohup firefox $@ --new-window "$choice" </dev/null >/dev/null 2>&1 &
   else
-    nohup firefox --search "$choice" &>/dev/null & 
+    nohup firefox $@ --search "$choice" </dev/null >/dev/null 2>&1 &
   fi
 fi
 

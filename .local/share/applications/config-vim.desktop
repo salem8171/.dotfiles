@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
-Name=Config Vim
+Name=Config Vimrc
 Exec=normal-terminal "$EDITOR ~/.vimrc"
 # Description=

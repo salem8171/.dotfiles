@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Hotspot On
+Exec=nmcli connection up Hotspot
+# Description=

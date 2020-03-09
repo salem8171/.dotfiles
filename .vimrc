@@ -1,16 +1,16 @@
-set nocompatible
-
 call plug#begin('~/.vim/plugged')
 Plug 'https://github.com/scrooloose/nerdtree'
+Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
 Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/tpope/vim-surround'
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'https://github.com/scrooloose/nerdcommenter'
-" Plug 'https://github.com/neoclide/coc.nvim', {'branch': 'release'}
-Plug 'https://github.com/neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'https://github.com/neoclide/coc.nvim',
+      \ {'do': 'yarn install --frozen-lockfile'}
 Plug 'https://github.com/junegunn/fzf'
 Plug 'https://github.com/junegunn/fzf.vim'
-Plug 'https://github.com/iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'https://github.com/iamcco/markdown-preview.nvim',
+      \ { 'do': { -> mkdp#util#install() } }
 Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/mcmartelle/vim-monokai-bold'
@@ -20,8 +20,12 @@ Plug 'https://github.com/SirVer/ultisnips'
 Plug 'https://github.com/honza/vim-snippets'
 Plug 'https://github.com/Yggdroot/indentLine'
 Plug 'https://github.com/thaerkh/vim-workspace'
+Plug 'https://github.com/dense-analysis/ale'
+Plug 'https://github.com/Chiel92/vim-autoformat'
+Plug 'https://github.com/yuttie/comfortable-motion.vim'
+Plug 'https://github.com/ryanoasis/vim-devicons'
 " Plug 'https://github.com/wgwoods/vim-systemd-syntax'
-" Plug 'https://github.com/OmniSharp/omnisharp-vim'
+Plug 'https://github.com/OmniSharp/omnisharp-vim'
 " Plug 'https://github.com/sickill/vim-monokai'
 " Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 " Plug 'https://github.com/fisadev/vim-ctrlp-cmdpalette'
@@ -31,43 +35,80 @@ Plug 'https://github.com/thaerkh/vim-workspace'
 " Plug 'https://github.com/mattn/emmet-vim'
 
 " coc extensions
-Plug 'https://github.com/neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-pairs', {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/coc-extensions/coc-omnisharp', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-stylelint', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/bmatcuk/coc-stylelintplus', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-java', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/iamcco/coc-angular', {'do': 'npm install --no-package-lock'}
-" Plug 'https://github.com/iamcco/coc-vimlsp', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/fannheyward/coc-xml', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/yatli/coc-powershell', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/fannheyward/coc-marketplace', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-tslint', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/voldikss/coc-template', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/fannheyward/coc-sql', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/iamcco/coc-gitignore', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/voldikss/coc-github', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/josa42/coc-docker', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/yatli/coc-omnisharp', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/jberglinds/coc-jira-complete', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/balta2ar/coc-jira', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-yank', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/fannheyward/coc-terminal', {'do': 'npm install --no-package-lock'}
+Plug 'https://github.com/neoclide/coc-snippets',
+      \ {'do': 'yarn install --frozen-lockfile'}
+Plug 'https://github.com/neoclide/coc-highlight',
+      \ {'do': 'yarn install --frozen-lockfile'}
+Plug 'https://github.com/neoclide/coc-python',
+      \ {'do': 'yarn install --frozen-lockfile'}
+Plug 'https://github.com/neoclide/coc-pairs',
+      \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/coc-extensions/coc-omnisharp',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-tsserver',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-stylelint',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/bmatcuk/coc-stylelintplus',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-json',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-html',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-css',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-java',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-yaml',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-emmet',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-lists',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-git',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/iamcco/coc-angular',
+"       \ {'do': 'npm install --no-package-lock'}
+" Plug 'https://github.com/iamcco/coc-vimlsp',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/fannheyward/coc-xml',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/yatli/coc-powershell',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/fannheyward/coc-markdownlint',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/weirongxu/coc-explorer',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/fannheyward/coc-marketplace',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-tslint-plugin',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-tslint',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/voldikss/coc-template',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/fannheyward/coc-sql',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/iamcco/coc-gitignore',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/voldikss/coc-github',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-eslint',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/josa42/coc-docker',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-prettier',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/yatli/coc-omnisharp',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/jberglinds/coc-jira-complete',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/balta2ar/coc-jira',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-yank',
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/fannheyward/coc-terminal',
+"       \ {'do': 'npm install --no-package-lock'}
 call plug#end()
 
 " let g:coc_global_extensions=[]
@@ -103,6 +144,9 @@ set nowrap
 " disable search highlight
 set nohlsearch
 
+" Hightlight preferred text width column
+set colorcolumn=80
+
 " show the effects of commands (like substitute) as you type
 set inccommand=split
 
@@ -118,11 +162,16 @@ cabbrev h vert h
 " natural splits
 set splitbelow splitright
 
-" Cursor line highlight
-set cursorline
+" Cursor line and column highlight
+set cursorline cursorcolumn
+au WinEnter * set cursorline cursorcolumn
+au WinLeave * set nocursorline nocursorcolumn
 
 " Disable comment insertion on new line
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" Autoformat on buffer save
+autocmd BufWritePre * :Autoformat
 
 " use alt for splitting windows in a similiar way to i3
 nnoremap <A-/> <c-w>v
@@ -131,12 +180,10 @@ nnoremap <A--> <c-w>s
 nnoremap <A-s> <c-w>s
 
 " use alt+hjkl to move between split/vsplit panels
-if has("nvim")
-  tnoremap <A-h> <C-\><C-n><C-w>h
-  tnoremap <A-j> <C-\><C-n><C-w>j
-  tnoremap <A-k> <C-\><C-n><C-w>k
-  tnoremap <A-l> <C-\><C-n><C-w>l
-endif
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
 nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
@@ -147,30 +194,19 @@ nnoremap <AS-h> :vertical resize -1<cr>
 nnoremap <AS-l> :vertical resize +1<cr>
 nnoremap <AS-k> :resize -1<cr>
 nnoremap <AS-j> :resize +1<cr>
-if has("nvim")
-  tnoremap <AS-h> <c-\><c-n>:vertical resize -1<cr>
-  tnoremap <AS-l> <c-\><c-n>:vertical resize +1<cr>
-  tnoremap <AS-k> <c-\><c-n>:resize -1<cr>
-  tnoremap <AS-j> <c-\><c-n>:resize +1<cr>
-endif
-
-" commands tab completion
-" set wildmenu
-" set wildmode=list:longest,full
+tnoremap <AS-h> <c-\><c-n>:vertical resize -1<cr>
+tnoremap <AS-l> <c-\><c-n>:vertical resize +1<cr>
+tnoremap <AS-k> <c-\><c-n>:resize -1<cr>
+tnoremap <AS-j> <c-\><c-n>:resize +1<cr>
 
 " edit .virmrc on the fly
 command! -nargs=0 Vimrc :edit ~/.vimrc
 
 " terminal
-if has("nvim")
-  nnoremap <leader>t :15split +term<cr>i
-  nnoremap <leader>vt :vsplit +term<cr>i
-  tnoremap <leader><esc> <c-\><c-n>
-else
-  " nnoremap gt <Plug>(coc-terminal-toggle)
-  " nnoremap gt :terminal ++rows=12 zsh -c "tmux attach -t vim \|\| tmux new-session -s vim"<CR>
-  nnoremap <leader>t :term ++rows=15<CR>
-endif
+nnoremap <leader>t :15split +term<cr>i
+nnoremap <leader>vt :vsplit +term<cr>i
+tnoremap ,<esc> <c-\><c-n>
+autocmd BufEnter term://* startinsert
 
 " buffers
 nnoremap <tab> :bn<cr>
@@ -203,8 +239,19 @@ let g:NERDTreeShowHidden = 1
 " remove default clutter
 let g:NERDTreeMinimalUI = 1
 
+let g:NERDTreeIgnore = ['\.meta$']
+
 " close vim if the last open buffer is NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd bufenter *
+      \ if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) |
+      \     q |
+      \ endif
+
+" Open NERDTree when opening a directory
+autocmd VimEnter *
+      \ if argc() == 1 && isdirectory(argv()[0]) |
+      \     exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] |
+      \ endif
 """ end of NerdTree """
 
 """ fzf """
@@ -216,8 +263,9 @@ command! Files :call fzf#run(fzf#wrap({'source': 'fd --hidden --no-ignore'}))
 nnoremap <leader>of :Files<CR>
 
 " open a directory
-command! Directories :call fzf#run(fzf#wrap({'source': 'fd . $HOME --hidden --no-ignore --type d', 'sink': 'cd '}))
-nnoremap <leader>od :Directories<CR>
+" command! Directories :call fzf#run(fzf#wrap({
+"       \ 'source': 'fd . $HOME --hidden --no-ignore --type d', 'sink': 'cd '}))
+" nnoremap <leader>od :Directories<CR>
 
 " open a recently opened file
 nnoremap <leader>b :Buffers<CR>
@@ -236,17 +284,6 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 """ end of Air line """
 
-""" Syntastic """
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-"
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-""" end of Syntastic """
-
 """ NerdCommenter """
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -254,14 +291,9 @@ let g:NERDSpaceDelims = 1
 " Use compact syntax for prettified multi-line comments
 let g:NERDCompactSexyComs = 1
 
-" Align line-wise comment delimiters flush left instead of following code indentation
+" Align line-wise comment delimiters flush left instead of following code
+" indentation
 let g:NERDDefaultAlign = 'left'
-
-" Set a language to use its alternate delimiters by default
-" let g:NERDAltDelims_java = 1
-
-" Add your own custom formats or override the defaults
-" let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
 
 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDCommentEmptyLines = 0
@@ -269,22 +301,31 @@ let g:NERDCommentEmptyLines = 0
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
 
-" Enable NERDCommenterToggle to check all selected lines is commented or not 
+" Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
+
+" Comment toggle mapping
+nnoremap yc :call NERDComment("n", "Toggle")<cr>
+xnoremap yc :call NERDComment("x", "Toggle")<cr>
 """ end of NerdCommenter """
 
 """ UltiSnip """
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<c-u>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" Trigger configuration. Do not use <tab> if you use
+" https://github.com/Valloric/YouCompleteMe.
+" let g:UltiSnipsExpandTrigger="<c-u>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+" let g:UltiSnipsEditSplit="vertical"
 """ end of UltiSnip """
 
-" OmniSharp
+""" OmniSharp """
 let g:OmniSharp_server_stdio = 1
+let g:OmniSharp_timeout = 5
+set completeopt=longest,menuone,preview
+let g:OmniSharp_highlight_types = 3
+""" end of OmniSharp """
 
 """ Workspace """
 " don't create tabs when reopening session
@@ -295,7 +336,16 @@ let g:workspace_session_directory = $HOME . '/.vim/sessions/'
 
 " mapping for toggling workspace
 nnoremap <leader>w :ToggleWorkspace<CR>
+
+" Ignore empty buffers (Workaround for NERDTree errors on session restore)
+set sessionoptions-=blank
 """ end of Workspace """
+
+""" ALE """
+let g:ale_linters = {
+      \ 'cs': ['OmniSharp']
+      \}
+""" end of ALE """
 
 """ coc """
 
@@ -319,13 +369,8 @@ set shortmess+=c
 set signcolumn=yes
 
 " Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? "\<C-n>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ coc#refresh()
-" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other
+" plugin.
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -333,7 +378,8 @@ endfunction
 
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ coc#expandableOrJumpable() ?
+      \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
 
@@ -342,11 +388,11 @@ let g:coc_snippet_next = '<tab>'
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position.
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" Or use `complete_info` if your vim support it, like:
-" inoremap <expr> <cr> complete_info()["selected"] != -1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -382,7 +428,8 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current
+" paragraph
 xmap <leader>a <Plug>(coc-codeaction-selected)
 nmap <leader>a <Plug>(coc-codeaction-selected)
 
@@ -391,13 +438,15 @@ nmap <leader>ac <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf <Plug>(coc-fix-current)
 
-" Create mappings for function text object, requires document symbols feature of languageserver.
+" Create mappings for function text object, requires document symbols feature of
+" languageserver.
 xmap if <Plug>(coc-funcobj-i)
 xmap af <Plug>(coc-funcobj-a)
 omap if <Plug>(coc-funcobj-i)
 omap af <Plug>(coc-funcobj-a)
 
-" Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+" Use <C-d> for select selections ranges, needs server support, like:
+" coc-tsserver, coc-python
 " nmap <silent> <C-d> <Plug>(coc-range-select)
 " xmap <silent> <C-d> <Plug>(coc-range-select)
 
@@ -408,10 +457,8 @@ command! -nargs=0 Format :call CocAction('format')
 command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
 " use `:OR` for organize import of current buffer
-command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add status line support, for integration with other plugin, checkout `:h coc-status`
-" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+command! -nargs=0 OR :call CocAction('runCommand',
+      \ 'editor.action.organizeImport')
 
 " Using CocList
 " Show all diagnostics
@@ -433,6 +480,8 @@ nnoremap <silent> <space>p :<C-u>CocListResume<CR>
 
 " Coc settings
 
+call coc#config('diagnostic.disblayByAle', 'true')
+
 " ccls lsp configuration
 call coc#config('languageserver', {
       \  'ccls': {
@@ -446,20 +495,4 @@ call coc#config('languageserver', {
       \    }
       \  }
       \})
-
-" omnisharp lsp configuration
-" call coc#config('languageserver', {
-"       \  'omnisharp': {
-"       \    "command": "mono",
-"       \    "args": [ "/opt/omnisharp-roslyn-stdio/OmniSharp.exe", "-lsp" ],
-"       \    "filetypes": ["cs"],
-"       \  }
-"       \})
-      " \    "rootPatterns": ["*.sln", ".git/"],
-
 """ end of coc """
-
-" python3 from powerline.vim import setup as powerline_setup
-" python3 powerline_setup()
-" python3 del powerline_setup
-

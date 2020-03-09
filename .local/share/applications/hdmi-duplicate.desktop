@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=HDMI Duplicate
+Exec=xrandr --output HDMI-0 --same-as eDP-1-1
+# Description=

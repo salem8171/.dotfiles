@@ -40,3 +40,4 @@ fhistory () {
 }
 
 bindkey -s '^R' 'fhistory\n'
+# if [ -z $TMUX ]; then tmux && exit; fi
