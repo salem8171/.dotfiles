@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Config Tmux
+Exec=normal-terminal "$EDITOR ~/.tmux.conf"
+# Description=

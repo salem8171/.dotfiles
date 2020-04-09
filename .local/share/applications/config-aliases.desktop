@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Config Aliases
+Exec=normal-terminal "$EDITOR ~/.aliasrc"
+# Description=

@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Remove Desktop Entry
+Exec=popup-terminal remove-desktop-entry
+# Description=

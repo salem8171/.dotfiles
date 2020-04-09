@@ -1,4 +1,5 @@
 #!/bin/zsh
+TMUX="notmux"
 source ~/.zshrc
 
 HIST_QUERY="SELECT DISTINCT place.url \

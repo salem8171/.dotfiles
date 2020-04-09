@@ -1,13 +1,13 @@
 # vim: set ft=bash :
 
-alias ls='ls --color=auto'
+alias ls='lsd'
 alias grep='grep --colour=auto'
 alias egrep='egrep --colour=auto'
 alias fgrep='fgrep --colour=auto'
 
 alias df='dfc'
 alias free='free -m'
-alias ll='ls -hl'
+alias ll='lsd -hl'
 
 alias desktop-mac=74:27:ea:6b:91:c3
 alias wake-desktop="wol 74:27:ea:6b:91:c3"
@@ -16,6 +16,7 @@ alias ssh-desktop="ssh salem-desktop-pc.local"
 alias barrier-desktop="barrierctl connect salem-desktop-pc.local"
 alias barrier-desktop-disconnect="barrierctl disconnect salem-desktop-pc.local"
 
+alias g="git"
 ghclone () { git clone git@github.com:$@ }
 glclone () { git clone git@gitlab.com:$@ }
 alias gclone="git clone"
@@ -28,7 +29,7 @@ alias gbranch="git branch"
 alias gstatus="git status"
 alias glog="git log --oneline"
 alias gfetch="git fetch"
-alias gclean="git clean -fd"
+alias gclean="git clean -fdx"
 alias gstash="git stash"
 alias greset="git reset"
 alias gdiff="git diff"
@@ -40,22 +41,26 @@ alias nmt="nmtui"
 
 alias sstart="sudo systemctl start"
 alias sstop="sudo systemctl stop"
+alias srestart="sudo systemctl restart"
 alias sstatus="systemctl status"
-alias senable="sudo systemctl enable"
+alias senable="sudo systemctl enable --now"
+alias sdisable="sudo systemctl disable"
 alias sedit="sudo systemctl edit --force --full"
 alias srestart="sudo systemctl restart"
 
 alias sstartu="systemctl start --user"
 alias sstopu="systemctl stop --user"
+alias srestartu="sudo systemctl restart --user"
 alias sstatusu="systemctl status --user"
-alias senableu="systemctl enable --user"
+alias senableu="systemctl enable --now --user"
+alias sdisableu="systemctl disable --user"
 alias seditu="systemctl edit --user --force --full"
 alias srestartu="systemctl restart --user"
 
 alias v="$EDITOR"
 alias sv="sudo -E $EDITOR"
 alias r=". ranger"
-alias h="htop" 
+alias h="htop"
 
 alias pg="ping google.com"
 alias serve="python -m http.server"

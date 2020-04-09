@@ -9,6 +9,8 @@ antigen bundle zdharma/fast-syntax-highlighting
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
 
+POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
+# antigen theme bhilburn/powerlevel9k powerlevel9k
 antigen theme caiogondim/bullet-train-oh-my-zsh-theme bullet-train
 
 antigen apply
@@ -40,4 +42,4 @@ fhistory () {
 }
 
 bindkey -s '^R' 'fhistory\n'
-# if [ -z $TMUX ]; then tmux && exit; fi
+if [ -z $TMUX ]; then tmux && exit; fi

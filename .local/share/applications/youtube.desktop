@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Youtube
+Exec=firefox --new-window youtube.com
+# Description=
