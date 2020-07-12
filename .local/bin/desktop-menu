@@ -1,0 +1,34 @@
+#!/bin/bash
+
+space=" "
+preview_cmd="
+  echo '{}' &&
+  echo '--------------------------------------------------------------' &&
+  grep -r -e '^Name={}$' /usr/share/applications |
+    cut -d : -f 1 |
+    head -n 1 |
+    xargs bat |
+    sed 's/^.Desktop.Entry.//' |
+    grep -v -e 'Name' |
+    grep -v -e '^Comment....=' |
+    grep -v -e '^Comment.....=' |
+    grep -v -e '^Comment.......=' |
+    grep -v -e '^Comment...@' |
+    grep -v -e '^Icon....=' |
+    grep -v -e '^Icon.....=' |
+    grep -v -e '^Icon.......=' |
+    grep -v -e '^Icon...@' |
+    grep -v -e '^Keywords....=' |
+    grep -v -e '^Keywords.....=' |
+    grep -v -e '^Keywords.......=' |
+    grep -v -e '^Keywords...@' |
+    highlight --syntax desktop --out-format=ansi &&
+  grep -r -e '^Name={}$' $HOME/.local/share/applications |
+    cut -d : -f 1 |
+    head -n 1 |
+    xargs bat |
+    grep -v -e '^.Desktop.Entry.' |
+    grep -v -e '^Name' |
+    highlight --syntax desktop --out-format=ansi"
+i3-dmenu-desktop --dmenu="fzf --height=24 --layout=reverse \
+  --preview-window=':60%' --preview='$preview_cmd'"

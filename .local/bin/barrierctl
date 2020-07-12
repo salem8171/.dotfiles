@@ -1,11 +1,11 @@
 #!/bin/bash
 case $1 in
-    connect) 
-	systemctl --user start barrierd 
-	ssh $2 "nohup barrierc -f --name client `hostname`.local &> /dev/null &"
-	;;
-    disconnect)
-	systemctl --user stop barrierd 
-	ssh $2 'pkill barrierc'
-	;;
+connect)
+  systemctl --user start barrierd
+  ssh $2 "nohup barrierc -f --name client $(hostname).local &> /dev/null &"
+  ;;
+disconnect)
+  systemctl --user stop barrierd
+  ssh $2 'pkill barrierc'
+  ;;
 esac

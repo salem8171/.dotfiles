@@ -24,13 +24,15 @@ get_bookmarks() {
   sqlite3 $db "$BOOKMARK_QUERY"
 }
 
-choice=`cat <(get_history) | fzf --height=23 --reverse --bind 'enter:print-query,tab:replace-query'`
+choice=$(cat <(get_history) |
+  fzf --height=23 --reverse --bind 'enter:print-query,tab:replace-query')
 if [ "$choice" ]; then
-  if [[ "$choice" == *"."* ]]; then
-    nohup firefox $@ --new-window "$choice" </dev/null >/dev/null 2>&1 &
+  if [ -z $(echo $choice | grep -e "\(\.\|:\)") ]; then
+    url=$(echo -n $choice | sed "s| |+|g; s|^|https://ddg.gg/?&q=|")
   else
-    nohup firefox $@ --search "$choice" </dev/null >/dev/null 2>&1 &
+    url=$choice
   fi
+  nohup firefox "$@" "$url" </dev/null >/dev/null 2>&1 &
 fi
 
 rm -rf $db

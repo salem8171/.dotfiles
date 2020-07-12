@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=The Pirate Bay
+Exec=firefox --new-window thepiratebay.org
+# Description=

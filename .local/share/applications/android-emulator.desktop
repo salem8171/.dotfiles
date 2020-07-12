@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Android Emulator
+Exec=emulator -avd virt_android
+# Description=

@@ -1,24 +1,28 @@
 #!/bin/bash
 
+# https://wiki.gentoo.org/wiki/QEMU/Windows_guest
+# qemu-img create -f qcow2 ~/.vm/windoze7-qemu/windoze7.img 25G
+
 qemu-system-x86_64 \
   -enable-kvm \
-  -daemonize \
   -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
   -smp 6 \
   -drive file=~/.vm/windoze7-qemu/windoze7.img,if=virtio \
   -nic user,model=virtio-net-pci,hostname=salem-vrt-pc,smb=/ \
   -m 6G \
-  -vga none -device qxl-vga,vgamem_mb=128,vram_size_mb=128 \
-  -spice port=5930,disable-ticketing \
   -usb -device usb-tablet \
   -device virtio-serial \
-  -chardev spicevmc,id=vdagent,name=vdagent \
-  -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
   -soundhw ac97 \
   -name "windoze7" \
   "$@"
+# -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
+# -spice port=5930,disable-ticketing \
+# -vga none -device qxl-vga,vgamem_mb=128,vram_size_mb=128 \
+# -chardev spicevmc,id=vdagent,name=vdagent \
+# -daemonize \
+
 # -spice unix,addr=/tmp/vm_spice,disable-ticketing \
 
 # exec spicy --title Windoze7 --uri="spice+unix:///tmp/vm_spice"
 # exec spicy 172.0.0.1 -p 5930
-exec remmina -c /home/salem/.local/share/remmina/windoze7.remmina
+# exec remmina -c /home/salem/.local/share/remmina/windoze7.remmina

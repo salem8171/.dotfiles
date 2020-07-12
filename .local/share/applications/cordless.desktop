@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Cordless
+Exec=tmux-terminal Cordless cordless
+Comment=The Discord terminal client you never knew you wanted.

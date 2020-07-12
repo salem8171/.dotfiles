@@ -33,5 +33,5 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 # source $HOME/.zprofile
-/usr/bin/prime-offload
+# /usr/bin/prime-offload
 exec /usr/bin/i3

@@ -14,8 +14,8 @@ Plug 'https://github.com/iamcco/markdown-preview.nvim',
 Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/mcmartelle/vim-monokai-bold'
-Plug 'https://github.com/francoiscabrol/ranger.vim'
-Plug 'https://github.com/rbgrouleff/bclose.vim'
+" Plug 'https://github.com/francoiscabrol/ranger.vim'
+" Plug 'https://github.com/rbgrouleff/bclose.vim'
 Plug 'https://github.com/SirVer/ultisnips'
 Plug 'https://github.com/honza/vim-snippets'
 Plug 'https://github.com/Yggdroot/indentLine'
@@ -49,16 +49,16 @@ Plug 'https://github.com/neoclide/coc-tsserver',
 "       \ {'do': 'yarn install --frozen-lockfile'}
 " Plug 'https://github.com/neoclide/coc-json',
 "       \ {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-html',
-"       \ {'do': 'yarn install --frozen-lockfile'}
+Plug 'https://github.com/neoclide/coc-html',
+      \ {'do': 'yarn install --frozen-lockfile'}
 " Plug 'https://github.com/neoclide/coc-css',
 "       \ {'do': 'yarn install --frozen-lockfile'}
 " Plug 'https://github.com/neoclide/coc-java',
 "       \ {'do': 'yarn install --frozen-lockfile'}
 " Plug 'https://github.com/neoclide/coc-yaml',
 "       \ {'do': 'yarn install --frozen-lockfile'}
-" Plug 'https://github.com/neoclide/coc-emmet',
-"       \ {'do': 'yarn install --frozen-lockfile'}
+Plug 'https://github.com/neoclide/coc-emmet',
+      \ {'do': 'yarn install --frozen-lockfile'}
 " Plug 'https://github.com/neoclide/coc-lists',
 "       \ {'do': 'yarn install --frozen-lockfile'}
 " Plug 'https://github.com/neoclide/coc-git',
@@ -110,6 +110,7 @@ call plug#end()
 filetype plugin on
 syntax on
 colorscheme monokai-bold
+highlight normal guibg=NONE ctermbg=NONE
 
 " line numbers
 set number relativenumber
@@ -150,6 +151,13 @@ vnoremap <c-c> "+y
 vnoremap <c-v> "+p
 vnoremap <c-x> "+d
 
+" User friendly maps
+nnoremap  u
+inoremap  ua
+nnoremap <bs> a<BS>
+vnoremap <BS> c
+inoremap  dawa
+
 " show help panes in vertical split
 cabbrev h vert h
 
@@ -166,7 +174,15 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Autoformat on buffer save
 autocmd BufWritePre * :Autoformat
-autocmd FileType i3config let b:autoformat_autoindent=0
+let g:autoformat_autoindent=0
+
+autocmd FileType vim let b:autoformat_autoindent=1
+autocmd FileType desktop let b:autoformat_autoindent=1
+
+let g:formatdef_htmlbeautify =
+      \'"html-beautify - -w ".&colorcolumn." -".(&expandtab ? "s ".shiftwidth() : "t")'
+let g:formatdef_astyle_cs =
+      \'"astyle --mode=cs --style=ansi --max-code-length=".&colorcolumn." --indent-namespaces -pcH".(&expandtab ? "s".shiftwidth() : "t")'
 
 " use alt for splitting windows in a similiar way to i3
 nnoremap <A-/> <c-w>v
@@ -202,6 +218,7 @@ nnoremap <leader>t :15split +term<cr>i
 nnoremap <leader>vt :vsplit +term<cr>i
 tnoremap ,<esc> <c-\><c-n>
 autocmd BufEnter term://* startinsert
+autocmd TermEnter * set nobuflisted
 
 " buffers
 nnoremap <tab> :bn<cr>
@@ -209,24 +226,27 @@ nnoremap <s-tab> :bp<cr>
 
 """ Ranger """
 " disable mapped shortcut for bclose (dependancy for ranger)
-let g:bclose_no_plugin_maps = 1
+" let g:bclose_no_plugin_maps = 1
 
 " disable default mapping for ranger which is redefined below
-let g:ranger_map_keys = 0
+" let g:ranger_map_keys = 0
 
 " prevent NERDTree from being open by default when opening folders
-let g:NERDTreeHijackNetrw = 0
+" let g:NERDTreeHijackNetrw = 0
 
 " open ranger when editing folders
-let g:ranger_replace_netrw = 1
+" let g:ranger_replace_netrw = 1
 
 " ranger shortcut
-nnoremap <leader>r :Ranger<cr>
+" nnoremap <leader>r :Ranger<cr>
 """ end of Ranger """
 
 """ NerdTree """
 " find current file in NERDTree
 nnoremap <leader>n :NERDTreeFind<cr>
+
+" Open NERDTree when opening folder
+let g:NERDTreeHijackNetrw = 0
 
 " show hidden files
 let g:NERDTreeShowHidden = 1
@@ -237,10 +257,10 @@ let g:NERDTreeMinimalUI = 1
 let g:NERDTreeIgnore = ['\.meta$']
 
 " close vim if the last open buffer is NERDTree
-autocmd bufenter *
-      \ if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) |
-      \     q |
-      \ endif
+" autocmd bufenter *
+"       \ if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) |
+"       \     q |
+"       \ endif
 
 " Open NERDTree when opening a directory
 autocmd VimEnter *
@@ -303,6 +323,8 @@ let g:NERDToggleCheckAllLines = 1
 " Comment toggle mapping
 nnoremap yc :call NERDComment("n", "Toggle")<cr>
 xnoremap yc :call NERDComment("x", "Toggle")<cr>
+nnoremap  :call NERDComment("n", "Toggle")<cr>
+vnoremap  :call NERDComment("n", "Toggle")<cr>
 """ end of NerdCommenter """
 
 """ UltiSnip """
@@ -476,7 +498,7 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Coc settings
 
-call coc#config('diagnostic.disblayByAle', 'true')
+call coc#config('diagnostic.displayByAle', 'true')
 
 " ccls lsp configuration
 call coc#config('languageserver', {

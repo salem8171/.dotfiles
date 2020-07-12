@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# Documentation: https://wiki.gentoo.org/wiki/QEMU/Windows_guest
+# Virtio driver: https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/index.html#virtio-win-direct-downloads
+
+[[ -z $VM_DIR_PREFIX ]] && VM_DIR_PREFIX="$HOME/.vm"
+[[ -z $ISO_PATH ]] && ISO_PATH="$HOME/Downloads/windows.iso"
+[[ -z $VIRTIO_PATH ]] && VIRTIO_PATH="$HOME/Downloads/virtio.iso"
+
+create-img() {
+  VM_DIR=$VM_DIR_PREFIX/$VM_NAME-qemu
+  mkdir -p $VM_DIR
+  qemu-img create -f qcow2 "$VM_DIR/$VM_NAME.img" 50G
+}
+
+start-vm() {
+  VM_IMG_PATH="$VM_DIR_PREFIX/$VM_NAME-qemu/$VM_NAME.img"
+  qemu-system-x86_64 \
+    -enable-kvm \
+    -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
+    -smp 6 \
+    -drive file=$VM_IMG_PATH,if=virtio \
+    -nic user,hostfwd=tcp::3389-:3389,model=virtio-net-pci,hostname=$VM_NAME-pc,smb=/ \
+    -m 6G \
+    -usb -device usb-tablet \
+    -device virtio-serial \
+    -soundhw ac97 \
+    -name "$VM_NAME" \
+    "$@"
+  # -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
+  # -spice port=5930,disable-ticketing \
+  # -vga none -device qxl-vga,vgamem_mb=128,vram_size_mb=128 \
+  # -chardev spicevmc,id=vdagent,name=vdagent \
+  # -daemonize \
+
+  # -spice unix,addr=/tmp/vm_spice,disable-ticketing \
+}
+
+setup-vm() {
+  VM_IMG_PATH="$VM_DIR_PREFIX/$VM_NAME-qemu/$VM_NAME.img"
+  [[ -f $VM_IMG_PATH ]] || create-img $VM_NAME
+  start-vm \
+    -boot d \
+    -drive file=$ISO_PATH,media=cdrom \
+    -drive file=$VIRTIO_PATH,media=cdrom \
+    "$@"
+}
+
+# exec spicy --title Windoze7 --uri="spice+unix:///tmp/vm_spice"
+# exec spicy 172.0.0.1 -p 5930
+# exec remmina -c /home/salem/.local/share/remmina/windoze7.remmina
+
+VM_NAME=$2
+case $1 in
+"create")
+  create-img
+  ;;
+"setup")
+  shift && shift && setup-vm "$@"
+  ;;
+"start")
+  shift && shift && start-vm "$@"
+  ;;
+esac

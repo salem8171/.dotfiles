@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Pavucontrol
+Exec=pavucontrol -t 5
+# Description=

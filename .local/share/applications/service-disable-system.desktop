@@ -1,4 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Service disable (system)
-Exec=popup-terminal "fsystemctl disable"

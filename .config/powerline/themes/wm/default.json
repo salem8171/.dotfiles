@@ -1,38 +1,9 @@
 {
   "segments": {
-    "right": [
-      {
-        "function": "powerline.segments.common.players.dbus_player",
-        "name": "vlc",
-        "args": {
-          "format": "{state_symbol}{artist} — {title} ({album})",
-          "short_format": "{state_symbol}{short_title}",
-          "auto_disable": true,
-          "show_controls": true,
-          "auto_shrink": true,
-          "channel_name": "players.vlc",
-          "state_symbols": {
-            "fallback": "♫",
-            "play": "▶ ",
-            "pause": "▮▮ ",
-            "stop": " ",
-            "repeat": "↺ ",
-            "loop": "↺1 ",
-            "shuffle": " ",
-            "next": "",
-            "previous": ""
-          },
-          "player_name": "vlc",
-          "bus_name": "org.mpris.MediaPlayer2.vlc",
-          "player_path": "/org/mpris/MediaPlayer2",
-          "iface_prop": "org.freedesktop.DBus.Properties",
-          "iface_player": "org.mpris.MediaPlayer2.Player"
-        }
-      },
-      {
+    "right": [{
         "function": "powerline.segments.common.volume.vol",
         "args": {
-          "format": " {volume:3.0%}",
+          "format": "Snd: {volume:3.0%}",
           "format_muted": null
         },
         "priority": 30
@@ -40,7 +11,7 @@
       {
         "function": "powerline.segments.common.sys.memory_usage",
         "args": {
-          "format": "MEM:{percent:.1f}% {absolute:.3f}G/{total:.3f}G",
+          "format": "MEM: {percent:.1f}% {absolute:.3f}G/{total:.3f}G",
           "short_format": "MEM:{percent:.1f}% {absolute:.1f}G/{total:1f}G"
         },
         "priority": 40
@@ -48,14 +19,14 @@
       {
         "function": "powerline.segments.common.sys.cpu_load_percent",
         "args": {
-          "format": "CPU:{0:.0f}%"
+          "format": "CPU: {0:.0f}%"
         },
         "priority": 40
       },
       {
         "function": "powerline.segments.common.net.wireless",
         "args": {
-          "format": " {quality:3.0%} {essid}"
+          "format": "WiFi: {quality:3.0%} {essid}"
         },
         "priority": 40
       },
@@ -68,7 +39,7 @@
       {
         "function": "powerline.segments.common.time.date",
         "args": {
-          "format": "%m-%d"
+          "format": "%a %d-%b-%Y"
         },
         "priority": 10
       },
@@ -76,14 +47,13 @@
         "function": "powerline.segments.common.time.date",
         "name": "date",
         "args": {
-          "format": "%H:%M",
+          "format": "%I:%M",
           "istime": true
         },
         "priority": 1
       }
     ],
-    "left": [
-      {
+    "left": [{
         "function": "powerline.segments.common.net.internal_ip",
         "args": {
           "format": "{addr}/{cidr}",
@@ -93,44 +63,15 @@
       },
       {
         "function": "powerline.segments.i3wm.mode",
-        "args": {
-          "names": {
-            "default": null,
-            "gaps": "Gaps: (o) outer, (i) inner",
-            "gaps-o": "Outer Gaps: p|m|0 (local), Shift + p|m|0 (global)",
-            "gaps-i": "Inner Gaps: p|m|0 (local), Shift + p|m|0 (global)"
-          }
-        },
         "priority": 60
       },
       {
         "function": "powerline.segments.i3wm.workspaces",
-        "exclude_modes": [ "default" ],
-        "draw_inner_divider": true,
-        "draw_soft_divider": true,
         "args": {
-          "only_show": [ "focused", "visible" ],
-          "separator": " ",
-          "show_multiple_icons": false,
+          "show_icons": false,
           "show_dummy_workspace": true,
           "show_output": true
         },
-        "priority": 30
-      },
-      {
-        "function": "powerline.segments.i3wm.workspaces",
-        "include_modes": [ "default" ],
-        "draw_inner_divider": true,
-        "draw_soft_divider": true,
-        "args": {
-          "separator": " ",
-          "show_dummy_workspace": true,
-          "show_output": true
-        },
-        "priority": 30
-      },
-      {
-        "function": "powerline.segments.i3wm.scratchpad",
         "priority": 30
       }
     ]

@@ -1,4 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Service status (user)
-Exec=popup-terminal "fsystemctl status --user"

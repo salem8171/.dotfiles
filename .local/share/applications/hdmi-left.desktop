@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=HDMI Left
-Exec=xrandr --output HDMI-0 --left-of eDP-1-1
+Exec=xrandr --output eDP-1-1 --auto --output HDMI-0 --left-of eDP-1-1
 # Description=

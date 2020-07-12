@@ -12,7 +12,7 @@ set theme dark
 set modeindicator false
 
 " set homepage
-set newtab file:///home/salem/.mozilla/homepage.html
+" set newtab file:///home/salem/.mozilla/homepage.html
 
 " popup git clone
 bind gc composite get_current_url | ! popup-gitclone
@@ -22,6 +22,10 @@ jsb browser.webRequest.onHeadersReceived.addListener(tri.request.clobberCSP,{url
 
 " links open in new windows instead of tabs
 bind F hint -w
+
+seturl https://codeforces.com noiframe true
+unbindurl youtube P
+unbindurl youtube N
 
 quickmark m mail.google.com
 quickmark a https://9anime.ru/user/watchlist

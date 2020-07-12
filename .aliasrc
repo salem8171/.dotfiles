@@ -1,6 +1,7 @@
 # vim: set ft=bash :
 
 alias ls='lsd'
+alias cat=bat
 alias grep='grep --colour=auto'
 alias egrep='egrep --colour=auto'
 alias fgrep='fgrep --colour=auto'
@@ -33,6 +34,7 @@ alias gclean="git clean -fdx"
 alias gstash="git stash"
 alias greset="git reset"
 alias gdiff="git diff"
+alias gremote="git remote"
 
 alias nmr="nmcli device wifi rescan"
 alias nmc="nmcli device wifi connect"
@@ -63,5 +65,6 @@ alias r=". ranger"
 alias h="htop"
 
 alias pg="ping google.com"
+alias py="ipython --no-banner"
 alias serve="python -m http.server"
 alias :q="exit"

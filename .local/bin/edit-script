@@ -2,7 +2,7 @@
 
 path="~/.local/bin/"
 cd ~/.local/bin
-file=`fd --type file --max-depth=1 |
-  fzf --height=23 --layout=reverse --preview-window=":70%"\
-  --preview="bat --color=always --style="numbers,header" {}"`
+file=$(fd --type file --max-depth=1 |
+  fzf --height=24 --layout=reverse --preview-window=":70%" \
+    --preview="bat --color=always --style="numbers,header" {}")
 [[ $file ]] && normal-terminal "$EDITOR $path$file"

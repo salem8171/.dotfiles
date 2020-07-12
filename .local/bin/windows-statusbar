@@ -1,0 +1,137 @@
+#!/bin/sh
+
+transparent=#00000000
+black=#ff000000
+white=#ffffffff
+gray1=#ff111111
+gray2=#ff222222
+gray3=#ff333333
+gray4=#ff444444
+gray5=#ff555555
+gray6=#ff666666
+gray7=#ff777777
+gray8=#ff888888
+gray9=#ff999999
+
+bg_color=$gray5
+hl_color=$gray7
+
+seperator_left() {
+  if [[ $1 == $2 ]]; then
+    echo -n "  "
+  else
+    echo -n " %{F$1 B$2}%{F- B$2} "
+  fi
+}
+
+seperator_right() {
+  if [[ $1 == $2 ]]; then
+    echo -n "  "
+  else
+    echo -n " %{F$2 B$1}%{F- B$2} "
+  fi
+}
+
+get_active_workspace() {
+  i3-msg -t get_workspaces |
+    jq 'map(select(.focused == true)) | .[] | .name'
+}
+
+get_windows() {
+  i3-msg -t get_tree |
+    jq '[recurse(.nodes[])]
+      | map(select(.type =="workspace"))
+      | map(select(.name =="1")) | .[]
+      | [recurse(.nodes[])]
+      | map(select(.window != null)) | .[]
+      | { id, name: .window_properties.title, focused } | .[]'
+}
+
+format_windows_output() {
+
+  start_bg_color=$1
+  end_bg_color=$2
+
+  first_iteration=true
+  output=""
+  sep=""
+  while read -r window_id; do
+    old_focus_status=$focus_status
+    read -r window_name
+    read -r focus_status
+
+    window_name=$(printf "%s" "$window_name" |
+      sed 's|\"||g; s|\(^.\{0,25\}\).*|\1|g')
+    window_name="%{A:focus-$window_id:}$window_name%{A}"
+    window_name="%{A2:kill-$window_id:}$window_name%{A}"
+
+    if [[ $first_iteration == true ]]; then
+      first_iteration=false
+      if [[ $focus_status == true ]]; then
+        sep="$(seperator_left $start_bg_color $hl_color)"
+      else
+        sep="$(seperator_left $start_bg_color $bg_color)"
+      fi
+    else
+      if [[ $old_focus_status == true ]]; then
+        sep="$(seperator_left $hl_color $bg_color)"
+      else
+        if [[ $focus_status == true ]]; then
+          sep="$(seperator_left $bg_color $hl_color)"
+        else
+          sep="$(seperator_left $bg_color $bg_color)"
+        fi
+      fi
+    fi
+
+    output="$output$sep$window_name"
+  done
+
+  if [[ $focus_status == true ]]; then
+    sep="$(seperator_left $hl_color $end_bg_color)"
+  else
+    if [[ $first_iteration == false ]]; then
+      sep="$(seperator_left $bg_color $end_bg_color)"
+    else
+      sep="$(seperator_left $start_bg_color $end_bg_color)"
+    fi
+  fi
+
+  printf "%s" "$output$sep"
+}
+
+get_cpu_tmp() {
+  printf "%s" "$(sensors | grep Core | awk '{print $3}' |
+    sed "s|+\([0-9]*\).*|\1|" | sort -n | tail -n 1).0°C"
+}
+
+get_gpu_tmp() {
+  printf "%s" "$(nvidia-smi | grep GeForce -A 1 | tail -n 1 |
+    awk '{print $3}' | sed "s|C||").0°C"
+}
+
+while :; do
+  sleep 0.1
+  output="%{B$gray9 F$white}%{A:desktop_menu:} Start%{A}"
+  output+="$(get_windows | format_windows_output $gray9 $transparent)"
+  output+="%{r}"
+  output+="$(seperator_right $transparent $gray5)GPUt: $(get_gpu_tmp)"
+  output+="$(seperator_right $gray5 $gray5)CPUt: $(get_cpu_tmp)"
+  output+=" %{B$transparent}"
+  printf "%s\n" "$output"
+done | lemonbar -g x15++ -f "Hack Nerd Font-9" -f "PowerlineSymbols-9" $@ |
+  while read cmd; do
+    case $cmd in
+    "desktop_menu")
+      popup-terminal desktop-menu
+      ;;
+    "focus-"*)
+      id=$(echo -n $cmd | sed "s|^focus-\([0-9]*\)$|\1|")
+      i3-msg [con_id="$id"] focus >/dev/null
+      ;;
+    "kill-"*)
+      id=$(echo -n $cmd | sed "s|^kill-\([0-9]*\)$|\1|")
+      i3-msg [con_id="$id"] kill >/dev/null
+      ;;
+    esac
+  done

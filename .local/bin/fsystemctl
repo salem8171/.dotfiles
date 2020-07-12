@@ -1,15 +1,30 @@
 #!/bin/bash
 
-fsystemctl-select-unit-files () {
-  systemctl list-unit-files $@ |
-    grep .service |
-    sed 's/.service//' |
-    grep --invert-match UNIT |
-    awk '{print $1}' |
-    fzf --multi --height=23 --layout=reverse --preview-window=":70%" --preview="systemctl status $@ {1}"
+fsystemctl-select-unit-files() {
+  preview_cmd="
+    if [[ -z '{2}' ]]; then
+      systemctl status {1};
+    else
+      systemctl status {1} --user
+    fi"
+  cat \
+    <(systemctl list-unit-files |
+      grep .service |
+      sed "s/.service//" |
+      awk '{print $1}') \
+    <(systemctl list-unit-files --user |
+      grep .service |
+      sed "s/.service/ ($USER)/" |
+      awk '{print $1 " " $2}') |
+    fzf --multi --height=23 --layout=reverse \
+      --preview-window=":70%" --preview="$preview_cmd"
 }
 
-user_flag_present=`echo $@ | grep -e "--user"`
-[[ $user_flag_present ]] || SUDO="sudo"
-[[ $user_flag_present ]] && USER_FLAG="--user"
-fsystemctl-select-unit-files $USER_FLAG | while read unit; do $SUDO systemctl $@ $unit; done
+fsystemctl-select-unit-files |
+  while read unit; do
+    user_flag_present=$(echo $unit | grep -e " ($USER)")
+    unit=$(echo $unit | awk '{print $1}')
+    [[ $user_flag_present ]] || SUDO="sudo"
+    [[ $user_flag_present ]] && USER_FLAG="--user"
+    $SUDO systemctl $USER_FLAG $@ $unit
+  done

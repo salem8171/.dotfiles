@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=NightcoreLounge
+Exec=firefox --new-window https://www.youtube.com/user/NightcoreLounge
+# Description=

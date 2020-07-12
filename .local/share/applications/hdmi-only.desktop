@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=HDMI Only
+Exec=xrandr --output HDMI-0 --auto --output eDP-1-1 --off
+# Description=

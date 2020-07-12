@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Alsamixer
+Exec=normal-terminal alsamixer
+Comment=Advanced linux sound architecture - Mixer
