@@ -4,8 +4,33 @@
 # Virtio driver: https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/index.html#virtio-win-direct-downloads
 
 [[ -z $VM_DIR_PREFIX ]] && VM_DIR_PREFIX="$HOME/.vm"
-[[ -z $ISO_PATH ]] && ISO_PATH="$HOME/Downloads/windows.iso"
-[[ -z $VIRTIO_PATH ]] && VIRTIO_PATH="$HOME/Downloads/virtio.iso"
+[[ -z $ISO_PATH ]] && ISO_PATH="./windows.iso"
+# [[ -z $VIRTIO_PATH ]] && VIRTIO_PATH="$HOME/Downloads/virtio.iso"
+
+synopsis() {
+  echo -e "\
+    \rUsage:
+    \r    virtual-machine [--help|-h]
+    \r    virtual-machine create VM_NAME
+    \r    virtual-machine setup VM_NAME [QEMU_ARGS]
+    \r    virtual-machine start VM_NAME [QEMU_ARGS]
+    \r
+    \rArguments:
+    \r    -h, --help      Show this help message and exit
+    \r    create VM_NAME  Create a disk image in VM_DIR_PREFIX/VM_NAME
+    \r    setup VM_NAME   Boots up the VM using the iso image in ISO_PATH as
+    \r                    installation media
+    \r    start VM_NAME   Boots up the VM
+    \r    QEMU_ARGS       Optional args for qemu
+    \r
+    \rEnvironment variables:
+    \r    VM_DIR_PREFIX   Where VM files are stored, defaults to ~/.vm
+    \r    ISO_PATH        Iso path for bootable media for setup, defaults
+    \r                    to ./windows.iso
+    \r    VIRTIO_PATH     Optional iso path for virtio drivers for windows VM
+    \r                    used in setup
+    "
+}
 
 create-img() {
   VM_DIR=$VM_DIR_PREFIX/$VM_NAME-qemu
@@ -39,10 +64,11 @@ start-vm() {
 setup-vm() {
   VM_IMG_PATH="$VM_DIR_PREFIX/$VM_NAME-qemu/$VM_NAME.img"
   [[ -f $VM_IMG_PATH ]] || create-img $VM_NAME
+  [[ -z $VIRTIO_PATH ]] || VIRTIO_ARG="-drive file=$VIRTIO_PATH,media=cdrom"
   start-vm \
     -boot d \
     -drive file=$ISO_PATH,media=cdrom \
-    -drive file=$VIRTIO_PATH,media=cdrom \
+    $VIRTIO_ARG \
     "$@"
 }
 
@@ -52,6 +78,9 @@ setup-vm() {
 
 VM_NAME=$2
 case $1 in
+"--help" | "-h")
+  synopsis
+  ;;
 "create")
   create-img
   ;;

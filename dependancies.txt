@@ -2,6 +2,7 @@ alsa-utils
 antigen
 astyle
 bat
+caps2esc
 cordless
 fd
 firefox
@@ -12,6 +13,7 @@ htop-vim-git
 i3-gaps
 imagemagick
 ipython
+jq
 keynav
 lemonbar-clicks-git
 lsd
@@ -45,8 +47,7 @@ xorg-server
 xorg-xinit
 xorg-xkill
 yarn
+yq
 zathura
 zathura-pdf-poppler
 zenity
-jq
-yq
