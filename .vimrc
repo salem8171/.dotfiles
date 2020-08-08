@@ -5,7 +5,7 @@ if !executable('node')
     let $password = inputsecret('[sudo] password: ')
     !echo $password | sudo -S pacman --noconfirm -Syu nodejs npm yarn
     let $password = ''
-  elseif match(system('uname -a'), '\c'.'ubuntu\|debian\|raspbian'"') != -1
+  elseif match(system('uname -a'), '\c'.'ubuntu\|debian\|raspbian') != -1
     echo 'Installing node...'
     let $password = inputsecret('[sudo] password: ')
     !echo $password | sudo -S apt-get install node nodejs npm yarn
