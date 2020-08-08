@@ -1,4 +1,7 @@
-[[ -f .antigen/antigen.zsh ]] || curl -L git.io/antigen > .antigen/antigen.zsh
+[[ -f .antigen/antigen.zsh ]] || {
+  mkdir -p .antigen &&
+  curl -L git.io/antigen > .antigen/antigen.zsh
+}
 [[ -x "$(command -v fzf)" ]] || [[ -x "$(command -v .fzf/bin/fzf)" ]] &&
   export PATH=$PATH:$HOME/.fzf/bin || {
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
