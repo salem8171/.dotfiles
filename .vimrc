@@ -1,3 +1,25 @@
+" Check missing dependancies if missing
+if !executable('node')
+  if match(system('uname -a'), '\c'.'archlinux\|manjaro') != -1
+    echo 'Installing node...'
+    let $password = inputsecret('[sudo] password: ')
+    !echo $password | sudo -S pacman --noconfirm -Syu nodejs npm yarn
+    let $password = ''
+  elseif match(system('uname -a'), '\c'.'ubuntu\|debian\|raspbian'"') != -1
+    echo 'Installing node...'
+    let $password = inputsecret('[sudo] password: ')
+    !echo $password | sudo -S apt-get install node nodejs npm yarn
+    let $password = ''
+  endif
+endif
+
+" Install plugins if missing
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin('~/.vim/plugged')
 Plug 'https://github.com/scrooloose/nerdtree'
 Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin'
@@ -9,32 +31,32 @@ Plug 'https://github.com/neoclide/coc.nvim',
       \ {'do': 'yarn install --frozen-lockfile'}
 Plug 'https://github.com/junegunn/fzf'
 Plug 'https://github.com/junegunn/fzf.vim'
-Plug 'https://github.com/iamcco/markdown-preview.nvim',
-      \ { 'do': { -> mkdp#util#install() } }
+" Plug 'https://github.com/iamcco/markdown-preview.nvim',
+"       \ { 'do': { -> mkdp#util#install() } }
 Plug 'https://github.com/vim-airline/vim-airline'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/mcmartelle/vim-monokai-bold'
 " Plug 'https://github.com/francoiscabrol/ranger.vim'
 " Plug 'https://github.com/rbgrouleff/bclose.vim'
-Plug 'https://github.com/SirVer/ultisnips'
-Plug 'https://github.com/honza/vim-snippets'
-Plug 'https://github.com/Yggdroot/indentLine'
-Plug 'https://github.com/thaerkh/vim-workspace'
+" Plug 'https://github.com/SirVer/ultisnips'
+" Plug 'https://github.com/honza/vim-snippets'
+" Plug 'https://github.com/Yggdroot/indentLine'
+" Plug 'https://github.com/thaerkh/vim-workspace'
 Plug 'https://github.com/dense-analysis/ale'
 Plug 'https://github.com/Chiel92/vim-autoformat'
-Plug 'https://github.com/yuttie/comfortable-motion.vim'
-Plug 'https://github.com/ryanoasis/vim-devicons'
-Plug 'https://github.com/edkolev/tmuxline.vim'
-Plug 'https://github.com/dkprice/vim-easygrep'
-Plug 'https://github.com/OmniSharp/omnisharp-vim'
-Plug 'https://github.com/mboughaba/i3config.vim'
-Plug 'https://github.com/sheerun/vim-polyglot'
+" Plug 'https://github.com/yuttie/comfortable-motion.vim'
+" Plug 'https://github.com/ryanoasis/vim-devicons'
+" Plug 'https://github.com/edkolev/tmuxline.vim'
+" Plug 'https://github.com/dkprice/vim-easygrep'
+" Plug 'https://github.com/OmniSharp/omnisharp-vim'
+" Plug 'https://github.com/mboughaba/i3config.vim'
+" Plug 'https://github.com/sheerun/vim-polyglot'
 
 " coc extensions
 Plug 'https://github.com/neoclide/coc-snippets',
-      \ {'do': 'yarn install --frozen-lockfile'}
-Plug 'https://github.com/neoclide/coc-highlight',
-      \ {'do': 'yarn install --frozen-lockfile'}
+"       \ {'do': 'yarn install --frozen-lockfile'}
+" Plug 'https://github.com/neoclide/coc-highlight',
+"       \ {'do': 'yarn install --frozen-lockfile'}
 Plug 'https://github.com/neoclide/coc-python',
       \ {'do': 'yarn install --frozen-lockfile'}
 Plug 'https://github.com/neoclide/coc-pairs',
@@ -107,8 +129,8 @@ call plug#end()
 
 " let g:coc_global_extensions=[]
 
-filetype plugin on
-syntax on
+" filetype plugin on
+" syntax on
 colorscheme monokai-bold
 highlight normal guibg=NONE ctermbg=NONE
 
@@ -116,7 +138,7 @@ highlight normal guibg=NONE ctermbg=NONE
 set number relativenumber
 
 " mouse support
-set mouse=nvi
+set mouse=a
 
 " comfirm saving before quitting
 set confirm
@@ -130,7 +152,7 @@ set shiftwidth=2
 set autoindent
 set smartindent
 
-set showtabline=1
+" set showtabline=1
 set noshowmode
 
 " disable line wrapping
@@ -146,17 +168,17 @@ set colorcolumn=80
 set inccommand=split
 
 " clipboard
-inoremap <c-v> <c-r>+
-vnoremap <c-c> "+y
-vnoremap <c-v> "+p
-vnoremap <c-x> "+d
+" inoremap <c-v> <c-r>+
+" vnoremap <c-c> "+y
+" vnoremap <c-v> "+p
+" vnoremap <c-x> "+d
 
 " User friendly maps
-nnoremap  u
-inoremap  ua
-nnoremap <bs> a<BS>
-vnoremap <BS> c
-inoremap  dawa
+" nnoremap  u
+" inoremap  ua
+" nnoremap <bs> a<BS>
+" vnoremap <BS> c
+" inoremap  dawa
 
 " show help panes in vertical split
 cabbrev h vert h
@@ -165,9 +187,9 @@ cabbrev h vert h
 set splitbelow splitright
 
 " Cursor line and column highlight
-set cursorline cursorcolumn
-au WinEnter * set cursorline cursorcolumn
-au WinLeave * set nocursorline nocursorcolumn
+" set cursorline cursorcolumn
+" au WinEnter * set cursorline cursorcolumn
+" au WinLeave * set nocursorline nocursorcolumn
 
 " Disable comment insertion on new line
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -186,9 +208,9 @@ let g:formatdef_astyle_cs =
 
 " use alt for splitting windows in a similiar way to i3
 nnoremap <A-/> <c-w>v
-nnoremap <A-v> <c-w>v
+" nnoremap <A-v> <c-w>v
 nnoremap <A--> <c-w>s
-nnoremap <A-s> <c-w>s
+" nnoremap <A-s> <c-w>s
 
 " use alt+hjkl to move between split/vsplit panels
 tnoremap <A-h> <C-\><C-n><C-w>h
@@ -347,16 +369,16 @@ let g:OmniSharp_highlight_types = 3
 
 """ Workspace """
 " don't create tabs when reopening session
-let g:workspace_create_new_tabs = 0  " enabled = 1 (default), disabled = 0
+" let g:workspace_create_new_tabs = 0  " enabled = 1 (default), disabled = 0
 
 " save all sessions in sessions folder instead of inside the workspace
-let g:workspace_session_directory = $HOME . '/.vim/sessions/'
+" let g:workspace_session_directory = $HOME . '/.vim/sessions/'
 
 " mapping for toggling workspace
-nnoremap <leader>w :ToggleWorkspace<CR>
+" nnoremap <leader>w :ToggleWorkspace<CR>
 
 " Ignore empty buffers (Workaround for NERDTree errors on session restore)
-set sessionoptions-=blank
+" set sessionoptions-=blank
 """ end of Workspace """
 
 """ ALE """
@@ -368,17 +390,17 @@ let g:ale_linters = {
 """ coc """
 
 " If hidden is not set, TextEdit might fail.
-set hidden
+" set hidden
 
 " Some servers have issues with backup files, see #649
-set nobackup
-set nowritebackup
+" set nobackup
+" set nowritebackup
 
 " Better display for messages
 " set cmdheight=2
 
 " You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
+set updatetime=500
 
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
@@ -412,9 +434,9 @@ inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Remap keys for gotos
-" nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gd <Plug>(coc-definition)
 " nmap <silent> gy <Plug>(coc-type-definition)
-" nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gi <Plug>(coc-implementation)
 " nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window
@@ -422,14 +444,14 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
+    execute 'vert h '.expand('<cword>')
   else
     call CocAction('doHover')
   endif
 endfunction
 
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
 " nmap <leader>rn <Plug>(coc-rename)
