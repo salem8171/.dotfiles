@@ -51,6 +51,7 @@ Plug 'https://github.com/Chiel92/vim-autoformat'
 " Plug 'https://github.com/OmniSharp/omnisharp-vim'
 " Plug 'https://github.com/mboughaba/i3config.vim'
 " Plug 'https://github.com/sheerun/vim-polyglot'
+Plug 'easymotion/vim-easymotion'
 
 " coc extensions
 Plug 'https://github.com/neoclide/coc-snippets',
@@ -245,6 +246,15 @@ autocmd TermEnter * set nobuflisted
 " buffers
 nnoremap <tab> :bn<cr>
 nnoremap <s-tab> :bp<cr>
+
+""" Easymotion """
+map <Leader> <Plug>(easymotion-prefix)
+let g:EasyMotion_do_mapping = 0
+nmap s <Plug>(easymotion-overwin-f)
+let g:EasyMotion_smartcase = 1
+nmap <leader>j <Plug>(easymotion-j)
+nmap <leader>k <Plug>(easymotion-k)
+""" end of Easymotion """
 
 """ Ranger """
 " disable mapped shortcut for bclose (dependancy for ranger)
