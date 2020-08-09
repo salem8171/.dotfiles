@@ -1,15 +1,15 @@
-[[ -f .antigen/antigen.zsh ]] || {
-  mkdir -p .antigen &&
-  curl -L git.io/antigen > .antigen/antigen.zsh
+[[ -f ~/.antigen/antigen.zsh ]] || {
+  mkdir -p ~/.antigen &&
+  curl -L git.io/antigen > ~/.antigen/antigen.zsh
 }
-[[ -x "$(command -v fzf)" ]] || [[ -x "$(command -v .fzf/bin/fzf)" ]] &&
+[[ -x "$(command -v fzf)" ]] || [[ -x "$(command -v ~/.fzf/bin/fzf)" ]] &&
   export PATH=$PATH:$HOME/.fzf/bin || {
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
   ~/.fzf/install --bin
   export PATH=$PATH:$HOME/.fzf/bin
 }
 
-source .antigen/antigen.zsh
+source ~/.antigen/antigen.zsh
 
 antigen use oh-my-zsh
 
