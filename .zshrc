@@ -20,10 +20,12 @@ antigen bundle Aloxaf/fzf-tab
 antigen bundle zdharma/fast-syntax-highlighting
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
+antigen theme romkatv/powerlevel10k
 
 # POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
 # antigen theme bhilburn/powerlevel9k powerlevel9k
-antigen theme caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+# antigen theme caiogondim/bullet-train-oh-my-zsh-theme bullet-train
+command -v wal &>/dev/null && wal -qR
 
 antigen apply
 
