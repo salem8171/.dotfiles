@@ -1,53 +1,41 @@
-[[ -f ~/.antigen/antigen.zsh ]] || {
-  mkdir -p ~/.antigen &&
-  curl -L git.io/antigen > ~/.antigen/antigen.zsh
-}
-[[ -x "$(command -v fzf)" ]] || [[ -x "$(command -v ~/.fzf/bin/fzf)" ]] &&
-  export PATH=$PATH:$HOME/.fzf/bin || {
-  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-  ~/.fzf/install --bin
-  export PATH=$PATH:$HOME/.fzf/bin
-}
+p10k_path="${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+[ -r "$p10k_path" ] && source "$p10k_path"
 
-source ~/.antigen/antigen.zsh
+antigen="$HOME/.local/share/antigen/antigen.zsh"
+[ -f $antigen ] || curl -fLo $antigen --create-dirs git.io/antigen
+
+source $antigen
 
 antigen use oh-my-zsh
 
 antigen bundle colored-man-pages
 antigen bundle vi-mode
-antigen bundle junegunn/fzf shell/key-bindings.zsh
-antigen bundle Aloxaf/fzf-tab
+
+fzf="$(command -v fzf)"
+[ -x "$fzf" ] && antigen bundle junegunn/fzf shell/key-bindings.zsh
+[ -x "$fzf" ] && antigen bundle Aloxaf/fzf-tab
+
 antigen bundle zdharma/fast-syntax-highlighting
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
-antigen theme romkatv/powerlevel10k
+antigen bundle rupa/z
 
-# POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
-# antigen theme bhilburn/powerlevel9k powerlevel9k
-# antigen theme caiogondim/bullet-train-oh-my-zsh-theme bullet-train
-command -v wal &>/dev/null && wal -qR
+antigen theme romkatv/powerlevel10k
 
 antigen apply
 
-[[ -f $HOME/.aliasrc ]] && source $HOME/.aliasrc
-
+HISTFILE=${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zsh_history
+mkdir -p "$(dirname "$HISTFILE")"
 HISTSIZE=10000
 SAVEHIST=10000
-HISTFILE=$HOME/.zsh_history
 
-### bullet-train ###
-BULLETTRAIN_DIR_FG=black
-BULLETTRAIN_DIR_EXTENDED=0
-BULLETTRAIN_PROMPT_ORDER=(
-  time
-  status
-  context
-  dir
-  virtualenv
-  aws
-  git
-  cmd_exec_time
-)
-### end of bullet-train ###
+_Z_DATA=${XDG_CACHE_HOME:-$HOME/.cache}/z
+[ -f "$_Z_DATA" ] || touch "$_Z_DATA"
 
-# if [ -z $TMUX ]; then tmux && exit; fi
+bindkey ^b backward-char
+bindkey ^f forward-char
+
+aliasrc="${XDG_CONFIG_HOME:-$HOME/.config}/aliases/aliasrc"
+[ -f "$aliasrc" ] && source "$aliasrc" 
+
+[ -f ~/.p10k.zsh ] && source ~/.p10k.zsh
