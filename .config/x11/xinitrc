@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# session=openbox-session
+session=i3
+
+[ -x "/bin/prime-offload" ] && /bin/prime-offload
+exec /usr/bin/$session
