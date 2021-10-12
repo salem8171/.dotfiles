@@ -1,61 +1,76 @@
-# vim: set ft=bash :
+#!/bin/env sh
+# vim:ft=bash:
 
-[ -x "$(command -v lsd)" ] && alias ls="lsd"
-[ -x "$(command -v lsd)" ] && alias ll="lsd -hl" || alias ll="ls -hl"
-[ -x "$(command -v bat)" ] && alias cat="bat"
-[ -x "$(command -v dfc)" ] && alias df="dfc"
+[ -x "$(command -v zsh)" ] && alias zsh="exec zsh"
+[ -x "$(command -v bash)" ] && alias bash="exec bash"
+
+alias ll="ls -hl"
+# [ -x "$(command -v lsd)" ] && alias ls="lsd" ll="lsd -hl"
+# [ -x "$(command -v exa)" ] && alias ls="exa --icons" ll="exa --icons -l"
+
+# [ -x "$(command -v bat)" ] && alias cat="bat"
+# [ -x "$(command -v dfc)" ] && alias df="dfc"
+
 alias grep='grep --colour=auto'
 alias egrep='egrep --colour=auto'
 alias fgrep='fgrep --colour=auto'
 alias sudo='sudo -E'
 
 alias free='free -m'
+[ -x "$(command -v xev)" ] && alias keysym='xev -event keyboard |
+  grep -P "(?:(?<=keysym 0x[a-f0-9]{2}, )|(?<=keysym 0x[a-f0-9]{4}, )).*(?=\))" -o'
 
-alias g="git"
-ghclone () { git clone git@github.com:$@ }
-glclone () { git clone git@gitlab.com:$@ }
-alias gclone="git clone"
-alias gadd="git add"
-alias gcommit="git commit"
-alias gpush="git push"
-alias gpull="git pull"
-alias gcheckout="git checkout"
-alias gbranch="git branch"
-alias gstatus="git status"
-alias glog="git log --oneline"
-alias gfetch="git fetch"
-alias gclean="git clean -fdx"
-alias gstash="git stash"
-alias greset="git reset"
-alias gdiff="git diff"
-alias gremote="git remote"
+[ -x "$(command -v git)" ] && {
+  alias g="git"
+  alias gclone="git clone"
+  alias gadd="git add"
+  alias gcommit="git commit"
+  alias gpush="git push"
+  alias gpull="git pull"
+  alias gcheckout="git checkout"
+  alias gbranch="git branch"
+  alias gstatus="git status"
+  alias glog="git log --oneline"
+  alias gfetch="git fetch"
+  alias gclean="git clean -fdx"
+  alias gstash="git stash"
+  alias greset="git reset"
+  alias gdiff="git diff"
+  alias gremote="git remote"
+}
 
-alias nmr="nmcli device wifi rescan"
-alias nmc="nmcli device wifi connect"
-alias nml="nmcli device wifi list"
-alias nmt="nmtui"
+[ -x "$(command -v nmcli)" ] && {
+  alias nmr="nmcli device wifi rescan"
+  alias nmc="nmcli device wifi connect"
+  alias nml="nmcli device wifi list"
+  alias nmt="nmtui"
+}
 
-alias sstart="sudo systemctl start"
-alias sstop="sudo systemctl stop"
-alias srestart="sudo systemctl restart"
-alias sstatus="systemctl status"
-alias senable="sudo systemctl enable --now"
-alias sdisable="sudo systemctl disable"
-alias sedit="sudo systemctl edit --force --full"
+[ -x "$(command -v systemctl)" ] && {
+  alias sstart="sudo systemctl start"
+  alias sstop="sudo systemctl stop"
+  alias srestart="sudo systemctl restart"
+  alias sstatus="systemctl status"
+  alias senable="sudo systemctl enable --now"
+  alias sdisable="sudo systemctl disable"
+  alias sedit="sudo systemctl edit --force --full"
 
-alias sstartu="systemctl start --user"
-alias sstopu="systemctl stop --user"
-alias srestartu="systemctl restart --user"
-alias sstatusu="systemctl status --user"
-alias senableu="systemctl enable --now --user"
-alias sdisableu="systemctl disable --user"
-alias seditu="systemctl edit --user --force --full"
+  alias sstartu="systemctl start --user"
+  alias sstopu="systemctl stop --user"
+  alias srestartu="systemctl restart --user"
+  alias sstatusu="systemctl status --user"
+  alias senableu="systemctl enable --now --user"
+  alias sdisableu="systemctl disable --user"
+  alias seditu="systemctl edit --user --force --full"
+}
 
-[ -z "$EDITOR" ] || alias e="$EDITOR"
-[ -z "$EDITOR" ] || alias se="sudo -E $EDITOR"
-[ -x "$(command -v lf)" ] && alias l="lf"
+[ -n "$EDITOR" ] && alias e="$EDITOR" se="sudo -E $EDITOR"
+[ -x "$(command -v lf)" ] && alias lf="exec lf" l="lf"
+[ -x "$(command -v tmux)" ] && alias tmux="exec tmux"
 [ -x "$(command -v htop)" ] && alias h="htop"
 
-alias pg="ping -c 1 gnu.org"
+[ -n "$PAGER" ] && alias p="$PAGER"
+
+alias pg="ping archlinux.org"
 [ -x "$(command -v ipython)" ] && alias py="ipython --no-banner"
 alias serve="python -m http.server"
