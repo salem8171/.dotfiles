@@ -1,34 +1,191 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-space=" "
-preview_cmd="
-  echo '{}' &&
-  echo '--------------------------------------------------------------' &&
-  grep -r -e '^Name={}$' /usr/share/applications |
-    cut -d : -f 1 |
-    head -n 1 |
-    xargs bat |
-    sed 's/^.Desktop.Entry.//' |
-    grep -v -e 'Name' |
-    grep -v -e '^Comment....=' |
-    grep -v -e '^Comment.....=' |
-    grep -v -e '^Comment.......=' |
-    grep -v -e '^Comment...@' |
-    grep -v -e '^Icon....=' |
-    grep -v -e '^Icon.....=' |
-    grep -v -e '^Icon.......=' |
-    grep -v -e '^Icon...@' |
-    grep -v -e '^Keywords....=' |
-    grep -v -e '^Keywords.....=' |
-    grep -v -e '^Keywords.......=' |
-    grep -v -e '^Keywords...@' |
-    highlight --syntax desktop --out-format=ansi &&
-  grep -r -e '^Name={}$' $HOME/.local/share/applications |
-    cut -d : -f 1 |
-    head -n 1 |
-    xargs bat |
-    grep -v -e '^.Desktop.Entry.' |
-    grep -v -e '^Name' |
-    highlight --syntax desktop --out-format=ansi"
-i3-dmenu-desktop --dmenu="fzf --height=24 --layout=reverse \
-  --preview-window=':60%' --preview='$preview_cmd'"
+###############################################################################
+# Config
+###############################################################################
+
+SYS_APPS=/usr/share/applications
+USER_APPS=$HOME/.local/share/applications
+CACHE_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/$(basename "$0")/entries"
+USE_MIME=${USE_MIME:-0}
+
+###############################################################################
+# Utilities
+###############################################################################
+
+error() { echo -e "$@" >&2 && exit 1; }
+
+hline() {
+  # shellcheck disable=SC2034
+  for i in $(seq 1 "${FZF_PREVIEW_COLUMNS:-40}") ; do echo -n '-'; done
+  echo
+}
+
+assert-editor() {
+  for e in "$EDITOR" nvim vim vi nano; do
+    [ -x "$(command -v "$e")" ] && EDITOR="$e" && return 0
+  done
+  error "No text editor found. Install one or try setting \$EDITOR"
+}
+
+assert-exist() {
+  for exe; do
+    [ ! -x "$(command -v "$exe")" ] && error "$exe not found in PATH";
+  done
+  return 0
+}
+
+choose-action() {
+  assert-exist fzf
+  local header actions
+  header="$1" && shift
+  actions=$(while [ $# -ne 0 ]; do echo "$1"; shift; done)
+  fzf --header="$header" <<< "$actions" | tr "[:upper:] " "[:lower:]-"
+}
+
+build-prompt() {
+  PL_LEFT_HARD=""
+  PL_SOFT_EDGE="╱"
+  PL_DOWN_EDGE=""
+  PROMPT_FG="\033[38;2;118;113;94m"
+  PROMPT_BG="\033[48;2;118;113;94m"
+  PROMPT_TEXT="\e[37m"
+  DEFAULT="\e[0m"
+
+  local prompt="$PROMPT_FG$PL_DOWN_EDGE$PROMPT_BG$PROMPT_TEXT "
+  prompt+="$1" && shift
+  for segment; do
+    prompt+=" $PL_SOFT_EDGE $segment"
+  done
+  prompt+=" $DEFAULT$PROMPT_FG$PL_LEFT_HARD$DEFAULT "
+  echo -e "$prompt"
+}
+
+###############################################################################
+# Functions
+###############################################################################
+
+filter-entries() {
+  while read -r entry; do
+    local entry_path try_exec
+    entry_path=$(cut -f 2 -d : <<< "$entry")
+    grep -q -m 1 "^NoDisplay=true" "$entry_path" && continue
+    try_exec=$(grep -m 1 "^TryExec=" "$entry_path")
+    [ -n "$try_exec" ] &&
+      [ ! -x "$(command -v "$(cut -f 2 -d = <<< "$try_exec")")" ] && continue
+    echo "$entry"
+  done
+}
+
+# shellcheck disable=SC2120
+list() {
+  mkdir -p "$(dirname "$CACHE_FILE")"
+  [ ! -f "$CACHE_FILE" ] || [ "$1" = "--refresh" ] && cat \
+    <(grep -m 1 -oRP '(?<=^Name=).*$' "$USER_APPS" | sort | sed 's/^/user:/') \
+    <(grep -m 1 -oRP '(?<=^Name=).*$' "$SYS_APPS" | sort | sed 's/^/sys:/') |
+    filter-entries > "$CACHE_FILE"
+  cat "$CACHE_FILE"
+}
+
+preview() {
+  name=$(grep -m 1 -e '^Name=' "$@" | cut -d'=' -f 2)
+  echo -e "\e[32m$name\e[0;39;49m"
+  hline
+  [ -x "$(command -v highlight)" ] &&
+    highlight="highlight --syntax desktop --out-format=ansi" ||
+    highlight="cat"
+  sed '
+    /\[Desktop Entry\]/d;
+    /Name/d;
+    /^Comment.\+=/d;
+    /^Icon.\+=/d;
+    /^Keywords.\+=/d;
+    /=$/d;
+    /^#/d;
+    /^$/d;
+  ' "$@" |
+    $highlight
+}
+
+edit-files() {
+  [ "$USE_MIME" -eq 0 ] && assert-editor && "$EDITOR" "$@"
+  [ "$USE_MIME" -eq 1 ] && assert-exist mimeopen && mimeopen "$@"
+}
+
+edit-selected() {
+  export USE_MIME
+  echo "$@" | grep '^sys' | cut -d ":" -f 2 | sed "s|$SYS_APPS/||" |
+    xargs -roI "{}" cp -nv "$SYS_APPS/{}" "$USER_APPS/{}"
+  echo "$@" | cut -d ":" -f 2 | sed "s|$SYS_APPS|$USER_APPS|" |
+    xargs "$0" edit-files
+}
+
+create-new() {
+  local entry_file_name
+  mkdir -p "$USER_APPS"
+  cd "$USER_APPS" || error "Could not open $USER_APPS"
+  while [ -z "$entry_file_name" ]; do
+    entry_file_name=$(echo -n |
+      fzf --no-info --preview-window="up:2" --print-query \
+      --preview="echo 'New desktop entry file name without extension (avoid using spaces):'")
+  done
+  entry_file_name="$USER_APPS/$entry_file_name.desktop"
+  touch "$entry_file_name"
+  edit-files "$entry_file_name"
+}
+
+open-selected() {
+  while read -r entry; do
+    local entry_file
+    entry_file="$(cut -d ":" -f 2 <<< "$entry")"
+    setsid -f gtk-launch "$(basename "$entry_file")" &>/dev/null
+  done <<< "$@"
+  sleep 0.15
+}
+
+remove-selected() {
+  echo "$@" | grep "^user" | cut -d ":" -f 2 | xargs -ro rm -rfIv
+}
+
+handle-action() {
+  local action
+  action="$1" && shift
+  case "$action" in
+    "create-new") create-new;;
+    "open-selected") open-selected "$@";;
+    "edit-selected") edit-selected "$@";;
+    "remove-selected") remove-selected "$@";;
+  esac
+}
+
+handle-key() {
+  local key action header
+  key="$1" && shift
+  case "$key" in
+    "enter"|"double-click") handle-action "open-selected" "$@";;
+    "alt-enter")
+      header="$(build-prompt "Action")"
+      action="$(choose-action "$header" \
+        "Create new" "Open selected" "Edit selected" "Remove selected")"
+      [ -n "$action" ] && handle-action "$action" "$@"
+  esac
+}
+
+find-and-process() {
+  local entries header key
+  header="$(build-prompt "Desktop Entries")"
+  entries=$(list | fzf --multi --header="$header" --preview="$0 preview {2}" \
+    --bind "ctrl-r:reload($0 list --refresh)" -d ":" --with-nth=3 \
+    --expect="enter,double-click,alt-enter")
+  key=$(head -1 <<< "$entries") && entries=$(sed '1d' <<< "$entries")
+  [ -n "$key" ] && handle-key "$key" "$entries"
+}
+
+###############################################################################
+# Main
+###############################################################################
+
+case "$1" in
+  "edit-files"|"preview"|"list") "$@";;
+  "") find-and-process;;
+esac

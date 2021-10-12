@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Desktop Menu
+Exec=terminal-adapter -u "desktop-menu" -p env USE_MIME=1 desktop-menu
+TryExec=desktop-menu
+Comment=
+Path=
+Icon=terminal
+Terminal=false
+StartupNotify=false
