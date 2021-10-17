@@ -1,9 +1,0 @@
-[Unit]
-Description=Barrier deamon
-
-[Service]
-Type=simple
-ExecStart=/usr/bin/barriers -f --name server
-
-[Install]
-WantedBy=default.target

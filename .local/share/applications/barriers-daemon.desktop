@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Barriers Daemon
+Exec=barriers-wrapper
+TryExec=barriers
