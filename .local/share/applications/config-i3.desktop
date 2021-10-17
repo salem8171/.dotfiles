@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Config i3
-Exec=normal-terminal "$EDITOR ~/.config/i3/config"
-# Description=

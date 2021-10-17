@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=HDMI Right
-Exec=xrandr --output eDP-1-1 --auto --output HDMI-0 --right-of eDP-1-1
-# Description=

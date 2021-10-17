@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Firefox Launcher
-Exec=popup-terminal "ffirefox --new-window"
-# Description=

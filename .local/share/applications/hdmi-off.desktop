@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=HDMI Off
-Exec=xrandr --output HDMI-0 --off --output eDP-1-1 --auto
-# Description=

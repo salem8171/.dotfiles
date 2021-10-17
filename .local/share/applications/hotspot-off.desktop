@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Hotspot Off
-Exec=nmcli connection down Hotspot
-# Description=

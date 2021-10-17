@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Config zshrc
-Exec=normal-terminal "$EDITOR ~/.zshrc"
-# Description=

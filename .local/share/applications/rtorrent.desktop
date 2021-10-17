@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=RTorrent
-Exec=tmux-terminal RTorrent rtorrent
-# Description=

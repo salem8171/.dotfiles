@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Gitlab
-Exec=firefox --new-window gitlab.com
-# Description=

@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Network Manager TUI
-Exec=popup-terminal nmtui
-# Description=

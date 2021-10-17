@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Firefox private
-Exec=popup-terminal "ffirefox --private-window"
-# Description=
