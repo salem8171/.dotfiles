@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/$(basename "$0")/filter.sed"
+TEMPLATE="\
+#!/usr/bin/sed
+# Use sed syntax to filter files. Only d and p commands are supported, e.g.:
+# /fconfig\\/filter.sed/p;
+# /fconfig\\/.*/d;
+"
+
+error() { echo -e "$@" >&2 && exit 1; }
+
+assert-editor() {
+  for e in "$EDITOR" nvim vim vi nano; do
+    [ -x "$(command -v "$e")" ] && EDITOR="$e" && return 0
+  done
+  error "No text editor found. Install one or try setting \$EDITOR"
+}
+
+assert-exist() {
+  [ ! -x "$(command -v "$1")" ] && error "$1 not found in PATH"
+}
+
+build-prompt() {
+  PL_LEFT_HARD=""
+  PL_SOFT_EDGE="╱"
+  PL_DOWN_EDGE=""
+  PROMPT_FG="\033[38;2;118;113;94m"
+  PROMPT_BG="\033[48;2;118;113;94m"
+  PROMPT_TEXT="\e[37m"
+  DEFAULT="\e[0m"
+
+  local prompt="$PROMPT_FG$PL_DOWN_EDGE$PROMPT_BG$PROMPT_TEXT "
+  prompt+="$1" && shift
+  for segment; do
+    prompt+=" $PL_SOFT_EDGE $segment"
+  done
+  prompt+=" $DEFAULT$PROMPT_FG$PL_LEFT_HARD$DEFAULT "
+  echo -e "$prompt"
+}
+
+preview() {
+  cd "${XDG_CONFIG_HOME:-$HOME/.config}" || error "Could not find config dir"
+  # shellcheck disable=SC2015
+  [ -x "$(command -v bat)" ] &&
+    bat --color=always --style='numbers,header' "$@" ||
+    cat "$@"
+}
+
+filter() {
+  [ -f "$CONFIG_FILE" ] || {
+    mkdir -p "$(dirname "$CONFIG_FILE")" &&
+    echo -ne "$TEMPLATE" > "$CONFIG_FILE"
+  }
+  sed -f "$CONFIG_FILE"
+}
+
+find-and-edit() {
+  assert-exist fzf
+  assert-editor
+  cd "${XDG_CONFIG_HOME:-$HOME/.config}" || error "Could not find config dir"
+  header="$(build-prompt "Edit Config")"
+  fzf_cmd=(fzf --multi --header="$header" --preview="$0 preview {}")
+  [ "$(tput cols)" -le "100" ] && fzf_cmd+=(--preview-window=down)
+  find -- * -type f | filter | "${fzf_cmd[@]}" | xargs -r "$EDITOR"
+}
+
+[ $# -gt 0 ] && "$@"
+[ $# -gt 0 ] || find-and-edit

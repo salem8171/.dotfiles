@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Config
+Exec=terminal-adapter config
+TryExec=config
+Icon=terminal
