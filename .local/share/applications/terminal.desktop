@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Terminal
+Exec=terminal-adapter
+Comment=
+Path=
+Icon=terminal
+Terminal=false
+StartupNotify=false

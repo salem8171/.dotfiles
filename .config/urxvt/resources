@@ -1,0 +1,31 @@
+! vim:ft=xdefaults
+
+URxvt.termName: xterm-256color
+URxvt.font: xft:MesloLGS NF:size12
+
+URxvt.background: #272822
+URxvt.foreground: #acada1
+
+! Highlights
+URxvt.color0: #48483e
+URxvt.color1: #cb376b
+URxvt.color2: #8fc029
+URxvt.color3: #d4c96e
+URxvt.color4: #4aa7b7
+URxvt.color5: #9358fe
+URxvt.color6: #56b7a5
+URxvt.color7: #acada1
+
+! Text
+URxvt.color8: #48483e
+URxvt.color9: #dc2566
+URxvt.color10: #8fc029
+URxvt.color11: #d4c96e
+URxvt.color12: #55bcce
+URxvt.color13: #9358fe
+URxvt.color14: #56b7a5
+URxvt.color15: #acada1
+
+URxvt.perl-ext: default,-searchable-scrollback
+URxvt.scrollBar: False
+URxvt.cursorBlink: True

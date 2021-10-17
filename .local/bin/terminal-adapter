@@ -1,0 +1,143 @@
+#!/bin/bash
+
+###############################################################################
+# Config
+###############################################################################
+
+POPUP_TITLE="popup-terminal"
+TMP_FILE="/tmp/$(basename "$0")"
+
+CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/$(basename "$0")/config.sh"
+CONFIG_TEMPLATE="#!/usr/bash
+
+# Configuration variables:
+#   \$TERM_CMD: An array containing the final terminal command to be executed.
+#
+# Read only variables:
+#   \$CMD: Contains the command passed as argument to the terminal.
+#   \$TITLE: Contains a string that should be set as the terminal title.
+#   \$POPUP: Indicate that a terminal should be a popup, empty otherwise.
+
+# xfce4-terminal
+# TERM_CMD=(xfce4-terminal)
+# [ -n \"\$TITLE\" ] && TERM_CMD+=(-T \"\$TITLE\")
+# [ -z \"\$POPUP\" ] && TERM_CMD+=(--maximize)
+# [ -n \"\$CMD\" ] && TERM_CMD+=(-e \"sh -c \\\"\$CMD\\\"\")
+
+# urxvt
+TERM_CMD=(urxvt)
+[ -n \"\$TITLE\" ] && TERM_CMD+=(-title \"\$TITLE\")
+[ -n \"\$CMD\" ] && TERM_CMD+=(-e sh -c \"\$CMD\")
+"
+
+###############################################################################
+# Utils
+###############################################################################
+
+error() { echo -e "$@" >&2 && exit 1; }
+
+assert-exist() {
+  for exe; do
+    [ ! -x "$(command -v "$exe")" ] && error "$exe not found in PATH";
+  done
+  return 0
+}
+
+load-config() {
+  [ -f "$CONFIG_FILE" ] || {
+    mkdir -p "$(dirname "$CONFIG_FILE")"
+    echo -ne "$CONFIG_TEMPLATE" > "$CONFIG_FILE"
+  }
+  # shellcheck disable=SC1090
+  source "$CONFIG_FILE"
+  [ -z "$TERM_CMD" ] && eval "$CONFIG_TEMPLATE"
+}
+
+assert-unique() {
+  [ -f "$TMP_FILE" ] || return
+  existing_window="$(grep -m 1 "^$UNIQUE" "$TMP_FILE")"
+  [ -z "$existing_window" ] && return
+  window_id=$(cut -d ' ' -f 2 <<< "$existing_window")
+  window_pid=$(cut -d ' ' -f 3 <<< "$existing_window")
+  running_window_pid="$(xdotool getwindowpid "$window_id")"
+  if [ "$window_pid" -eq "$running_window_pid" ]; then
+    xdotool windowactivate "$window_id"
+    exit
+  fi
+  sed -i "/^$UNIQUE/d" "$TMP_FILE"
+}
+
+help() {
+  echo -e "\
+    \rUsage:
+    \r  $(basename "$0") [ARGS] [Command]
+    \r
+    \rArguments:
+    \r  -h, --help, help   Show this help message and exit
+    \r  -p, --popup        Set terminal title to $POPUP_TITLE
+    \r  -u, --unique TAG   Allow only one running instance with tag TAG
+    \r
+    \rFiles:
+    \r  $CONFIG_FILE
+  " >&2
+}
+
+parse-args() {
+  while [ $# -gt 0 ]; do
+    # shellcheck disable=SC2034
+    case $1 in
+      "-h" | "--help" | "help") help; exit 0;;
+      "-p" | "--popup") POPUP=true; shift;;
+      "-u" | "--unique") UNIQUE="$2"; shift 2;;
+      "--popuponize") POPUPONIZE=true; shift;;
+      "--maximize") MAXIMIZE=true; shift;;
+      "--unify") UNIFY=true; UNIQUE="$2"; shift 2;;
+      *) TITLE="$1"; CMD="$(printf '%q ' "$@")"; break;;
+    esac
+  done
+}
+
+set-wm-prop() {
+  local window_id=$1; shift
+  for prop in "$@"; do xdotool windowstate --add "$prop" "$window_id"; done
+}
+
+popuponize() {
+  window_id="$(xprop -root _NET_CLIENT_LIST | awk '{ print $NF }')"
+  window_pid="$(xdotool getwindowpid "$window_id")"
+  set-wm-prop "$window_id" skip_pager skip_taskbar sticky above modal
+}
+
+maximize() {
+  window_id="$(xprop -root _NET_CLIENT_LIST | awk '{ print $NF }')"
+  set-wm-prop "$window_id" maximized_vert maximized_horz
+}
+
+unify() {
+  window_id="$(xprop -root _NET_CLIENT_LIST | awk '{ print $NF }')"
+  window_pid="$(xdotool getwindowpid "$window_id")"
+  echo "$UNIQUE $window_id $window_pid" >> "$TMP_FILE"
+}
+
+###############################################################################
+# Main
+###############################################################################
+
+parse-args "$@"
+
+[ -z "$CMD" ] && CMD="exec $SHELL"
+[ -n "$POPUP" ] && CMD="$0 --popuponize; $CMD"
+[ -n "$POPUP" ] && TITLE="$POPUP_TITLE - $TITLE"
+[ -z "$POPUP" ] && CMD="$0 --maximize; $CMD"
+[ -n "$UNIQUE" ] && CMD="$0 --unify $UNIQUE; $CMD"
+
+load-config
+
+assert-exist xdotool "${TERM_CMD[0]}"
+
+[ -n "$POPUPONIZE" ] && { popuponize; exit; }
+[ -n "$MAXIMIZE" ] && { maximize; exit; }
+[ -n "$UNIFY" ] && { unify; exit; }
+
+[ -n "$UNIQUE" ] && assert-unique
+setsid -f "${TERM_CMD[@]}"
