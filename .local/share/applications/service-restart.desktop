@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Service restart
-Exec=popup-terminal "fsystemctl restart"
-# Description=

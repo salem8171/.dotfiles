@@ -1,0 +1,96 @@
+#!/bin/bash
+
+error() { echo -e "$@" >&2 && exit 1; }
+
+assert-exist() {
+  for exe; do
+    [ ! -x "$(command -v "$exe")" ] && error "$exe not found in PATH";
+  done
+  return 0
+}
+
+choose-action() {
+  assert-exist fzf
+  local header actions
+  header="$1" && shift
+  actions=$(while [ $# -ne 0 ]; do echo "$1"; shift; done)
+  fzf --header="$header" <<< "$actions" | tr "[:upper:] " "[:lower:]-"
+}
+
+build-prompt() {
+  PL_LEFT_HARD=""
+  PL_SOFT_EDGE="╱"
+  PL_DOWN_EDGE=""
+  PROMPT_FG="\033[38;2;118;113;94m"
+  PROMPT_BG="\033[48;2;118;113;94m"
+  PROMPT_TEXT="\e[37m"
+  DEFAULT="\e[0m"
+
+  local prompt="$PROMPT_FG$PL_DOWN_EDGE$PROMPT_BG$PROMPT_TEXT "
+  prompt+="$1" && shift
+  for segment; do
+    prompt+=" $PL_SOFT_EDGE $segment"
+  done
+  prompt+=" $DEFAULT$PROMPT_FG$PL_LEFT_HARD$DEFAULT "
+  echo -e "$prompt"
+}
+
+list-unit-files() {
+  DEF="$(echo -e "\e[0m")"
+  FG_RED="$(echo -e "\e[31m")"
+  FG_GREEN="$(echo -e "\e[32m")"
+
+  local user="${FG_GREEN}user${DEF}"
+  local system="${FG_RED}system${DEF}"
+
+  systemctl list-unit-files --user |
+    sed -n "/@\./d; /\.service/{ s/^/  ($user) /; s/\.service.*//; p }"
+  systemctl list-unit-files |
+    sed -n "/@\./d; /\.service/{ s/^/($system) /; s/\.service.*//; p }"
+}
+
+preview() {
+  scope=$(awk '{print $1}' <<< "$@")
+  service=$(awk '{print $2}' <<< "$@")
+  [ "$scope" = "(user)" ] && SYSTEMD_COLORS=1 systemctl --user status "$service"
+  [ "$scope" = "(system)" ] && SYSTEMD_COLORS=1 systemctl status "$service"
+}
+
+handle-action() {
+  local action=$1
+  while read -r line; do
+    [ -z "$line" ] && continue
+    scope=$(awk '{print $1}' <<< "$line")
+    service=$(awk '{print $2}' <<< "$line")
+    cmd=(systemctl)
+    [ "$scope" = "(user)" ] && cmd=("${cmd[@]}" --user)
+    [ "$scope" = "(system)" ] && [ "$(id -u)" -ne 0 ] && cmd=(sudo "${cmd[@]}")
+    cmd=("${cmd[@]}" "$action" "$service")
+    "${cmd[@]}"
+  done
+}
+
+find-and-handle() {
+  header="$(build-prompt Services)"
+  fzf_cmd=(fzf -m -n 2 --multi --header="$header" --expect="enter,alt-enter")
+  fzf_cmd+=(--preview="$0 preview {}")
+  [ "$(tput cols)" -le "100" ] && fzf_cmd+=(--preview-window=down)
+  services=$(list-unit-files | "${fzf_cmd[@]}")
+  [ "$(head -1 <<< "$services")" = alt-enter ] && alt_enter=true
+  [ "$(head -1 <<< "$services")" = alt-enter ] &&
+    services=$(sed '1d' <<< "$services")
+  [ -z "$services" ] && exit
+
+  action=restart
+  header=$(build-prompt "Action")
+  [ -n "$alt_enter" ] &&
+    action="$(choose-action "$header" Start Stop Restart Enable Disable)"
+  [ -n "$action" ] && handle-action "$action" <<< "$services"
+  $0
+}
+
+case "$1" in
+  "") find-and-handle;;
+  "preview") "$@";;
+  *) systemctl "$@";;
+esac

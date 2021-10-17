@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Service Manager
+Exec=terminal-adapter -u service-manager service-manager
+Icon=terminal
+Terminal=false
+StartupNotify=false
