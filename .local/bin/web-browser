@@ -1,0 +1,115 @@
+#!/bin/bash
+
+DEFAULT_SEARCH_ENGINE_QUERY="https://duckduckgo.com/?q={}"
+DEFAULT_BROWSER_CMD="mimeopen {}"
+
+CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/$(basename "$0")/config.sh"
+CONFIG_TEMPLATE="\
+#!/usr/bin/bash
+SEARCH_ENGINE_QUERY='https://duckduckgo.com/?q={}'
+BROWSER_CMD='mimeopen {}'
+
+# Declare the list-history function to provide history for fuzzy search
+# firefox
+# list-history() {
+#   find ~/.mozilla/firefox/ -name places.sqlite |
+#     head -1 |
+#     xargs -r -I {} cp {} /tmp/
+#   sqlite3 /tmp/places.sqlite \\
+#     'SELECT DISTINCT place.url
+#     FROM moz_historyvisits as hist, moz_places as place
+#     WHERE hist.place_id == place.id
+#     ORDER BY hist.visit_date DESC;'
+# }
+
+# chromium
+list-history() {
+  cp ~/.config/chromium/Default/History /tmp/
+  sqlite3 /tmp/History \\
+    'SELECT DISTINCT url, title FROM urls ORDER BY last_visit_time DESC;'
+}
+"
+
+CACHE_FILE="/tmp/$(basename "$0")"
+
+DEF="$(echo -e "\e[0m")"
+FG_GREEN="$(echo -e "\e[32m")"
+
+error() { echo -e "$@" >&2 && exit 1; }
+
+assert-exist() {
+  for exe; do
+    [ ! -x "$(command -v "$exe")" ] && error "$exe not found in PATH";
+  done
+  return 0
+}
+
+build-prompt() {
+  PL_LEFT_HARD=""
+  PL_SOFT_EDGE="╱"
+  PL_DOWN_EDGE=""
+  PROMPT_FG="\033[38;2;118;113;94m"
+  PROMPT_BG="\033[48;2;118;113;94m"
+  PROMPT_TEXT="\e[37m"
+  DEFAULT="\e[0m"
+
+  local prompt="$PROMPT_FG$PL_DOWN_EDGE$PROMPT_BG$PROMPT_TEXT "
+  prompt+="$1" && shift
+  for segment; do
+    prompt+=" $PL_SOFT_EDGE $segment"
+  done
+  prompt+=" $DEFAULT$PROMPT_FG$PL_LEFT_HARD$DEFAULT "
+  echo -e "$prompt"
+}
+
+load-config() {
+  [ -f "$CONFIG_FILE" ] || {
+    mkdir -p "$(dirname "$CONFIG_FILE")"
+    echo -ne "$CONFIG_TEMPLATE" > "$CONFIG_FILE"
+  }
+  # shellcheck disable=SC1090
+  source "$CONFIG_FILE"
+
+  SEARCH_ENGINE_QUERY="${SEARCH_ENGINE_QUERY:-$DEFAULT_SEARCH_ENGINE_QUERY}"
+  BROWSER_CMD="${BROWSER_CMD:-$DEFAULT_BROWSER_CMD}"
+}
+
+is-url() { grep -e ":\|\." <<< "$@"; }
+
+# shellcheck disable=SC2120
+list() {
+  local url query use_cache
+  [ "$1" = "--use-cache" ] && shift && use_cache=1 || use_cache=0
+  query="$*"
+
+  if is-url "$query"; then
+    echo "$query ${FG_GREEN}$query${DEF}"
+  else
+    url="${query// /"%20"}"
+    url="${SEARCH_ENGINE_QUERY//\{\}/$url}"
+    echo "$url $query ${FG_GREEN}$url${DEF}"
+  fi
+
+  command -v list-history >/dev/null ||
+    error "list-history is not declared, Please define it in $CONFIG_FILE"
+  if [ $use_cache -eq 0 ]; then
+    list-history |
+      sed -r "s/^([^|]*)\\|(.*)$/\\1 \\2 ${FG_GREEN}\\1${DEF}/" > "$CACHE_FILE"
+  fi
+  cat "$CACHE_FILE"
+}
+
+query-and-open() {
+  assert-exist fzf "${BROWSER_CMD/ */}"
+  local header query
+  header="$(build-prompt "Web Browser")"
+  # shellcheck disable=SC2119
+  query=$(list | fzf --header="$header" --exact --no-sort --with-nth 2.. \
+    --bind "change:+reload($0 list --use-cache {q})" | cut -d ' ' -f 1)
+  [ -n "$query" ] && eval "setsid -f ${BROWSER_CMD//\{\}/"$query"}"
+}
+
+load-config
+[ $# -eq 0 ] && query-and-open
+# [ $# -eq 0 ] || eval "$(sed "s|{}|$*|; s|{}|\\&|g" <<< "setsid -f $BROWSER_CMD")"
+[ $# -eq 0 ] || [ "$1" = "list" ] && "$@"

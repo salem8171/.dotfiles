@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Web App
+Comment=Access the internet
+Exec=chromium-wrapper --app=%U
+TryExec=chromium
+# Exec=firefox %U
+StartupNotify=true
+Terminal=false
+Icon=chromium-browser
+Type=Application
+Categories=Network;WebBrowser;

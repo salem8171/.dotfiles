@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Web Browser
+Exec=terminal-adapter -u "web-browser" -p web-browser %U
+TryExec=web-browser
+Icon=terminal
