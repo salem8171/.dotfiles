@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Scripts
+Exec=terminal-adapter -u "scripts" env USE_MIME=1 scripts
+TryExec=scripts
+Icon=terminal

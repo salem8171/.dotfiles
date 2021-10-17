@@ -1,0 +1,141 @@
+#!/usr/bin/env bash
+
+###############################################################################
+# Config
+###############################################################################
+
+USE_MIME=${USE_MIME:-0}
+TEMPLATE="\
+#!/usr/bin/env bash
+"
+
+###############################################################################
+# Utilities
+###############################################################################
+
+error() { echo -e "$@" >&2 && exit 1; }
+
+assert-editor() {
+  for e in "$EDITOR" nvim vim vi nano; do
+    [ -x "$(command -v "$e")" ] && EDITOR="$e" && return 0
+  done
+  error "No text editor found. Install one or try setting \$EDITOR"
+}
+
+assert-exist() {
+  for exe; do
+    [ ! -x "$(command -v "$exe")" ] && error "$exe not found in PATH";
+  done
+  return 0
+}
+
+build-prompt() {
+  PL_LEFT_HARD=""
+  PL_SOFT_EDGE="╱"
+  PL_DOWN_EDGE=""
+  PROMPT_FG="\033[38;2;118;113;94m"
+  PROMPT_BG="\033[48;2;118;113;94m"
+  PROMPT_TEXT="\e[37m"
+  DEFAULT="\e[0m"
+
+  local prompt="$PROMPT_FG$PL_DOWN_EDGE$PROMPT_BG$PROMPT_TEXT "
+  prompt+="$1" && shift
+  for segment; do
+    prompt+=" $PL_SOFT_EDGE $segment"
+  done
+  prompt+=" $DEFAULT$PROMPT_FG$PL_LEFT_HARD$DEFAULT "
+  echo -e "$prompt"
+}
+
+choose-action() {
+  assert-exist fzf
+  local header actions
+  header="$1" && shift
+  actions=$(while [ $# -ne 0 ]; do echo "$1"; shift; done)
+  fzf --header="$header" <<< "$actions" | tr "[:upper:] " "[:lower:]-"
+}
+
+###############################################################################
+# Functions
+###############################################################################
+
+list() {
+  cd "$HOME/.local/bin" || error "Could not open $HOME/.local/bin/"
+  # shellcheck disable=2035
+  find * -maxdepth 1 -type f
+}
+
+preview() {
+  cd "$HOME/.local/bin" || error "Could not open $HOME/.local/bin/"
+  # shellcheck disable=2015
+  [ -x "$(command -v bat)" ] &&
+    bat --color=always --style='numbers,header' "$@" ||
+    cat "$@"
+}
+
+create-new() {
+  local script_name
+  mkdir -p "$HOME/.local/bin"
+  cd "$HOME/.local/bin" || error "Could not open $HOME/.local/bin/"
+  while [ -z "$script_name" ]; do
+    script_name=$(echo -n | fzf --no-info --preview-window="up:2" --print-query \
+      --preview="echo 'New script name (avoid using spaces):'")
+  done
+  echo -en "$TEMPLATE" > "$script_name"
+  chmod +x "$script_name"
+  edit "$script_name"
+}
+
+edit() {
+  cd "$HOME/.local/bin" || error "Could not open $HOME/.local/bin/"
+  [ "$USE_MIME" -eq 0 ] && assert-editor && xargs -ro "$EDITOR" <<< "$@"
+  [ "$USE_MIME" -eq 1 ] && assert-exist mimeopen && xargs -ro mimeopen <<< "$@"
+}
+
+remove() {
+  cd "$HOME/.local/bin" || error "Could not open $HOME/.local/bin/"
+  rm -rfv "$@"
+}
+
+handle-action() {
+  local action
+  action="$1" && shift
+  case "$action" in
+    "create-new") create-new;;
+    "edit-selected") edit "$@";;
+    "remove-selected") remove "$@";;
+  esac
+}
+
+handle-key() {
+  local key action header
+  key="$1" && shift
+  case "$key" in
+    "enter") handle-action "edit-selected" "$@";;
+    "alt-enter")
+      header="$(build-prompt "Action")"
+      action="$(choose-action "$header" \
+        "Create new" "Edit selected" "Remove selected")"
+      [ -n "$action" ] && handle-action "$action" "$@"
+  esac
+}
+
+find-and-process() {
+  local scripts key header
+  header="$(build-prompt "Scripts")"
+  fzf_cmd=(fzf --multi --header="$header" --expect="enter,alt-enter")
+  fzf_cmd+=(--preview="$0 preview {}")
+  [ "$(tput cols)" -le "100" ] && fzf_cmd+=(--preview-window=down)
+  scripts=$(list | "${fzf_cmd[@]}")
+  key=$(head -1 <<< "$scripts") && scripts=$(sed '1d' <<< "$scripts")
+  [ -n "$key" ] && handle-key "$key" "$scripts"
+}
+
+###############################################################################
+# Main
+###############################################################################
+
+case "$1" in
+  "preview"|"create-new") "$@";;
+  *) find-and-process;;
+esac
