@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Unclutter
+Exec=unclutter --timeout 2
+TryExec=unclutter
+Terminal=false
+StartupNotify=false
