@@ -1,9 +1,0 @@
-#!/bin/bash
-
-[[ $# == 0 ]] && {
-  yay -Qeq | fzf -m --reverse --height 23 --preview-window=":70%" --preview 'yay -Qi {1}' | xargs -ro yay -Rs
-} || {
-  yay $@
-}
-echo Press Enter to continue && read
-

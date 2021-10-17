@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+
+###############################################################################
+# Config
+###############################################################################
+
+INSTALL_CMD=(yay -S)
+REMOVE_CMD=(yay -Rsc)
+UPDATE_CMD=(yay -Syu)
+LIST_CMD=(yay --repo --color always -Sl)
+AUR_LIST_CMD=(yay --color always --topdown -Sl)
+CLEAN_CMD=(yay -Sc)
+PREVIEW_CMD=(yay --color always -Si)
+
+###############################################################################
+# Utilities
+###############################################################################
+
+error() { echo -e "$@" >&2 && exit 1; }
+
+assert-exist() {
+  for exe; do
+    [ ! -x "$(command -v "$exe")" ] && error "$exe not found in PATH";
+  done
+}
+
+pause() { echo Press ENTER to continue... >&2; read -r; }
+
+choose-action() {
+  assert-exist fzf
+  local header actions
+  header="$1" && shift
+  actions=$(while [ $# -ne 0 ]; do echo "$1"; shift; done)
+  fzf --header="$header" <<< "$actions" | tr "[:upper:] " "[:lower:]-"
+}
+
+build-prompt() {
+  PL_LEFT_HARD=""
+  PL_SOFT_EDGE="╱"
+  PL_DOWN_EDGE=""
+  PROMPT_FG="\033[38;2;118;113;94m"
+  PROMPT_BG="\033[48;2;118;113;94m"
+  PROMPT_TEXT="\e[37m"
+  DEFAULT="\e[0m"
+
+  local prompt="$PROMPT_FG$PL_DOWN_EDGE$PROMPT_BG$PROMPT_TEXT "
+  prompt+="$1" && shift
+  for segment; do
+    prompt+=" $PL_SOFT_EDGE $segment"
+  done
+  prompt+=" $DEFAULT$PROMPT_FG$PL_LEFT_HARD$DEFAULT "
+  echo -e "$prompt"
+}
+
+###############################################################################
+# Functions
+###############################################################################
+
+handle-action() {
+  local action="$1" && shift
+  case "$action" in
+    "install") echo "$@" | cut -d ' ' -f 2 | xargs -ro "${INSTALL_CMD[@]}";;
+    "update") "${UPDATE_CMD[@]}";;
+    "remove-selected") echo "$@" | cut -d ' ' -f 2 |
+      xargs -ro "${REMOVE_CMD[@]}";;
+    "clean") "${CLEAN_CMD[@]}";;
+  esac
+  [ $? -eq 130 ] || pause
+}
+
+handle-key() {
+  local key="$1" && shift
+  case $key in
+    "enter")
+      handle-action "install" "$@";;
+    "alt-enter")
+      local header action
+      header=$(build-prompt "Actions")
+      action=$(choose-action "$header" "Update" "Remove selected" "Clean")
+      [ -n "$action" ] && handle-action "$action" "$@"
+  esac
+}
+
+find-and-process() {
+  local header preview_cmd reload_cmd packages key packages
+  header="$(build-prompt "Package Manager")"
+  preview_cmd="${PREVIEW_CMD[*]}"
+  reload_cmd="${AUR_LIST_CMD[*]}"
+  fzf_cmd=(fzf --multi --header="$header" --expect="enter,alt-enter" --nth 2)
+  fzf_cmd+=(--preview="$preview_cmd {2}" --bind="ctrl-r:reload($reload_cmd)")
+  [ "$(tput cols)" -le "100" ] && fzf_cmd+=(--preview-window=down)
+  packages=$("${LIST_CMD[@]}" | "${fzf_cmd[@]}")
+  [ $? -eq 130 ] && exit
+  key=$(head -1 <<< "$packages") && packages=$(sed '1d' <<< "$packages")
+  [ -n "$key" ] && handle-key "$key" "$packages"
+  $0
+}
+
+###############################################################################
+# Main
+###############################################################################
+
+find-and-process

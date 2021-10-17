@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Package Manager
+Exec=terminal-adapter package-manager
+TryExec=package-manager
+Icon=terminal
