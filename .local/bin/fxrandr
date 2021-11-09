@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/$(basename "$0")"
+
