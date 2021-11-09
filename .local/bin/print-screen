@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+TMP_FILE="/tmp/$(basename "$0")"
+
+error() { echo -e "$@" >&2 && exit 1; }
+
+assert-exist() {
+  for exe; do
+    [ ! -x "$(command -v "$exe")" ] && error "$exe not found in PATH";
+  done
+  return 0
+}
+
+build-prompt() {
+  PL_LEFT_HARD=""
+  PL_SOFT_EDGE="╱"
+  PL_DOWN_EDGE=""
+  PROMPT_FG="\033[38;2;118;113;94m"
+  PROMPT_BG="\033[48;2;118;113;94m"
+  PROMPT_TEXT="\e[37m"
+  DEFAULT="\e[0m"
+
+  local prompt="$PROMPT_FG$PL_DOWN_EDGE$PROMPT_BG$PROMPT_TEXT "
+  prompt+="$1" && shift
+  for segment; do
+    prompt+=" $PL_SOFT_EDGE $segment"
+  done
+  prompt+=" $DEFAULT$PROMPT_FG$PL_LEFT_HARD$DEFAULT "
+  echo -e "$prompt"
+}
+
+choose-action() {
+  assert-exist fzf
+  local header actions
+  header="$1" && shift
+  actions=$(while [ $# -ne 0 ]; do echo "$1"; shift; done)
+  fzf --header="$header" <<< "$actions" | tr "[:upper:] " "[:lower:]-"
+}
+
+fullscreen() {
+  assert-exist import
+  assert-exist xclip
+  sleep 0.1 && import -window root png:- |
+    xclip -selection clipboard -t image/png
+}
+
+snip() {
+  assert-exist import
+  assert-exist xclip
+  import png:- | xclip -selection clipboard -t image/png
+}
+
+window() {
+  assert-exist import
+  assert-exist xclip
+  assert-exist xdotool
+  wid=$(xdotool selectwindow)
+  import -window "$wid" png:- | xclip -selection clipboard -t image/png
+}
+
+start-recording() {
+  assert-exist ffmpeg
+  is-recording && exit
+  ffmpeg_procs=$(pgrep ffmpeg)
+  setsid -f ffmpeg -f x11grab -i :0.0 \
+    "$HOME/$(date "+%Y-%m-%d-%H-%M-%S").mp4" &>/dev/null
+  pid=$(comm -23 <(pgrep ffmpeg) <(cat <<< "$ffmpeg_procs"))
+  echo "$pid" > "$TMP_FILE"
+}
+
+stop-recording() {
+  is-recording || exit
+  kill -INT "$(cat "$TMP_FILE")"
+}
+
+is-recording() {
+  [ -f "$TMP_FILE" ] || return 1
+  pgrep ffmpeg | grep -q "$(cat "$TMP_FILE")" && return 0
+  rm -f "$TMP_FILE" && return 1
+}
+
+[ $# -gt 0 ] && case $1 in
+  "fullscreen"|"snip"|"window"|"start-recording"|"stop-recording") "$@"; exit;;
+  *) exit 1;;
+esac
+
+header="$(build-prompt "Print Screen")"
+is-recording && record="Stop Recording" || record="Start Recording"
+action=$(choose-action "$header" Fullscreen Snip Window "$record")
+[ -n "$action" ] && setsid -f "$0" "$action" &> /dev/null

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Print Screen
+Exec=terminal-adapter -u "print-screen" -p print-screen
+Comment=
+Path=
+Icon=terminal
+Terminal=false
+StartupNotify=false

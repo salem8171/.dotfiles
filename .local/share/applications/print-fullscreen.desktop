@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Print Fullscreen
+Exec=print-screen fullscreen
+Comment=
+Path=
+Icon=
+Terminal=false
+StartupNotify=false
