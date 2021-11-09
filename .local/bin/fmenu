@@ -1,0 +1,37 @@
+#!/bin/bash
+
+error() { echo -e "$@" >&2 && exit 1; }
+
+assert-exist() {
+  for exe; do
+    [ ! -x "$(command -v "$exe")" ] && error "$exe not found in PATH";
+  done
+  return 0
+}
+
+help() {
+  assert-exist fzf
+  echo "This is an fzf wrapper that spawns in a popup terminal."
+  fzf --help
+}
+
+fmenu() {
+  assert-exist fzf
+  assert-exist terminal-adapter
+
+  stdinbuffer=$(mktemp)
+  stdoutfifo=$(mktemp -u) && mkfifo "$stdoutfifo"
+
+  [ -t 0 ] || cat > "$stdinbuffer"
+  [ -t 0 ] && ls > "$stdinbuffer"
+  setsid terminal-adapter -p sh -c "fzf -m $* < $stdinbuffer > $stdoutfifo"
+  cat "$stdoutfifo"
+
+  rm -rf "$stdinbuffer" "$stdoutfifo"
+}
+
+[ $# -ge 1 ] && case "$1" in
+  -h | --help | help) help | less && exit 0;;
+esac
+
+fmenu "$@"
