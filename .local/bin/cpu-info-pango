@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+FIFO="/tmp/$(basename "$0")"
+test -p "$FIFO" || mkfifo "$FIFO"
+
+# shellcheck disable=SC2034 disable=SC2016
+awk_temp_script='
+  /^Pack/ {
+    temp = $4
+    gsub(/+|\..*/, "", temp)
+    printf("Temp: %s\n", temp)
+    fflush()
+  }
+'
+
+# shellcheck disable=SC2034 disable=SC2016
+awk_usage_script='
+  /[0-9]/ {
+    usage = 100 - $15
+    printf("Usage: %s\n", usage)
+    fflush()
+  }
+'
+
+# shellcheck disable=SC2034 disable=SC2016
+awk_aggregator_script='
+  function pango_colorize(text, hexcolor) {
+    return "<span fgcolor=\"" hexcolor "\">" text "</span>"
+  }
+
+  BEGIN {
+    temp = 0
+    usage = 0
+    red = "#cb376b"
+    yellow = "#d4c96e"
+  }
+
+  /^Usage/ { usage_value = $2 + 0 }
+  /^Temp/ { temp_value = $2 + 0 }
+
+  /^print/ {
+    usage_color = (usage_value > 80) ? red : (usage_value > 50) ? yellow : "default"
+    temp_color = (temp_value > 80) ? red : (temp_value > 50) ? yellow : "default"
+
+    usage = sprintf("Usage%:%s%%", usage_value)
+    temp = sprintf("Temp:%s°C", temp_value)
+
+    usage = (usage_color != "default") ? pango_colorize(usage, usage_color) : usage
+    temp = (temp_color != "default") ? pango_colorize(temp, temp_color) : temp
+
+    printf("%s | %s\n", usage, temp)
+    fflush()
+  }
+'
+
+while true; do sensors; sleep 1; done | awk "$awk_temp_script" >> "$FIFO" &
+while true; do vmstat 1 10 --one-header; sleep 1; done | awk "$awk_usage_script" >> "$FIFO" &
+while true; do echo "print"; sleep 1; done >> "$FIFO" &
+
+awk "$awk_aggregator_script" "$FIFO"

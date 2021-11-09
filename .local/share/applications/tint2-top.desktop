@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Tint2 top
+Exec=tint2-top
+TryExec=tint2
+Icon=tint2

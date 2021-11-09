@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+CONFIG="${XDG_CONFIG_HOME-:$HOME/.config}/tint2/top.tint2rc"
+tint2 -c "$CONFIG" "$@"

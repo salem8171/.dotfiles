@@ -1,0 +1,228 @@
+# vim: set ft=dosini cms=#\ %s:
+
+###############################################################################
+# Backgrounds
+###############################################################################
+
+# Background 1: Panel
+rounded = 0
+background_color = #272822 100
+border_width = 0
+
+# Background 2: CPU
+rounded = 0
+background_color = #76715e 100
+border_width = 0
+
+# Background 3: CPU Info
+rounded = 0
+background_color = #48483e 100
+border_width = 0
+
+# Background 4: Mem
+rounded = 0
+background_color = #76715e 100
+border_width = 0
+
+# Background 5: Mem Info
+rounded = 0
+background_color = #48483e 100
+border_width = 0
+
+# Background 6: GPU Info
+rounded = 0
+background_color = #48483e 100
+border_width = 0
+
+# Background 7: CPU
+rounded = 0
+background_color = #76715e 100
+border_width = 0
+
+###############################################################################
+# Panel
+###############################################################################
+
+panel_items = EEEEEEEEFEEEE
+panel_size = 100% 25
+panel_margin = 0 0
+panel_padding = 2 0 0
+panel_background_id = 1
+wm_menu = 1
+panel_dock = 1
+panel_pivot_struts = 0
+panel_position = top center horizontal
+panel_layer = top
+panel_monitor = all
+panel_shrink = 0
+autohide = 0
+autohide_show_timeout = 0
+autohide_hide_timeout = 0.5
+autohide_height = 2
+strut_policy = follow_size
+panel_window_name = statusbar
+disable_transparency = 0
+mouse_effects = 0
+font_shadow = 0
+scale_relative_to_dpi = 0
+scale_relative_to_screen_height = 0
+
+###############################################################################
+# CPU
+###############################################################################
+
+execp = new
+execp_command = echo "CPU"
+execp_interval = 0
+execp_background_id = 2
+execp_font = MesloLGS NF Bold 10
+execp_font_color = #acada1 100
+execp_padding = 4 4 4
+
+###############################################################################
+# Powerline Separator
+###############################################################################
+
+execp = new
+execp_command = echo ""
+execp_interval = 0
+execp_background_id = 3
+execp_font = MesloLGS NF Normal 16
+execp_font_color = #76715e 100
+execp_padding = 0 0 0
+
+###############################################################################
+# CPU Info
+###############################################################################
+
+execp = new
+execp_command = cpu-info-pango
+execp_interval = 0
+execp_continuous = 1
+execp_markup = 1
+execp_font = MesloLGS NF Bold 10
+execp_font_color = #acada1 100
+execp_background_id = 3
+execp_padding = 4 4 4
+
+###############################################################################
+# Powerline Separator
+###############################################################################
+
+execp = new
+execp_command = echo ""
+execp_interval = 0
+execp_background_id = 4
+execp_font = MesloLGS NF Normal 16
+execp_font_color = #48483e 100
+execp_padding = 0 0 0
+
+###############################################################################
+# Mem
+###############################################################################
+
+execp = new
+execp_command = echo "Mem"
+execp_interval = 0
+execp_background_id = 4
+execp_font = MesloLGS NF Bold 10
+execp_font_color = #acada1 100
+execp_padding = 4 4 4
+
+###############################################################################
+# Powerline Separator
+###############################################################################
+
+execp = new
+execp_command = echo ""
+execp_interval = 0
+execp_background_id = 5
+execp_font = MesloLGS NF Normal 16
+execp_font_color = #76715e 100
+execp_padding = 0 0 0
+
+###############################################################################
+# Mem Info
+###############################################################################
+
+execp = new
+execp_command = mem-info-pango
+execp_interval = 0
+execp_continuous = 1
+execp_markup = 1
+execp_font = MesloLGS NF Bold 10
+execp_font_color = #acada1 100
+execp_background_id = 5
+execp_padding = 4 4 4
+
+###############################################################################
+# Powerline Separator
+###############################################################################
+
+execp = new
+execp_command = echo ""
+execp_interval = 0
+execp_background_id = 0
+execp_font = MesloLGS NF Bold 16
+execp_font_color = #48483e 100
+execp_padding = 0 0 0
+
+###############################################################################
+# Powerline Separator
+###############################################################################
+
+execp = new
+execp_command = echo ""
+execp_interval = 0
+execp_background_id = 0
+execp_font = MesloLGS NF Bold 16
+execp_font_color = #48483e 100
+execp_padding = 0 0 0
+
+###############################################################################
+# GPU Info
+###############################################################################
+
+execp = new
+execp_command = gpu-info-pango
+execp_interval = 0
+execp_continuous = 1
+execp_markup = 1
+execp_font = MesloLGS NF Bold 10
+execp_font_color = #acada1 100
+execp_background_id = 6
+execp_padding = 4 4 4
+
+###############################################################################
+# Powerline Separator
+###############################################################################
+
+execp = new
+execp_command = echo ""
+execp_interval = 0
+execp_background_id = 6
+execp_font = MesloLGS NF Bold 16
+execp_font_color = #76715e 100
+execp_padding = 0 0 0
+
+###############################################################################
+# GPU
+###############################################################################
+
+execp = new
+execp_command = echo "GPU"
+execp_interval = 0
+execp_background_id = 7
+execp_font = MesloLGS NF Bold 10
+execp_font_color = #acada1 100
+execp_padding = 4 4 4
+
+###############################################################################
+# Tooltip
+###############################################################################
+
+tooltip_show_timeout = 0.5
+tooltip_hide_timeout = 0.1
+tooltip_padding = 4 4
+tooltip_background_id = 1
+tooltip_font_color = #acada1 100

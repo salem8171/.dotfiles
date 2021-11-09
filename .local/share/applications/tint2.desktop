@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Tint2
+Comment=Lightweight panel
+Exec=tint2
+TryExec=tint2
+Icon=tint2
+Terminal=false
+Categories=System;

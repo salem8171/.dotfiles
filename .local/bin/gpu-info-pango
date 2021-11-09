@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+nvidia_query_opts=("utilization.gpu")
+nvidia_query_opts+=("utilization.memory")
+nvidia_query_opts+=("temperature.gpu")
+# nvidia_query_opts+=("encoder.stats.averageFps")
+# nvidia_query_opts+=("pstate")
+
+nvidia_cmd=(nvidia-smi)
+nvidia_cmd+=("--loop=1")
+nvidia_cmd+=("--format=csv,noheader")
+nvidia_cmd+=("--query-gpu=$(printf "%q," "${nvidia_query_opts[@]}")")
+
+# shellcheck disable=SC2016
+awk_script='
+  function pango_colorize(text, hexcolor) {
+    return "<span fgcolor=\"" hexcolor "\">" text "</span>"
+  }
+
+  BEGIN {
+    FS=", "
+    red = "#cb376b"
+    yellow = "#d4c96e"
+  }
+
+  {
+    usage = $1 + 0
+    mem = $2 + 0
+    temp = $3 + 0
+
+    usage_color = (usage > 80) ? red : (usage > 50) ? yellow : "default"
+    mem_color = (mem > 80) ? red : (mem > 50) ? yellow : "default"
+    temp_color = (temp > 80) ? red : (temp > 50) ? yellow : "default"
+
+    usage = sprintf("Usage%:%s%%", usage)
+    mem = sprintf("Mem%:%s%%", mem)
+    temp = sprintf("Temp:%s°C", temp)
+
+    usage = (usage_color != "default") ? pango_colorize(usage, usage_color) : usage
+    mem = (mem_color != "default") ? pango_colorize(mem, mem_color) : mem
+    temp = (temp_color != "default") ? pango_colorize(temp, temp_color) : temp
+
+    printf("%s | %s | %s\n", usage, mem, temp)
+    fflush()
+  }
+'
+
+"${nvidia_cmd[@]}" | awk "$awk_script"

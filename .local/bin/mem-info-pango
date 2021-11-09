@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+FIFO="/tmp/$(basename "$0")"
+test -p "$FIFO" || mkfifo "$FIFO"
+
+# shellcheck disable=SC2034 disable=SC2016
+awk_raw_script='
+  /^Mem/ {
+    printf("used_raw: %s\n", $3)
+    printf("total_raw: %s\n", $2)
+    fflush()
+  }
+'
+
+# shellcheck disable=SC2034 disable=SC2016
+awk_human_readable_script='
+  /^Mem/ {
+    printf("used_human_readable: %s\n", $3)
+    printf("total_human_readable: %s\n", $2)
+    fflush()
+  }
+'
+
+# shellcheck disable=SC2034 disable=SC2016
+awk_aggregator_script='
+  function pango_colorize(text, hexcolor) {
+    return "<span fgcolor=\"" hexcolor "\">" text "</span>"
+  }
+
+  function round(f) {
+    return int(f + 0.5)
+  }
+
+  BEGIN {
+    red = "#cb376b"
+    yellow = "#d4c96e"
+
+    used_raw = 0
+    total_raw = 1
+    used_human_readable = 0
+    total_human_readable = 0
+  }
+
+  /^used_raw/ { used_raw = $2 + 0 }
+  /^total_raw/ { total_raw = $2 + 0 }
+  /^used_human_readable/ { used_human_readable = $2 }
+  /^total_human_readable/ { total_human_readable = $2 }
+
+  /^print/ {
+    usage_value = round((used_raw * 100) / total_raw)
+    usage_color = (usage_value > 80) ? red : (usage_value > 50) ? yellow : "default"
+
+    usage_percent = sprintf("Usage%:%s%%", usage_value)
+    usage = sprintf("Usage:%s/%s", used_human_readable, total_human_readable)
+
+    usage_percent = (usage_color != "default") ?
+      pango_colorize(usage_percent, usage_color) : usage_percent
+    usage = (usage_color != "default") ? pango_colorize(usage, usage_color) : usage
+
+    printf("%s | %s\n", usage_percent, usage)
+    fflush()
+  }
+'
+
+free -s 1 | awk "$awk_raw_script" >> "$FIFO" &
+free -h -s 1 | awk "$awk_human_readable_script" >> "$FIFO" &
+while true; do echo "print"; sleep 1; done >> "$FIFO" &
+
+awk "$awk_aggregator_script" "$FIFO"
