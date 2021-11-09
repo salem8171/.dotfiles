@@ -1,0 +1,101 @@
+{
+    "keymap": {
+        "addsearch": "a",
+        "altname": "A",
+        "delete": "d",
+        "details": "i",
+        "details_exit": "i",
+        "down": "j",
+        "help": "H",
+        "left": "h",
+        "neweps": "N",
+        "next_filter": "right",
+        "open_web": "O",
+        "openfolder": "o",
+        "page_down": "J",
+        "page_up": "K",
+        "play": "p",
+        "play_random": "&",
+        "prev_filter": "left",
+        "quit": "q",
+        "reload": "c",
+        "retrieve": "R",
+        "right": "l",
+        "score": "z",
+        "search": "/",
+        "send": "P",
+        "sort": "f3",
+        "sort_order": "r",
+        "status": "s",
+        "switch_account": "f9",
+        "up": "k",
+        "update": "u"
+    },
+    "palette": {
+        "body": [
+            "",
+            ""
+        ],
+        "button": [
+            "white",
+            "black"
+        ],
+        "button hilight": [
+            "white",
+            "dark red"
+        ],
+        "error": [
+            "light red",
+            "black"
+        ],
+        "focus": [
+            "standout",
+            ""
+        ],
+        "head": [
+            "light red",
+            "black"
+        ],
+        "header": [
+            "bold",
+            ""
+        ],
+        "info_section": [
+            "dark blue",
+            ""
+        ],
+        "info_title": [
+            "light red",
+            ""
+        ],
+        "item_airing": [
+            "light blue",
+            ""
+        ],
+        "item_neweps": [
+            "white",
+            "brown"
+        ],
+        "item_notaired": [
+            "yellow",
+            ""
+        ],
+        "item_playing": [
+            "black",
+            "dark blue"
+        ],
+        "item_updated": [
+            "black",
+            "dark green"
+        ],
+        "status": [
+            "white",
+            "black"
+        ],
+        "window": [
+            "white",
+            "black"
+        ]
+    },
+    "show_help": true
+}
