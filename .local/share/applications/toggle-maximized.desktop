@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Toggle Maximized
+Exec=wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz
+Comment=
+Path=
+Icon=
+Terminal=false
+StartupNotify=false

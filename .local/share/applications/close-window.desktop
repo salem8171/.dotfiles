@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Close Window
+Exec=wmctrl -c :ACTIVE:
+Terminal=false
+StartupNotify=false
