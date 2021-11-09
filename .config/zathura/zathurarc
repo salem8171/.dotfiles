@@ -1,0 +1,16 @@
+set default-bg "#272822"
+
+set completion-bg "#272822"
+set completion-fg "#acada1"
+
+set completion-group-bg "#48483e"
+set completion-group-fg "#acada1"
+
+set statusbar-bg "#272822"
+set statusbar-fg "#acada1"
+
+set inputbar-bg "#272822"
+set inputbar-fg "#acada1"
+
+set completion-highlight-bg "#48483e"
+set completion-highlight-fg "#acada1"
