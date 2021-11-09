@@ -1,19 +1,33 @@
 # vim:ft=dosini
 
 [Default Applications]
+application/javascript=nvim.desktop
+application/json=nvim.desktop
 application/pdf=org.pwmt.zathura-pdf-poppler.desktop
+application/vnd.kde.kxmlguirc=nvim.desktop
 application/x-desktop=nvim.desktop
+application/x-shellscript=nvim.desktop;
+application/x-tint2-theme=nvim.desktop;
+application/x-wine-extension-ini=nvim.desktop
+application/x-yaml=nvim.desktop;
+application/xml=nvim.desktop;
+image/bmp=vimiv.desktop
 image/gif=vimiv.desktop
 image/jpeg=vimiv.desktop
 image/png=vimiv.desktop
-image/bmp=vimiv.desktop
+inode/directory=lf.desktop
+text/css=nvim.desktop;
+text/html=nvim.desktop;
 text/plain=nvim.desktop
-x-scheme-handler/torrent=add-torrent.desktop
+text/x-log=nvim.desktop;
+text/x-python=nvim.desktop;
+text/x-scheme=nvim.desktop;
+video/x-msvideo=mpv.desktop;
 x-scheme-handler/magnet=add-torrent.desktop
 x-scheme-handler/postman=Postman.desktop
+x-scheme-handler/torrent=add-torrent.desktop
 
 [Added Associations]
-application/pdf=org.pwmt.zathura-pdf-poppler.desktop;
-application/x-shellscript=nvim.desktop;
-text/x-log=nvim.desktop;
-video/x-msvideo=mpv.desktop;
+inode/directory=mpv.desktop
+inode/directory=nvim.desktop
+inode/directory=vimiv.desktop
