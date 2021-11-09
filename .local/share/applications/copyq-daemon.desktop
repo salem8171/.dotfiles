@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=CopyQ Daemon
+Exec=copyq --start-server
+TryExec=copyq
+Icon=copyq
+GenericName=Clipboard Manager
+Type=Application
+Terminal=false
+Categories=Qt;KDE;Utility;
+Comment=A cut & paste history utility

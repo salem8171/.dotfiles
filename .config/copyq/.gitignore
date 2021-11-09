@@ -1,0 +1,5 @@
+*
+!.gitignore
+!copyq.conf
+!copyq-commands.ini
+!copyq-filter.ini
