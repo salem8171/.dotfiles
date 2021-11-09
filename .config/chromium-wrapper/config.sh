@@ -21,7 +21,7 @@ CHROMIUM_ARGS+=("--show-avatar-button=never")
 
 CHROMIUM_FEATURES=()
 CHROMIUM_FEATURES+=("OverlayScrollbar")
-CHROMIUM_FEATURES+=("WebContentsForceDark:inversion_method/cielab_based/image_behavior/selective/text_lightness_threshold/150/background_lightness_threshold/205")
+# CHROMIUM_FEATURES+=("WebContentsForceDark:inversion_method/cielab_based/image_behavior/selective/text_lightness_threshold/150/background_lightness_threshold/205")
 CHROMIUM_FEATURES+=("TabHoverCardImages")
 CHROMIUM_FEATURES+=("Commander")
 
