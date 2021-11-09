@@ -1,0 +1,82 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+snippet desktop "[Desktop Entry]" b
+[Desktop Entry]
+Type=Application
+Name=${1:New Desktop Entry}
+endsnippet
+
+snippet exec "Exec=command" b
+Exec=${1:command}
+TryExec=${1/ .*//}
+endsnippet
+
+snippet exec_terminal "Exec=terminal-adapter ..." b
+Exec=terminal-adapter ${1:command}
+TryExec=${1/ .*//}
+Icon=terminal
+endsnippet
+
+snippet exec_popup_terminal "Exec=terminal-adapter -p ..." b
+Exec=terminal-adapter -u "${1:tag}" -p ${2:command}
+TryExec=${2/ .*//}
+Icon=terminal
+endsnippet
+
+snippet exec_web "Exec=gtk-launch web-app ..." b
+Exec=gtk-launch web-app ${1:https://${2:example.com}}
+Icon=chromium
+endsnippet
+
+snippet exec_youtube "Exec=gtk-launch youtube-channel ..." b
+Exec=gtk-launch youtube-channel ${1:https://www.youtube.com/c/${2:channel}/videos}
+Icon=youtube
+endsnippet
+
+snippet comment "Comment" b
+Comment=${1}
+endsnippet
+
+snippet icon "Icon" b
+Icon=${1:terminal}
+endsnippet
+
+snippet tryexec "TryExec" b
+TryExec=${1}
+endsnippet
+
+snippet path "Path" b
+Path=$1
+endsnippet
+
+snippet StartupNotify "StartupNotify" b
+StartupNotify=${1:false}
+endsnippet
+
+snippet NoDisplay "NoDisplay" b
+NoDisplay=${1:true}
+endsnippet

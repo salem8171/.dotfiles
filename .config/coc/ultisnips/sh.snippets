@@ -1,0 +1,144 @@
+# A valid snippet should starts with:
+#
+#		snippet trigger_word [ "description" [ options ] ]
+#
+# and end with:
+#
+#		endsnippet
+#
+# Snippet options:
+#
+#		b - Beginning of line.
+#		i - In-word expansion.
+#		w - Word boundary.
+#		r - Regular expression
+#		e - Custom context snippet
+#		A - Snippet will be triggered automatically, when condition matches.
+#
+# Basic example:
+#
+#		snippet emitter "emitter properties" b
+#		private readonly ${1} = new Emitter<$2>()
+#		public readonly ${1/^_(.*)/$1/}: Event<$2> = this.$1.event
+#		endsnippet
+#
+# Online reference: https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+
+snippet ### "Section header comment block" b
+###############################################################################
+# $1
+###############################################################################
+
+endsnippet
+
+snippet fn "New Function" b
+${1:function-name}() {
+  ${2:# body}
+}
+
+endsnippet
+
+snippet error "Error function" b
+error() { echo -e "$@" >&2 && exit 1; }
+
+endsnippet
+
+snippet hline "Create a horizontal line" b
+hline() {
+  # shellcheck disable=SC2034
+  for i in $(seq 1 \${FZF_PREVIEW_COLUMNS:-40}) ; do echo -n '-'; done
+  echo
+}
+
+endsnippet
+
+snippet assert-exist "Assert Exist function" b
+assert-exist() {
+  for exe; do
+    [ ! -x "$(command -v "$exe")" ] && error "$exe not found in PATH";
+  done
+  return 0
+}
+
+endsnippet
+
+snippet assert-editor "Assert Editor function" b
+assert-editor() {
+  for e in "$EDITOR" nvim vim vi nano; do
+    [ -x "$(command -v "$e")" ] && EDITOR="$e" && return 0
+  done
+  error "No text editor found. Install one or try setting \$EDITOR"
+}
+
+endsnippet
+
+snippet choose-action "Choose Action function" b
+choose-action() {
+  assert-exist fzf
+  local header actions
+  header="\$1" && shift
+  actions=$(while [ $# -ne 0 ]; do echo "\$1"; shift; done)
+  fzf --header="$header" <<< "$actions" | tr "[:upper:] " "[:lower:]-"
+}
+
+endsnippet
+
+snippet pause "Pause function" b
+pause() { echo Press ENTER to continue... >&2; read -r; }
+
+endsnippet
+
+snippet colors "List of colors escape sequences" b
+DEF="\$(echo -e "\e[0m")"
+BG_BLACK="\$(echo -e "\e[40m")"
+BG_RED="\$(echo -e "\e[41m")"
+BG_GREEN="\$(echo -e "\e[42m")"
+BG_YELLOW="\$(echo -e "\e[43m")"
+BG_BLUE="\$(echo -e "\e[44m")"
+BG_PURPLE="\$(echo -e "\e[45m")"
+BG_CYAN="\$(echo -e "\e[46m")"
+BG_WHITE="\$(echo -e "\e[47m")"
+FG_BLACK="\$(echo -e "\e[30m")"
+FG_RED="\$(echo -e "\e[31m")"
+FG_GREEN="\$(echo -e "\e[32m")"
+FG_YELLOW="\$(echo -e "\e[33m")"
+FG_BLUE="\$(echo -e "\e[34m")"
+FG_PURPLE="\$(echo -e "\e[35m")"
+FG_CYAN="\$(echo -e "\e[36m")"
+FG_WHITE="\$(echo -e "\e[37m")"
+
+endsnippet
+
+snippet powerline "List of powerline symbols" b
+PL_LEFT_HARD=""
+PL_LEFT_SOFT=""
+PL_LEFT_PROMPT="❯"
+PL_RIGHT_HARD=""
+PL_RIGHT_SOFT=""
+PL_RIGHT_PROMPT="❮"
+PL_DOWN_EDGE=""
+PL_UP_EDGE=""
+PL_SOFT_EDGE="╱"
+
+endsnippet
+
+snippet build-prompt "Build a powerline prompt" b
+build-prompt() {
+  PL_LEFT_HARD=""
+  PL_SOFT_EDGE="╱"
+  PL_DOWN_EDGE=""
+  PROMPT_FG="\033[38;2;118;113;94m"
+  PROMPT_BG="\033[48;2;118;113;94m"
+  PROMPT_TEXT="\e[37m"
+  DEFAULT="\e[0m"
+
+  local prompt="$PROMPT_FG$PL_DOWN_EDGE$PROMPT_BG$PROMPT_TEXT "
+  prompt+="\$1" && shift
+  for segment; do
+    prompt+=" $PL_SOFT_EDGE $segment"
+  done
+  prompt+=" $DEFAULT$PROMPT_FG$PL_LEFT_HARD$DEFAULT "
+  echo -e "$prompt"
+}
+
+endsnippet
