@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Reload Config
+Exec=reload-config
+TryExec=reload-config

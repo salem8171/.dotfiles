@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+pidof openbox >/dev/null && openbox --reconfigure
+pidof i3 >/dev/null && i3-msg restart
+pidof sxhkd >/dev/null && pkill -USR1 sxhkd
+[ -x "$(command -v reload-xsettings)" ] && reload-xsettings
+pidof tint2 >/dev/null && (sleep 1 && pkill -USR1 tint2)

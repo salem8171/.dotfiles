@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+CONFIG="${XDG_HOME_CONFIG:-$HOME/.config}/x11/xsettings.sh"
+# shellcheck disable=SC1090
+[ -f "$CONFIG" ] && source "$CONFIG"
