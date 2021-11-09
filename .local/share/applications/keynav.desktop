@@ -1,7 +1,6 @@
 [Desktop Entry]
 Type=Application
-Name=urxvt daemon
-Exec=urxvtd -q -o
-TryExec=urxvtd
+Name=Keynav
+Exec=keynav
 Terminal=false
 StartupNotify=false

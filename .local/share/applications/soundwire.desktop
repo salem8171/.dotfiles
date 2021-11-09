@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=SoundWire Server Daemon
+Comment=Server program for SoundWire Android app
+Exec=SoundWireServer -nogui
+TryExec=SoundWireServer
+Terminal=false
+Type=Application
+Categories=AudioVideo;Audio;

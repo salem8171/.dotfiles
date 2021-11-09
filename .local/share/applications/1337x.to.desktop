@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=1337x.to
+Exec=gtk-launch web-app https://1337x.to
+Comment=1337x is a search engine to find your favorite torrents
+Path=
+Icon=chromium
+Terminal=false
+StartupNotify=false

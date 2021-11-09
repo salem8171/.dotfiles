@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Tutanota Mail
+Exec=gtk-launch web-app https://mail.tutanota.com
+Comment=
+Path=
+# Icon=tutanota
+Icon=chromium
+Terminal=false
+StartupNotify=false

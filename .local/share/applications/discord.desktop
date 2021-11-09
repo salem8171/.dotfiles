@@ -1,5 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=Discord
-Exec=firefox --new-window https://discordapp.com/channels/@me
-# Description=
+Exec=gtk-launch web-app https://discordapp.com/channels/@me
+Icon=discord
+Terminal=false
+StartupNotify=false

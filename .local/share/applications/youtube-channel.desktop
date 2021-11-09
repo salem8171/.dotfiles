@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Youtube Channel
+Comment=Open a Youtube channel
+Exec=gtk-launch web-app %u
+StartupNotify=false
+Terminal=false
+Icon=youtube
+Type=Application
+Categories=Network;

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Ping Archlinux.org
+Exec=terminal-adapter ping archlinux.org
+TryExec=ping
+Icon=terminal
