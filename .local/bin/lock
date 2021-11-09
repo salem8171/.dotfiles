@@ -1,0 +1,75 @@
+#!/bin/bash
+
+IMG_PATH=/tmp/lock.jpg
+
+resolution="$(xdpyinfo | grep -P "\d+x\d+(?= pixels)" -o)"
+width=${resolution/x*}
+height=${resolution/*x}
+offset=$(("$width" / 3))
+
+center_X=$(("$offset" * 2 / 3))
+center_Y=$(("$height" / 2))
+radius=$(("$offset" / 4))
+inner_radius=$(("$radius" - 10))
+outer_radius=$(("$radius" + 10))
+ringwidth=8
+
+img=(convert)
+img+=(-background "#272822")
+img+=(-font "MesloLGS-NF-Regular")
+
+img+=(-size "${offset}x${height}")
+img+=(xc:)
+img+=(-stroke "#a1a1a1" -strokewidth "$ringwidth" -fill none)
+
+img+=(-draw "ellipse $center_X,$center_Y $inner_radius,$inner_radius 10,70")
+img+=(-draw "ellipse $center_X,$center_Y $inner_radius,$inner_radius 80,100")
+img+=(-draw "ellipse $center_X,$center_Y $inner_radius,$inner_radius 105,130")
+img+=(-draw "ellipse $center_X,$center_Y $inner_radius,$inner_radius 150,200")
+img+=(-draw "ellipse $center_X,$center_Y $inner_radius,$inner_radius 210,230")
+img+=(-draw "ellipse $center_X,$center_Y $inner_radius,$inner_radius 245,350")
+
+img+=(-draw "ellipse $center_X,$center_Y $outer_radius,$outer_radius 0,30")
+img+=(-draw "ellipse $center_X,$center_Y $outer_radius,$outer_radius 50,100")
+img+=(-draw "ellipse $center_X,$center_Y $outer_radius,$outer_radius 110,200")
+img+=(-draw "ellipse $center_X,$center_Y $outer_radius,$outer_radius 205,215")
+img+=(-draw "ellipse $center_X,$center_Y $outer_radius,$outer_radius 225,235")
+img+=(-draw "ellipse $center_X,$center_Y $outer_radius,$outer_radius 250,300")
+img+=(-draw "ellipse $center_X,$center_Y $outer_radius,$outer_radius 315,360")
+
+img+=("(")
+  img+=(-stroke none -fill "#a1a1a1")
+
+  img+=(-gravity southwest)
+  img+=(-size "$(("$width" - "$offset"))x$(("$height" / 2))")
+  img+=(-pointsize 100)
+  img+=(label:"Locked")
+
+  img+=(-gravity northwest)
+  img+=(-size "$(("$width" - "$offset"))x$(("$height" / 2))")
+  img+=(-pointsize 35)
+  img+=(label:"Type your password to continue")
+
+  img+=(-append)
+img+=(")")
+
+img+=(+append)
+img+=("$IMG_PATH")
+
+lock=(i3lock --nofork --image "$IMG_PATH")
+lock+=(--indicator --keylayout 0 --clock)
+lock+=(--pass-media-keys --pass-screen-keys --pass-power-keys --pass-volume-keys)
+invis="00000000"
+white="a1a1a1ff"
+lock+=(--inside-color="$invis" --insidever-color="$invis" --insidewrong-color="$invis")
+lock+=(--ring-color="$invis" --ringver-color="$invis" --ringwrong-color="$invis")
+lock+=(--verif-color="$white" --wrong-color="$white")
+lock+=(--layout-color="$white" --time-color="$white" --date-color="$white")
+lock+=(--line-uses-inside)
+lock+=(--keyhl-color="$white" --bshl-color="$white")
+lock+=(--separator-color="$invis")
+lock+=(--ind-pos="$center_X":"$center_Y")
+lock+=(--radius="$radius" --ring-width="$ringwidth")
+
+"${img[@]}"
+"${lock[@]}"

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Lock Session
+Exec=lock
+Comment=
+Path=
+Icon=
+Terminal=false
+StartupNotify=false
