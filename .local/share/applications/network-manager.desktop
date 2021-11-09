@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Network Manager
+Exec=terminal-adapter -u "network-manager" -p fnmcli
+TryExec=fnmcli
+Icon=terminal

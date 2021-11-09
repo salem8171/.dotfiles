@@ -1,0 +1,153 @@
+#!/bin/bash
+
+error() {
+  echo -e $@ >&2 && exit 1
+}
+
+assert-exist() {
+  [ ! -x "$(command -v "$1")" ] && error "$1 not found in PATH"
+}
+
+pause() {
+  echo Press ENTER to continue... >&2
+  read
+}
+
+hline() {
+  for i in $(seq 1 ${FZF_PREVIEW_COLUMNS:-40}) ; do echo -n '-'; done
+  echo
+}
+
+choose-action() {
+  assert-exist fzf
+  local header="$1" && shift
+  local actions=$(while [ $# -ne 0 ]; do echo "$1"; shift; done)
+  echo $(fzf --header="$header" <<< $actions | tr "[:upper:] " "[:lower:]-")
+}
+
+build-prompt() {
+  PL_LEFT_HARD=""
+  PL_SOFT_EDGE="╱"
+  PL_DOWN_EDGE=""
+  PROMPT_FG="\033[38;2;118;113;94m"
+  PROMPT_BG="\033[48;2;118;113;94m"
+  PROMPT_TEXT="\e[37m"
+  DEFAULT="\e[0m"
+
+  local prompt="$PROMPT_FG$PL_DOWN_EDGE$PROMPT_BG$PROMPT_TEXT "
+  prompt+="$1" && shift
+  for segment in $@; do
+    prompt+=" $PL_SOFT_EDGE $segment"
+  done
+  prompt+=" $DEFAULT$PROMPT_FG$PL_LEFT_HARD$DEFAULT "
+  echo -e "$prompt"
+}
+
+list() {
+  DEF="$(echo -e "\e[0m")"
+  FG_RED="$(echo -e "\e[31m")"
+  FG_GREEN="$(echo -e "\e[32m")"
+  FG_BLUE="$(echo -e "\e[34m")"
+  FG_PURPLE="$(echo -e "\e[35m")"
+
+  local wifi="(${FG_PURPLE}wifi${DEF})"
+  local conn="(${FG_BLUE}conn${DEF})"
+  local actv="${DEF}(${FG_GREEN}actv${DEF})"
+  local inac="${DEF}(${FG_RED}inac${DEF})"
+
+  nmcli --colors yes --get-values ACTIVE,SSID,BARS dev wifi list --rescan no |
+    sed "s/yes/$actv actv/; s/no/$inac inac/; s/^/$wifi wifi /" | column -t -s :
+  nmcli --colors yes --get-values ACTIVE,NAME connection |
+    sed "s/yes/$actv actv/; s/no/$inac inac/; s/^/$conn conn /" | column -t -s :
+}
+
+preview() {
+  local type=$(cut -d ' ' -f 2 <<< "$@")
+  local conn=$(cut -d ' ' -f -5 --complement <<< "$@")
+  local wifi=$(cut -d ' ' -f -5 --complement <<< "$@")
+  local wifi=$(sed 's/\s\+\S\+$//' <<< $wifi)
+  [ "$type" = "wifi" ] && preview-wifi "$wifi"
+  [ "$type" = "conn" ] && preview-connection "$conn"
+}
+
+preview-wifi() {
+  local DEF="$(echo -e "\e[0m")"
+  local FG_GREEN="$(echo -e "\e[32m")"
+  local FG_BLUE="$(echo -e "\e[34m")"
+
+  echo -e "${FG_GREEN}$@${DEF}" && hline
+  nmcli --mode multiline --terse device wifi list --rescan no |
+    sed "/^SSID/d; s/:/|/" | column -t -s "|" |
+    sed "s/^\(\S*\)/${FG_BLUE}\1${DEF}/"
+}
+
+preview-connection() {
+  local DEF="$(echo -e "\e[0m")"
+  local FG_GREEN="$(echo -e "\e[32m")"
+  local FG_BLUE="$(echo -e "\e[34m")"
+
+  echo -e "${FG_GREEN}$@${DEF}" && hline
+  nmcli -s connection show "$@" | sed -n '
+    /connection\.type/p;
+    /connection\.interface/p;
+    /802-11-wireless\.ssid/p;
+    /802-11-wireless\.mode/p;
+    /802-11-wireless\.channel/p;
+    /802-11-wireless-security\.key-mgmt/p;
+    /802-11-wireless-security\.psk:/p;
+    /ipv4\.method/p;
+    /IP4\.ADDRESS/p;
+    /IP4\.GATEWAY/p;
+    /IP4\.DNS/p;
+    /IP4\.DOMAIN/p;
+  ' | sed '
+    s/\s\s\+//;
+    s/^connection\.//;
+    s/^802-11-wireless\.//;
+    s/^802-11-wireless-security\.//;
+    s/^ipv4\.//;
+    s/^IP4\.//;
+  ' | column -t -s : |
+    sed "s/^\(\S*\)/${FG_BLUE}\1${DEF}/"
+}
+
+handle-connection() {
+  local header="$(build-prompt "Action")"
+  local action="$(choose-action "$header" Up Down Edit "Edit nmtui" Delete)"
+  [ -z "$action" ] && return
+  [ "$action" = "edit-nmtui" ] && nmtui edit "$@"
+  [ "$action" = "edit-nmtui" ] && return
+  nmcli connection $action "$@"
+}
+
+find-and-process() {
+  local header="$(build-prompt "Network Manager")"
+  local choice=$(list |
+    fzf --expect=alt-enter,enter,ctrl-r --header="$header" \
+      --with-nth 1,3,5.. -n 3.. --preview-window=:50% --preview="$0 preview {}")
+  local key=$(head -1 <<< $choice) && choice=$(sed '1d' <<< $choice)
+  local type=$(cut -d ' ' -f 2 <<< "$choice")
+  local conn=$(cut -d ' ' -f -5 --complement <<< "$choice")
+  local wifi=$(cut -d ' ' -f -5 --complement <<< "$choice")
+  local wifi=$(sed 's/\s\+\S\+$//' <<< $wifi)
+  case $key in
+    "enter")
+      [ "$type" = "wifi" ] && nmcli device wifi connect "$wifi" --ask
+      [ "$type" = "conn" ] && nmcli connection up "$conn"
+      $0 ;;
+    "alt-enter")
+      [ "$type" = "wifi" ] && nmcli device wifi connect "$wifi" --ask
+      [ "$type" = "conn" ] && handle-connection "$conn"
+      $0 ;;
+    "ctrl-r")
+      echo Rescanning...
+      nmcli device wifi list --rescan yes > /dev/null
+      $0 ;;
+  esac
+}
+
+case "$1" in
+  "") find-and-process;;
+  "list"|"preview") "$@";;
+  *) nmcli $@
+esac
