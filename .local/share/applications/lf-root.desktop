@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=lf root
+Exec=terminal-adapter sudo -E lf
+Comment=
+Path=
+Icon=terminal
+Terminal=false
+StartupNotify=false

@@ -1,0 +1,63 @@
+# vim:cms=#%s:
+
+set hidden
+set number
+set relativenumber
+set incsearch
+
+# Set terminal title
+cmd on-cd &{{ printf "\033]0; $(pwd | sed "s|$HOME|~|") - lf\007" > /dev/tty }}
+on-cd
+
+# Set number of columns in dynamically depending on terminal width
+%{{
+  w=$(tput cols)
+  if [ $w -le 100 ]; then
+    lf -remote "send $id set ratios 1:2"
+  elif [ $w -le 160 ]; then
+    lf -remote "send $id set ratios 1:2:3"
+  else
+    lf -remote "send $id set ratios 1:2:3:5"
+  fi
+}}
+
+# Soft links
+cmd link %{{
+  set -- $(cat ~/.local/share/lf/files)
+  shift
+  if [ "$#" -lt 1 ]; then
+    lf -remote "send $id echo no files to link"
+    exit 0
+  fi
+  ln -s -t . -- "$@"
+  rm ~/.local/share/lf/files
+  lf -remote "send clear"
+}}
+map P :link
+map L :link
+map S :link
+
+map D delete
+
+# Create directory
+cmd mkdir %mkdir -p "$@"
+map a push :mkdir<space>
+
+# Create file
+cmd touch %touch "$@"
+map t push :touch<space>
+
+# Open file
+cmd open ${{
+  mimeopen "$f" 2>/dev/null
+  exit 0
+}}
+
+# Open file and ask which application to use
+cmd ask-and-open !{{
+  echo "Opening $f..."
+  echo
+  mimeopen -a "$f" 2>/dev/null
+  exit 0
+}}
+map o ask-and-open
