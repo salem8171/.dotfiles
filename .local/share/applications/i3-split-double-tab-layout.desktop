@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=I3 Split Double Tab Layout
+Exec=i3-split-double-tab-layout
+TryExec=i3-split-double-tab-layout

@@ -1,0 +1,45 @@
+super+s
+  gtk-launch desktop-menu
+super+Tab
+  gtk-launch switch-window
+
+super+q
+  gtk-launch close-window
+
+super+{F,f}
+  gtk-launch toggle-{maximized,fullscreen}
+
+ctrl+{alt+Delete,shift+Escape}
+  gtk-launch htop
+
+ctrl+alt+x
+  gtk-launch xkill
+
+super+g
+  gtk-launch i3-split-double-tab-layout
+
+# super+l
+#   gtk-launch lock-session
+
+{Print,shift+Print}
+  gtk-launch print-{fullscreen,screen}
+super+shift+s
+  gtk-launch print-screen
+
+XF86Audio{Raise,Lower}Volume
+  pactl set-sink-volume @DEFAULT_SINK@ {+,-}10%
+XF86AudioMute
+  pactl set-sink-mute @DEFAULT_SINK@ toggle
+XF86AudioMicMute
+  pactl set-source-mute @DEFAULT_SOURCE@ toggle
+XF86Audio{Prev,Play,Next}
+  mpc {prev,toggle,next}
+
+super+o;{l,t,b,n,p;g,c,s;c,a,s;t,h,p;m}
+  gtk-launch {lf,terminal,chromium,nvim,ping-archlinux,config,scripts,anime,stig,htop,package-manager}
+
+# super+b
+#   gtk-launch web-browser
+
+super+v
+  copyq show

@@ -1,0 +1,127 @@
+#!/usr/bin/env node
+// nnoremap R :!bash -c 'i3-split-double-tab-layout \| jq > /tmp/i3-split-double-tab-layout-dump.json'<cr>
+
+const GROUP_LAYOUT = "stacked"
+// const GROUP_LAYOUT = "tabbed"
+
+const cp = require('child_process')
+
+function get_tree() {
+  return new Promise((resolve, reject) => {
+    cp.exec("i3-msg -t get_tree", (error, stdout, _) => {
+      if (error) {
+        reject(error);
+      }
+      let tree = JSON.parse(stdout);
+      resolve(tree);
+    });
+  });
+}
+
+function get_workspaces() {
+  return new Promise((resolve, reject) => {
+    cp.exec("i3-msg -t get_workspaces", (error, stdout, _) => {
+      if (error) {
+        reject(error);
+      }
+      let workspaces = JSON.parse(stdout);
+      resolve(workspaces);
+    });
+  });
+}
+
+function get_windows_in_node(node) {
+  let windows = [];
+  node.nodes.forEach(child_node => {
+    if (child_node.window) {
+      windows.push(child_node);
+    } else {
+      let child_node_windows = get_windows_in_node(child_node);
+      child_node_windows.forEach(win => windows.push(win));
+    }
+  });
+  return windows;
+}
+
+function get_workspace_node_by_id(node, id) {
+  if (node.type == "workspace" && node.id == id) {
+    return node;
+  }
+  let ret = null;
+  node.nodes.forEach(child_node => {
+    let workspace = get_workspace_node_by_id(child_node, id);
+    if (workspace) {
+      ret = workspace;
+    }
+  });
+  return ret;
+}
+
+function filter(node) {
+  let ret = {};
+  let atts = [
+    "id",
+    "type",
+    "marks",
+    "name",
+    "window",
+    // "window_type",
+    // "floating",
+    "layout"
+  ];
+  atts.forEach(att => {
+    if (node[att]) {
+      ret[att] = node[att];
+    }
+  });
+  ret.nodes = [];
+  node.nodes.forEach(child_node => {
+    ret.nodes.push(filter(child_node));
+  });
+  return ret;
+}
+
+function i3_cmd(cmd) {
+  cp.execSync(`i3-msg -t command '${cmd}'`);
+}
+
+get_tree().then((tree) => {
+  get_workspaces().then(workspaces => {
+    let focused_workspace = workspaces.find(ws => ws.focused == true);
+    let focused_workspace_node = get_workspace_node_by_id(tree, focused_workspace.id);
+    let windows = get_windows_in_node(focused_workspace_node);
+    if (windows.length >= 2) {
+      let initially_focused_window = windows.find(win => win.focused == true);
+      let ref_window_1 = windows[0];
+      let ref_window_2 = windows[Math.floor((windows.length + 1) / 2)];
+      i3_cmd("unmark _tab_ref");
+      windows.forEach(win => {
+        i3_cmd(`[id="${win.window}"] move window to workspace 2`);
+      });
+      i3_cmd(`[id="${ref_window_1.window}"] move window to workspace ${focused_workspace.num}`);
+      i3_cmd(`[id="${ref_window_2.window}"] move window to workspace ${focused_workspace.num}`);
+      i3_cmd(`[id="${ref_window_1.window}"] split toggle`);
+      i3_cmd(`[id="${ref_window_1.window}"] layout ${GROUP_LAYOUT}`);
+      i3_cmd(`[id="${ref_window_2.window}"] split toggle`);
+      i3_cmd(`[id="${ref_window_2.window}"] layout ${GROUP_LAYOUT}`);
+      let ref_window = ref_window_1;
+      i3_cmd(`[id="${ref_window_1.window}"] mark _tab_ref`);
+      windows.forEach(win => {
+        if (win.id != ref_window.id && win.id != ref_window_2.id) {
+          i3_cmd(`[id="${win.window}"] move window to mark _tab_ref`);
+        } else if (win.id == ref_window_2.id) {
+          i3_cmd(`unmark _tab_ref; [id="${ref_window_2.window}"] mark _tab_ref`);
+          ref_window = ref_window_2;
+        }
+      });
+      i3_cmd(`[id="${initially_focused_window.window}"] focus`);
+      i3_cmd("unmark _tab_ref");
+    }
+
+    // Show workspace tree after modifications
+    get_tree().then(tree => {
+      focused_workspace_node = get_workspace_node_by_id(tree, focused_workspace.id);
+      console.log(JSON.stringify(filter(focused_workspace_node)));
+    });
+  });
+});

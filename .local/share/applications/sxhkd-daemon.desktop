@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Sxhkd Daemon
+Exec=sxhkd
+Terminal=false
+StartupNotify=false
