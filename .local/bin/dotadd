@@ -1,9 +1,57 @@
 #!/bin/bash
 
-prefix=$HOME/.dotfiles
-source=$(readlink -f $1)
-destination=$(echo $source | sed "s#$HOME#$prefix#")
+prefix="$HOME/.dotfiles"
 
-mkdir -p $(dirname $destination) &&
-  ln -f $source $destination &&
-  echo $source " -> " $destination
+synopsis() {
+  echo -e "\
+    \rUsage:
+    \r  $(basename $0) [-h|--help]
+    \r  $(basename $0) FILE
+    \r  $(basename $0) [-a|--all] DIRECTORY
+    \r
+    \rArguments:
+    \r  -h, --help Show this help message and exit
+    \r  -a, --all  Add files recursively from a directory
+  " >&2
+}
+
+addfile() {
+  working_dir="$(pwd)"
+  cd "$(dirname $1)"
+  source="$(pwd)/$(basename $1)"
+  destination="${source/$HOME/$prefix}"
+  cd $working_dir
+
+  if [[ ! $source =~ "$HOME" ]]; then
+    echo "$1 is not in a subdirectory of $HOME" >&2
+    exit 1
+  else
+    mkdir -p $(dirname $destination) && ln -vfP $source $destination
+  fi
+}
+
+adddir() {
+  if [ "$recursive" = true ]; then
+    filter=cat
+  else
+    if [ -x "$(command -v fzf)" ]; then
+      filter="fzf --multi"
+    else
+      echo "fzf not found in PATH, use -a to recursively add files instead" >&2
+      exit 1
+    fi
+  fi
+  find "$1" -type f | $filter | while read file; do
+    addfile "$file"
+  done
+}
+
+case "$1" in
+  "-h" | "--help") synopsis; exit 0;;
+  "-a" | "--all") recursive=true; shift;;
+esac
+
+[ $# -eq 0 ] && adddir . && exit 0
+[ -d "$1" ] && adddir "$1" && exit 0
+[ -f "$1" ] && addfile "$1" && exit 0
+echo "$1 is not a file or directory" >&2 && exit 1
