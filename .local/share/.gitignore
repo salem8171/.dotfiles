@@ -1,6 +1,5 @@
 Android Open Source Project
 CMakeTools
-fluffychat
 KDE
 NuGet
 Smart Code ltd
@@ -13,18 +12,23 @@ calcurse
 citra-emu
 copyq
 desktop-directories
+fluffychat
 godot
 gsettings-data-convert
 gvfs-metadata
 i3.log
+icons/hicolor
 keyrings
+lftp
 lutris
 mime
 mirage
 orage
+ranger
 recently-used*
 stig
 tmux
+trackma
 unity3d
 vimiv
 webkitgtk
