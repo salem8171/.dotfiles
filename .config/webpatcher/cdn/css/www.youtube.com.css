@@ -1,0 +1,213 @@
+html {
+    background-color: var(--monokaish-0) !important;
+}
+
+html:not(.style-scope) {
+    --yt-spec-brand-background-solid: var(--monokaish-1) !important;
+    --yt-spec-brand-background-primary: var(--monokaish-2) !important;
+    /* --yt-spec-brand-background-secondary: var(--monokaish-2) !important; */
+    --yt-spec-general-background-a: var(--monokaish-0) !important;
+    --yt-spec-general-background-b: var(--monokaish-2) !important;
+    --yt-spec-general-background-c: #e9e9e9;
+    --yt-spec-error-background: #181818;
+    --yt-spec-text-primary: var(--monokaish-5) !important;
+    --yt-spec-text-primary-inverse: #fff;
+    --yt-spec-text-secondary: #606060;
+    --yt-spec-text-disabled: #909090;
+    --yt-spec-call-to-action: var(--monokaish-3) !important;
+    --yt-spec-icon-active-other: #606060;
+    --yt-spec-icon-inactive: #909090;
+    --yt-spec-icon-disabled: #ccc;
+    --yt-spec-badge-chip-background: rgba(0, 0, 0, 0.05);
+    --yt-spec-verified-badge-background: rgba(0, 0, 0, 0.15);
+    --yt-spec-suggested-action: #f2f8ff;
+    --yt-spec-button-chip-background-hover: rgba(0, 0, 0, 0.1);
+    --yt-spec-touch-response: #000;
+    --yt-spec-paper-tab-ink: rgba(0, 0, 0, 0.3);
+    --yt-spec-filled-button-text: #fff;
+    --yt-spec-call-to-action-inverse: #3ea6ff;
+    --yt-spec-brand-icon-active: #f00;
+    --yt-spec-brand-icon-inactive: #606060;
+    --yt-spec-brand-button-background: #c00;
+    --yt-spec-brand-link-text: #c00;
+    --yt-spec-filled-button-focus-outline: rgba(0, 0, 0, 0.6);
+    --yt-spec-call-to-action-button-focus-outline: rgba(6, 95, 212, 0.3);
+    --yt-spec-brand-text-button-focus-outline: rgba(204, 0, 0, 0.3);
+    --yt-spec-inactive-text-button-focus-outline: #ccc;
+    --yt-spec-ad-indicator: #00716c;
+    --yt-spec-brand-subscribe-button-background: var(--yt-spec-brand-button-background);
+    --yt-spec-wordmark-text: var(--monokaish-5) !important;
+    --yt-spec-10-percent-layer: rgba(0, 0, 0, 0.1);
+    --yt-spec-snackbar-background: #212121;
+    --yt-spec-selected-nav-text: #c00;
+    --yt-spec-themed-blue: #065fd4;
+    --yt-spec-themed-green: #107516;
+    --yt-spec-themed-overlay-background: rgba(255, 255, 255, 0.7);
+    --yt-spec-static-brand-red: #f00;
+    --yt-spec-static-brand-white: #fff;
+    --yt-spec-static-brand-black: #212121;
+    --yt-spec-static-ad-yellow: #fbc02d;
+    --yt-spec-static-overlay-background-solid: #000;
+    --yt-spec-static-overlay-background-heavy: rgba(0, 0, 0, 0.8);
+    --yt-spec-static-overlay-background-medium: rgba(0, 0, 0, 0.6);
+    --yt-spec-static-overlay-background-medium-light: rgba(0, 0, 0, 0.3);
+    --yt-spec-static-overlay-background-light: rgba(0, 0, 0, 0.1);
+    --yt-spec-static-overlay-text-primary: #fff;
+    --yt-spec-static-overlay-text-secondary: rgba(255, 255, 255, 0.7);
+    --yt-spec-static-overlay-text-disabled: rgba(255, 255, 255, 0.3);
+    --yt-spec-static-overlay-call-to-action: #3ea6ff;
+    --yt-spec-static-overlay-icon-active-other: #fff;
+    --yt-spec-static-overlay-icon-inactive: rgba(255, 255, 255, 0.7);
+    --yt-spec-static-overlay-icon-disabled: rgba(255, 255, 255, 0.3);
+    --yt-spec-static-overlay-button-primary: rgba(255, 255, 255, 0.3);
+    --yt-spec-static-overlay-button-secondary: rgba(255, 255, 255, 0.1);
+    --yt-spec-static-overlay-background-brand: rgba(204, 0, 0, 0.9);
+}
+
+html:not(.style-scope) {
+    --yt-luna-black: var(--monokaish-5) !important;
+    --yt-opalescence-grey: #888888;
+    --yt-opalescence-soft-grey: #eeeeee;
+    --yt-opalescence-dark-grey: #333333;
+    --yt-red: #e62117;
+    --yt-white: var(--monokaish-2) !important;
+    --yt-blue: #2793e6;
+    --ad-yellow: #e6bc27;
+    --yt-surface-100: white;
+    --yt-surface-200: #fafafa;
+    --yt-surface-300: whitesmoke;
+    --yt-surface-400: #ededed;
+    --yt-body-500: rgba(0, 0, 0, 0.87);
+    --yt-body-400: rgba(0, 0, 0, 0.74);
+    --yt-body-300: rgba(0, 0, 0, 0.54);
+    --yt-body-200: rgba(0, 0, 0, 0.26);
+    --yt-body-100: rgba(0, 0, 0, 0.04);
+    --yt-opacity-lighten-1: 0.8;
+    --yt-opacity-lighten-2: 0.6;
+    --yt-opacity-lighten-3: 0.4;
+    --yt-opacity-lighten-4: 0.2;
+    --yt-opacity-lighten-5: 0.1;
+    --yt-luna-black-opacity-lighten-1: hsla(0, 0%, 6.7%, var(--yt-opacity-lighten-1));
+    --yt-luna-black-opacity-lighten-2: hsla(0, 0%, 6.7%, var(--yt-opacity-lighten-2));
+    --yt-luna-black-opacity-lighten-2-hex: #707070;
+    --yt-luna-black-opacity-lighten-3: hsla(0, 0%, 6.7%, var(--yt-opacity-lighten-3));
+    --yt-luna-black-opacity-lighten-4: hsla(0, 0%, 6.7%, var(--yt-opacity-lighten-4));
+    --yt-opalescence-grey-opacity-lighten-1: hsla(0, 0%, 53.3%, var(--yt-opacity-lighten-1));
+    --yt-opalescence-grey-opacity-lighten-2: hsla(0, 0%, 53.3%, var(--yt-opacity-lighten-2));
+    --yt-opalescence-grey-opacity-lighten-3: hsla(0, 0%, 53.3%, var(--yt-opacity-lighten-3));
+    --yt-opalescence-grey-opacity-lighten-4: hsla(0, 0%, 53.3%, var(--yt-opacity-lighten-4));
+    --yt-opalescence-grey-opacity-lighten-5: hsla(0, 0%, 53.3%, var(--yt-opacity-lighten-5));
+    --yt-opalescence-soft-grey-opacity-lighten-1: hsla(0, 0%, 93.3%, var(--yt-opacity-lighten-1));
+    --yt-opalescence-soft-grey-opacity-lighten-2: hsla(0, 0%, 93.3%, var(--yt-opacity-lighten-2));
+    --yt-opalescence-soft-grey-opacity-lighten-3: hsla(0, 0%, 93.3%, var(--yt-opacity-lighten-3));
+    --yt-opalescence-soft-grey-opacity-lighten-4: hsla(0, 0%, 93.3%, var(--yt-opacity-lighten-4));
+    --yt-white-opacity-lighten-1: hsla(0, 0%, 100%, var(--yt-opacity-lighten-1));
+    --yt-white-opacity-lighten-2: hsla(0, 0%, 100%, var(--yt-opacity-lighten-2));
+    --yt-white-opacity-lighten-3: hsla(0, 0%, 100%, var(--yt-opacity-lighten-3));
+    --yt-white-opacity-lighten-4: hsla(0, 0%, 100%, var(--yt-opacity-lighten-4));
+    --yt-blue-opacity-lighten-2: hsla(206.1, 79.3%, 52.7%, var(--yt-opacity-lighten-2));
+    --yt-blue-opacity-lighten-4: hsla(206.1, 79.3%, 52.7%, var(--yt-opacity-lighten-4));
+    --yt-playability-button-color: #262626;
+    --yt-blue-light: #167ac6;
+    --yt-blue-suggestive: #f2f8ff;
+    --yt-grey: #222222;
+    --yt-section-4-light: #e3e3e3;
+    --yt-dark-surface-100: #121212;
+    --yt-dark-surface-200: #1c1c1c;
+    --yt-dark-surface-200-lighten-1: rgba(28, 28, 28, 0.8);
+    --yt-dark-surface-300: #242424;
+    --yt-dark-surface-400: #292929;
+    --yt-dark-body-500: rgba(255, 255, 255, 0.88);
+    --yt-dark-body-400: rgba(255, 255, 255, 0.74);
+    --yt-dark-body-300: rgba(255, 255, 255, 0.5);
+    --yt-dark-body-200: rgba(255, 255, 255, 0.26);
+    --yt-dark-body-100: rgba(255, 255, 255, 0.08);
+    --yt-section-4-dark: #292929;
+    --yt-subscribe-button-count: rgba(255, 255, 255, 0.85);
+}
+
+html:not(.style-scope) {
+    --ytd-searchbox-border-color: var(--yt-opalescence-grey-opacity-lighten-4);
+    --ytd-searchbox-legacy-border-color: var(--monokaish-3) !important;
+    --ytd-searchbox-legacy-border-shadow-color: var(--monokaish-3) !important;
+    --ytd-searchbox-legacy-button-color: var(--monokaish-3) !important;
+    --ytd-searchbox-legacy-button-border-color: var(--monokaish-4) !important;
+    --ytd-searchbox-legacy-button-focus-color: var(--monokaish-4) !important;
+    --ytd-searchbox-legacy-button-hover-color: var(--monokaish-4) !important;
+    --ytd-searchbox-legacy-button-hover-border-color: var(--monokaish-4) !important;
+    --ytd-searchbox-legacy-button-icon-color: var(--monokaish-5) !important;
+    --ytd-moderation-panel-background: var(--yt-opalescence-soft-grey-opacity-lighten-2);
+    --ytd-moderation-panel-hover: var(--yt-opalescence-soft-grey-opacity-lighten-1);
+    --ytd-moderation-panel-comment-text: var(--yt-luna-black);
+    --ytd-moderation-panel-comment-metadata-text: var(--yt-luna-black-opacity-lighten-2);
+    --ytd-moderation-icon-color: var(--yt-luna-black-opacity-lighten-2);
+    --ytd-moderation-icon-hover-color: var(--yt-luna-black);
+    --ytd-moderation-panel-likely-spam-divider: var(--yt-opalescence-grey-opacity-lighten-5);
+    --ytd-comment-text-color: var(--yt-luna-black);
+    --ytd-comment-metadata-text-color: var(--yt-spec-text-secondary);
+    --ytd-watch-card-secondary-text-color: var(--yt-opalescence-grey);
+    --ytd-watch-card-album-header-background: var(--yt-white);
+    --ytd-watch-header-background: var(--yt-surface-300);
+    --ytd-backstage-metadata-text-color: var(--yt-opalescence-grey);
+    --ytd-backstage-video-link-background-color: var(--yt-opalescence-soft-grey-opacity-lighten-3);
+    --ytd-backstage-image-alert-color: var(--yt-luna-black-opacity-lighten-2);
+    --ytd-backstage-cancel-background-color: var(--yt-white);
+    --ytd-backstage-cancel-color: var(--yt-luna-black-opacity-lighten-3);
+    --ytd-backstage-attachment-background-color: var(--yt-surface-100);
+    --ytd-backstage-creationbox-inactive-color: var(--yt-body-200);
+    --ytd-backstage-creationbox-text-color: var(--yt-body-300);
+    --ytd-backstage-creationbox-input-text-color: var(--yt-body-500);
+    --ytd-backstage-creationbox-disabled-button-color: var(--yt-body-100);
+    --ytd-backstage-creationbox-disabled-button-text-color: var(--yt-white);
+    --ytd-backstage-attachment-icon-hover-color: var(--yt-body-400);
+    --ytd-sponsorships-background-color-focus: var(--yt-opalescence-soft-grey-opacity-lighten-3);
+    --ytd-badge-disabled-color: var(--yt-opalescence-grey-opacity-lighten-3);
+    --ytd-collection-badge-color: var(--yt-luna-black-opacity-lighten-1);
+    --ytd-owner-badge-color: var(--yt-luna-black-opacity-lighten-3);
+    --ytd-simple-badge-color: var(--yt-luna-black-opacity-lighten-2);
+    --ytd-shopping-product-info: var(--yt-luna-black-opacity-lighten-1);
+    --ytd-transcript-cue-hover-background-color: var(--yt-opalescence-soft-grey);
+    --ytd-transcript-toolbar-background-color: var(--yt-opalescence-soft-grey);
+    --ytd-transcript-toolbar-text: var(--yt-luna-black);
+    --ytd-video-publish-date-color: var(--yt-luna-black-opacity-lighten-2);
+    --ytd-vat-notice-text: var(--yt-luna-black-opacity-lighten-2);
+    --ytd-offer-background-color: var(--yt-opalescence-soft-grey-opacity-lighten-3);
+    --ytd-video-game-watch-card-logo-color: var(--yt-luna-black);
+    --ytd-watch-split-pane-sidebar-background-color: var(--yt-surface-200);
+}
+
+.sbsb_d {
+    background: var(--monokaish-1) !important;
+}
+
+.sbdd_b {
+    border: 1px var(--monokaish-3) !important;
+}
+
+.sbsb_a {
+    background: var(--monokaish-2) !important;
+}
+
+.gsfs {
+    color: var(--monokaish-3) !important;
+}
+
+.sbfl_b {
+    background: var(--monokaish-2) !important;
+}
+
+/* Signin popup and Autoplay popup */
+.ytp-promotooltip-wrapper,
+yt-tooltip-renderer {
+    display: none !important;
+}
+
+/* [aria-label="Subscribe"], */
+/* [aria-label="More actions"], */
+/* [aria-label="Save to playlist"], */
+/* [aria-label="Settings"], */
+/* [aria-label="Sign in"], */
+/* [aria-label="YouTube apps"], */
+/* [aria-label="Guide"] { */
+/*     display: none !important; */
+/* } */

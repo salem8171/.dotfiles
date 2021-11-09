@@ -1,0 +1,152 @@
+body {
+    background-color: var(--monokaish-0);
+    color: var(--monokaish-5);
+}
+
+.gbh, .gbd {
+    border-top: 1px solid var(--monokaish-3) !important;
+}
+
+form[action="?&s=m"] > table[bgcolor="#CCCCCC"],
+table[bgcolor="#C3D9FF"] {
+    background-color: var(--monokaish-2);
+}
+
+table[bgcolor="#E0ECFF"] {
+    background-color: var(--monokaish-1);
+}
+
+td[bgcolor="#E0ECFF"] {
+    background-color: var(--monokaish-1);
+}
+
+tr[bgcolor="#E8EEF7"] {
+    background-color: var(--monokaish-1);
+}
+
+.th tr[bgcolor="#ffffff"] {
+    background-color: var(--monokaish-2);
+}
+
+.th td, .th th {
+    border-bottom: 1px solid var(--monokaish-3) !important;
+}
+
+a:link, a:active, a:visited,
+#guser a.gb1, #guser a.gb4,
+#gbar a.gb1, #gbar a.gb4 {
+    color: var(--monokaish-3) !important;
+}
+
+a:hover,
+#guser a.gb1:hover, #guser a.gb4:hover,
+#gbar a.gb1:hover, #gbar a.gb4:hover {
+    color: var(--monokaish-5) !important;
+}
+
+input[type="submit" i] {
+    color: var(--monokaish-5);
+    background-color: var(--monokaish-3);
+    border-style: solid;
+    border-color: var(--monokaish-3);
+    border-radius: 2px;
+    border-width: 1px;
+}
+
+input[type="submit" i]:hover {
+    background-color: var(--monokaish-4);
+}
+
+input, textarea {
+    color: var(--monokaish-5);
+    background-color: var(--monokaish-1);
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px;
+    border-color: var(--monokaish-3);
+}
+
+select {
+    color: var(--monokaish-5);
+    background-color: var(--monokaish-3);
+    border-radius: 2px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--monokaish-3);
+}
+
+:focus {
+    outline: var(--monokaish-3) auto 1px;
+}
+
+td[bgcolor="#ffffff"] {
+    background-color: var(--monokaish-2);
+}
+
+td[bgcolor="#CCCCCC"] {
+    background-color: var(--monokaish-2);
+}
+
+td[bgcolor="#C3D9FF"] {
+    background-color: var(--monokaish-2);
+}
+
+table[bgcolor="#cccccc"] {
+    background-color: var(--monokaish-3);
+}
+
+table[bgcolor="#efefef"] {
+    background-color: var(--monokaish-1);
+}
+
+tr[bgcolor="#ffffff"] {
+    background-color: var(--monokaish-1);
+}
+
+table[bgcolor="#E2E2E2"] {
+    background-color: var(--monokaish-2);
+}
+
+div.gmail_quote > blockquote {
+    border-left: 1px solid var(--monokaish-3) !important;
+}
+
+*[bgcolor="#fad163"] {
+    background-color: var(--monokaish-2);
+}
+
+*[bgcolor="#fff7d7"] {
+    background-color: var(--monokaish-1);
+}
+
+.prf td {
+    border-color: var(--monokaish-3) !important;
+}
+
+.nav ul li.on {
+    background: var(--monokaish-1) !important;
+}
+
+font[color="#000000"] {
+    color: var(--monokaish-5)
+}
+
+font[color="#7777CC"] {
+    color: var(--monokaish-5)
+}
+
+font[color="#5B1094"] {
+    color: #7B15AE;
+}
+
+font[color="#790619"] {
+    color: #B41C1C;
+}
+
+font[color="#550055"] {
+    color: #662866;
+}
+
+body > table > tbody > tr > td > h1 > a > img {
+    display: none
+}

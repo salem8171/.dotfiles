@@ -1,0 +1,16 @@
+html {
+    --monokaish-0: #272822;
+    --monokaish-1: #23241e;
+    --monokaish-2: #1f201a;
+    --monokaish-3: #48483e;
+    --monokaish-4: #76715e;
+    --monokaish-5: #acada1;
+}
+
+::-webkit-scrollbar {
+    background-color: var(--monokaish-2) !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--monokaish-3) !important;
+}

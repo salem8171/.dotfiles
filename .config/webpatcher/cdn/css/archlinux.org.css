@@ -1,0 +1,77 @@
+#archnavbar {
+    background-color: var(--monokaish-1) !important;
+}
+
+#searchInput {
+    background-color: var(--monokaish-0);
+    border-color: var(--monokaish-3);
+    color: var(--monokaish-5);
+}
+
+#content {
+    background-color: var(--monokaish-0);
+    border-color: var(--monokaish-3);
+}
+
+#content table, #content h1, #content h2, #content h3, #content h4, #content h5, #content pre, #content code, #content tt {
+    color: var(--monokaish-5);
+}
+
+.portal h3, .vector-menu-portal h3,
+.tocnumber {
+    color: var(--monokaish-5);
+}
+
+nav.vector-menu-tabs li.selected {
+    background-color: var(--monokaish-0);
+    border-color: var(--monokaish-3);
+    border-bottom-color: var(--monokaish-0);
+}
+
+body {
+    background: var(--monokaish-0);
+}
+
+#toc, .toc, .mw-warning, .toccolours {
+    background-color: var(--monokaish-0);
+    border-color: var(--monokaish-3);
+}
+
+code {
+    background-color: var(--monokaish-2);
+    border-color: var(--monokaish-3);
+}
+
+#content pre, #content code, #content tt {
+    background-color: var(--monokaish-2);
+    border-color: var(--monokaish-3);
+}
+
+.catlinks,
+div.archwiki-template-message,
+div.archwiki-template-box.archwiki-template-box-tip,
+div.archwiki-template-box.archwiki-template-box-note {
+    background-color: var(--monokaish-1);
+    border-color: var(--monokaish-3);
+}
+
+.mw-body, .parsoid-body {
+    color: var(--monokaish-5);
+}
+
+.mw-footer li {
+    color: var(--monokaish-5);
+}
+
+.wikitable {
+    background-color: var(--monokaish-1);
+}
+
+.wikitable > tr > th, .wikitable > * > tr > th {
+    background-color: var(--monokaish-2);
+}
+
+.wikitable > tr > th, .wikitable > tr > td,
+.wikitable > * > tr > th, .wikitable > * > tr > td {
+    border-color: var(--monokaish-3);
+}
