@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Stig
+Exec=terminal-adapter -u stig stig
+Comment=
+Path=
+Icon=terminal
+Terminal=false
+StartupNotify=false

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Add Torrent
+Exec=transmission-remote -a %U
+TryExec=transmission-remote
+Icon=transmission
+NoDisplay=true
+MimeType=x-scheme-handler/magnet;x-scheme-handler/torrent

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Transmission Daemon
+Exec=transmission-daemon
+Terminal=false
+StartupNotify=false
