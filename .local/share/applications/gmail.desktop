@@ -1,5 +1,9 @@
 [Desktop Entry]
 Type=Application
 Name=Gmail
-Exec=firefox --new-window mail.google.com?ui=html
-# Description=
+# Exec=chromium --password-store=basic --profile-directory="Profile 2" --app="https://mail.google.com/mail/u/0/h?ui=html"
+Exec=chromium-wrapper --profile-directory="Profile 2" --app="https://mail.google.com/mail/u/0/h?ui=html"
+TryExec=chromium-wrapper
+Icon=gmail
+Terminal=false
+StartupNotify=false
