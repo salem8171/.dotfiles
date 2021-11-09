@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+PLAYLISTS_FILE="${XDG_DATA_HOME-:$HOME/.local/share}/$(basename "$0")/playlists.txt"
+MUSIC_HOME="$HOME/Music"
+
+error() { echo -e "$@" >&2 && exit 1; }
+
+assert-exist() {
+  for exe; do
+    [ ! -x "$(command -v "$exe")" ] && error "$exe not found in PATH";
+  done
+  return 0
+}
+
+assert-exist youtube-dl
+
+YOUTUBE_DL_CMD=(youtube-dl)
+YOUTUBE_DL_CMD+=("-ciw")
+YOUTUBE_DL_CMD+=("--yes-playlist")
+YOUTUBE_DL_CMD+=("--extract-audio")
+YOUTUBE_DL_CMD+=("--audio-format" "mp3")
+YOUTUBE_DL_CMD+=("--download-archive" "ytdl_archive.txt")
+
+[ -f "$PLAYLISTS_FILE" ] || {
+  mkdir -p "$(dirname "$PLAYLISTS_FILE")"
+  touch "$PLAYLISTS_FILE"
+}
+
+sed '/^\s*$/d; /^#/d' "$PLAYLISTS_FILE" | while read -r line; do
+  playlist_name="$(awk '{ print $1 }' <<< "$line")"
+  playlist_url="$(awk '{ print $2 }' <<< "$line")"
+  mkdir -p "$MUSIC_HOME/$playlist_name"
+  (
+    cd "$MUSIC_HOME/$playlist_name" ||
+      error "Could not find $MUSIC_HOME/$playlist_name"
+    "${YOUTUBE_DL_CMD[@]}" "$playlist_url"
+  )
+done

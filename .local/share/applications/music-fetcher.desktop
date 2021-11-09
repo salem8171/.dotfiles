@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Music Fetcher
+Exec=terminal-adapter music-fetcher
+TryExec=music-fetcher
+Icon=terminal

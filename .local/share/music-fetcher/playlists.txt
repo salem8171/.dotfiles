@@ -1,0 +1,11 @@
+# vim: ft=conf
+
+################################################################################
+# Youtube playlists
+################################################################################
+
+NightcoreLounge https://www.youtube.com/c/NightcoreLounge/videos
+Rayden https://www.youtube.com/c/RaydenLGX/videos
+Zero.Miz-Kun https://www.youtube.com/c/ZeroMizKun/videos
+NightcoreTobi https://www.youtube.com/c/NightcoreTobi/videos
+NightcoreReality https://www.youtube.com/user/NightcoreReality/videos
