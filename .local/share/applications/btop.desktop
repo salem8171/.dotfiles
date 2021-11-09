@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=btop
+Exec=terminal-adapter btop
+TryExec=btop
+Icon=terminal
