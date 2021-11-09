@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Switch Window
+Exec=terminal-adapter -u "switch-window" -p switch-window
+Comment=
+Path=
+Icon=terminal
+Terminal=false
+StartupNotify=false
