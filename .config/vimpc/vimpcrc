@@ -1,0 +1,17 @@
+# vim:ft=vim
+
+hi status black yellow
+hi tab black yellow
+hi song default yellow
+
+set mouse
+
+set windows playlist,browse,lists,library,help
+set window playlist
+
+map l :tabnext<enter>
+map h :tabprev<enter>
+
+map q :quitall<enter>
+map <c-q> :quitall<enter>
+map <c-w> :quit<enter>

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Vimpc
+Exec=terminal-adapter vimpc
+TryExec=vimpc
+Icon=terminal
