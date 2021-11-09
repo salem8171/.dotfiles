@@ -475,10 +475,10 @@ let g:peekaboo_window = 'vert bo new'
 let g:asyncrun_open = 10
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
-command! -bang -bar -nargs=* Gpush execute 'AsyncRun<bang> -cwd=' .
-          \ fnameescape(FugitiveGitDir()) 'git push' <q-args>
-command! -bang -bar -nargs=* Gfetch execute 'AsyncRun<bang> -cwd=' .
-          \ fnameescape(FugitiveGitDir()) 'git fetch' <q-args>
+" command! -bang -bar -nargs=* Gpush execute 'AsyncRun<bang> -cwd=' .
+"           \ fnameescape(FugitiveGitDir()) 'git push' <q-args>
+" command! -bang -bar -nargs=* Gfetch execute 'AsyncRun<bang> -cwd=' .
+"           \ fnameescape(FugitiveGitDir()) 'git fetch' <q-args>
 
 " let g:asyncrun_status = ''
 " let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
