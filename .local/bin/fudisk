@@ -1,0 +1,105 @@
+#!/bin/bash
+
+error() { echo -e "$@" >&2 && exit 1; }
+
+pause() { echo Press ENTER to continue... >&2; read -r; }
+
+assert-exist() {
+  for exe; do
+    [ ! -x "$(command -v "$exe")" ] && error "$exe not found in PATH";
+  done
+  return 0
+}
+
+choose-action() {
+  assert-exist fzf
+  local header actions
+  header="$1" && shift
+  actions=$(while [ $# -ne 0 ]; do echo "$1"; shift; done)
+  fzf --header="$header" <<< "$actions" | tr "[:upper:] " "[:lower:]-"
+}
+
+build-prompt() {
+  PL_LEFT_HARD=""
+  PL_SOFT_EDGE="╱"
+  PL_DOWN_EDGE=""
+  PROMPT_FG="\033[38;2;118;113;94m"
+  PROMPT_BG="\033[48;2;118;113;94m"
+  PROMPT_TEXT="\e[37m"
+  DEFAULT="\e[0m"
+
+  local prompt="$PROMPT_FG$PL_DOWN_EDGE$PROMPT_BG$PROMPT_TEXT "
+  prompt+="$1" && shift
+  for segment; do
+    prompt+=" $PL_SOFT_EDGE $segment"
+  done
+  prompt+=" $DEFAULT$PROMPT_FG$PL_LEFT_HARD$DEFAULT "
+  echo -e "$prompt"
+}
+
+preview() {
+  if [ $# -eq 0 ]; then
+    for device in $(lsblk -lno PATH); do
+      $0 preview "$device"
+      echo
+    done | less -R
+  else
+    echo -e "\e[32m$1\e[0;39;49m"
+    for _ in $(seq 1 "${FZF_PREVIEW_COLUMNS:-40}") ; do echo -n '-'; done
+    echo
+    lsblk "$1" --nodeps --pairs \
+      -o SIZE,FSTYPE,MOUNTPOINT,UUID,PARTLABEL,PARTTYPENAME,MODE,HOTPLUG,MODEL,VENDOR |
+      sed 's/\s\w\+%\?=""//g; s/="/=/g; s/" \?/\n/g' |
+      column -t -s =
+  fi
+}
+
+# shellcheck disable=SC2120
+list() {
+  DEF="$(echo -e "\e[0m")"
+  FG_RED="$(echo -e "\e[31m")"
+  FG_GREEN="$(echo -e "\e[32m")"
+
+  mounted="(${FG_GREEN}mounted${DEF})"
+  unmounted="(${FG_RED}unmounted${DEF})"
+
+  [ $# -eq 0 ] && devices=$(lsblk -lno PATH)
+  # shellcheck disable=SC2086
+  lsblk "$@" $devices --nodeps -lno MOUNTPOINT,PATH,VENDOR,MODEL,LABEL,PARTLABEL |
+    sed "s/\s*$//; s/\s\+/ /g; s/^\S\+\s\+/$mounted   /; s/^\s\+/$unmounted /" |
+    sed 's/^\((\S\+)\s\+\)\(\S\+\)$/\1\2 \2/g'
+}
+
+mount() {
+  [ $# -eq 0 ] && error "No block device specified"
+  udisksctl mount -b "$1"
+  pause
+}
+
+unmount() {
+  [ $# -eq 0 ] && error "No block device specified"
+  udisksctl unmount -b "$1"
+  pause
+}
+
+find-and-process() {
+  assert-exist fzf
+  assert-exist udisksctl
+  header="$(build-prompt "Mount Manager")"
+  # shellcheck disable=SC2119
+  device=$(list |
+    fzf --header="$header" --with-nth=1,3.. -n 2.. \
+    --preview-window=down:60% --preview="$0 preview {2}")
+  [ -z "$device" ] && exit
+  # shellcheck disable=SC2001
+  current_state=$(sed 's/^(\(\w*\)).*$/\1/' <<< "$device")
+  blk_device=$(awk '{print $2}' <<< "$device")
+  [ "$current_state" = "mounted" ] && unmount "$blk_device"
+  [ "$current_state" = "unmounted" ] && mount "$blk_device"
+  $0
+}
+
+case "$1" in
+  "") find-and-process;;
+  "mount"|"unmount"|"preview"|"list") "$@"
+esac

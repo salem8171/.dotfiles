@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Mount Manager
+Exec=terminal-adapter -p fudisk
+Comment=
+Path=
+Icon=terminal
+Terminal=false
+StartupNotify=false
