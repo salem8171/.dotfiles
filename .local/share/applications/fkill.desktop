@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=fkill
+Exec=terminal-adapter -p fkill
+Comment=
+Path=
+Icon=terminal
+Terminal=false
+StartupNotify=false

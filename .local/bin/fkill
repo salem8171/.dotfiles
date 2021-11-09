@@ -1,12 +1,71 @@
 #!/bin/bash
 
-if [ "$UID" != "0" ]; then
-  pid=$(ps -f -u $UID | sed 1d | fzf --layout=reverse --height=23 -m | awk '{print $2}')
-else
-  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
-fi
+error() { echo -e "$@" >&2 && exit 1; }
 
-if [ "x$pid" != "x" ]
-then
-  echo $pid | xargs kill -${1:-9}
-fi
+assert-exist() {
+  for exe; do
+    [ ! -x "$(command -v "$exe")" ] && error "$exe not found in PATH";
+  done
+  return 0
+}
+
+choose-action() {
+  assert-exist fzf
+  local header actions
+  header="$1" && shift
+  actions=$(while [ $# -ne 0 ]; do echo "$1"; shift; done)
+  fzf --header="$header" <<< "$actions" | tr "[:upper:] " "[:lower:]-"
+}
+
+build-prompt() {
+  PL_LEFT_HARD=""
+  PL_SOFT_EDGE="╱"
+  PL_DOWN_EDGE=""
+  PROMPT_FG="\033[38;2;118;113;94m"
+  PROMPT_BG="\033[48;2;118;113;94m"
+  PROMPT_TEXT="\e[37m"
+  DEFAULT="\e[0m"
+
+  local prompt="$PROMPT_FG$PL_DOWN_EDGE$PROMPT_BG$PROMPT_TEXT "
+  prompt+="$1" && shift
+  for segment; do
+    prompt+=" $PL_SOFT_EDGE $segment"
+  done
+  prompt+=" $DEFAULT$PROMPT_FG$PL_LEFT_HARD$DEFAULT "
+  echo -e "$prompt"
+}
+
+handle-action() {
+  local action
+  action="$1" && shift
+  [ -z "$action" ] && return
+  while read -r pid; do
+    kill -"$action" "$pid"
+  done <<< "$@"
+}
+
+handle-key() {
+  local key action header
+  key="$1" && shift
+  case "$key" in
+    "enter"|"double-click") handle-action TERM "$@";;
+    "alt-enter")
+      header="$(build-prompt "Signals")"
+      # shellcheck disable=SC2046
+      action=$(choose-action "$header" TERM KILL USR1 USR2 INT)
+      handle-action "$action" "$@"
+      ;;
+  esac
+}
+
+find-and-kill() {
+  local header pids key
+  header="$(build-prompt "Processes")"
+  pids="$(ps -Ao pid,comm | sed 1d | fzf --header="$header" --multi \
+    --expect="enter,double-click,alt-enter" | awk '{print $1}')"
+  key=$(head -1 <<< "$pids") && pids=$(sed '1d' <<< "$pids")
+  [ -n "$key" ] && handle-key "$key" "$pids"
+}
+
+assert-exist fzf
+find-and-kill
