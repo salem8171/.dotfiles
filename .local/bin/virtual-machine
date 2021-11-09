@@ -49,7 +49,7 @@ start-vm() {
     -m 6G \
     -usb -device usb-tablet \
     -device virtio-serial \
-    -soundhw ac97 \
+    -device AC97 \
     -name "$VM_NAME" \
     "$@"
   # -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
