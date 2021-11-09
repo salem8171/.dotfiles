@@ -1,3 +1,5 @@
 [user]
   email = mohamed-salem.krichen@tutanota.com
   name = salem8171
+[core]
+	excludesfile = /home/salem/.gitignore
