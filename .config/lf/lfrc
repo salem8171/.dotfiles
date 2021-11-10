@@ -12,7 +12,7 @@ on-cd
 # Set number of columns in dynamically depending on terminal width
 %{{
   w=$(tput cols)
-  if [ $w -le 100 ]; then
+  if [ $w -le 160 ]; then
     lf -remote "send $id set ratios 1:2"
   else
     lf -remote "send $id set ratios 1:2:3"
