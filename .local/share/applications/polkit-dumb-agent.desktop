@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Polkit Dumb Agent
+Exec=polkit-dumb-agent
+TryExec=polkit-dumb-agent
