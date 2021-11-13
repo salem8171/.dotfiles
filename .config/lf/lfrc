@@ -15,7 +15,7 @@ map ga cd ~/.local/share/applications
 map gb cd ~/.local/bin
 map gc cd ~/.config
 map gd cd ~/Downloads
-map ge cd ~/etc
+map ge cd /etc
 map gh cd ~
 map gl cd ~/.local
 map gme cd /run/media
