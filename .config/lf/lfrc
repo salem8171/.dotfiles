@@ -50,6 +50,7 @@ cmd open ${{
   mimeopen "$f" 2>/dev/null
   exit 0
 }}
+map <enter> :open
 
 # Open file and ask which application to use
 cmd ask-and-open !{{
