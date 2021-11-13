@@ -195,8 +195,8 @@ tnoremap <A-/> <C-\><C-n><c-w>vi
 tnoremap <A--> <C-\><C-n><c-w>si
 
 " Movement
-nnoremap <silent> <tab> :bn<cr>
-nnoremap <silent> <s-tab> :bp<cr>
+nnoremap <silent><expr> <tab> &buflisted ? ":bnext<cr>" : "<nop>"
+nnoremap <silent><expr> <s-tab> &buflisted ? ":bprevious<cr>" : "<nop>"
 noremap <A-h> <esc><C-w>h
 noremap <A-j> <esc><C-w>j
 noremap <A-k> <esc><C-w>k
@@ -308,6 +308,15 @@ let g:auto_save = 1
 let g:auto_save_silent = 1
 
 "##############################################################################
+" Fugitive
+"##############################################################################
+augroup fugitive_user
+  autocmd!
+  autocmd FileType fugitive setlocal nobuflisted
+augroup END
+
+
+"##############################################################################
 " Floaterm
 "##############################################################################
 let g:floaterm_width = 0.99
@@ -385,8 +394,6 @@ augroup nerdtree
   autocmd!
   autocmd bufenter * call OnNERDTreeEnter()
 
-  autocmd FileType nerdtree nnoremap <buffer> <tab> <nop>
-  autocmd FileType nerdtree nnoremap <buffer> <s-tab> <nop>
   autocmd FileType nerdtree nnoremap <buffer> l <nop>
   autocmd FileType nerdtree nnoremap <buffer> h <nop>
   autocmd FileType nerdtree setlocal cursorline signcolumn=auto
