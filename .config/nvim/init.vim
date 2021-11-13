@@ -131,6 +131,8 @@ set colorcolumn=80
 " set scrolloff=10
 set sidescrolloff=10
 " set pumblend=10
+set diffopt=internal,algorithm:histogram,indent-heuristic,filler,closeoff,iwhite
+set fillchars=eob:\ ,diff:\ ,
 scriptencoding utf-8
 if has('nvim') | set inccommand=split | else | set incsearch | endif
 let mapleader = ' '
@@ -241,9 +243,10 @@ highlight! SignColumn                 guibg=None    ctermbg=None
 highlight! FoldColumn                 guibg=None    ctermbg=None
 highlight! Error        guifg=#dc2566 guibg=None
 highlight! diffRemoved  guifg=#dc2566
-highlight! DiffAdd                    guibg=#8fc029
-highlight! DiffDelete   guifg=pink    guibg=#dc2566
-highlight! DiffText                   guibg=#55bcce
+highlight! DiffAdd      guifg=None    guibg=#26332c gui=None
+highlight! DiffChange   guifg=None    guibg=#273842 gui=None
+highlight! DiffDelete   guifg=None    guibg=#572E33 gui=None
+highlight! DiffText     guifg=None    guibg=#314753 gui=None
 highlight! GitGutterAdd               guibg=None
 highlight! GitGutterChange            guibg=None
 highlight! GitGutterDelete            guibg=None
