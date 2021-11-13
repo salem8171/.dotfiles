@@ -5,6 +5,26 @@ set number
 set relativenumber
 set incsearch
 
+# Set shortcuts to most visited locations
+map g/ cd /
+map gA cd /usr/share/applications
+map gB cd /usr/bin
+map gG cd ~/.games
+map gM cd /mnt
+map ga cd ~/.local/share/applications
+map gb cd ~/.local/bin
+map gc cd ~/.config
+map gd cd ~/Downloads
+map ge cd ~/etc
+map gh cd ~
+map gl cd ~/.local
+map gme cd /run/media
+map gmn cd /mnt
+map gmu cd ~/Music
+map go cd /opt
+map gt cd /tmp
+map gu cd /usr
+
 # Set terminal title
 cmd on-cd &{{ printf "\033]0; $(pwd | sed "s|$HOME|~|") - lf\007" > /dev/tty }}
 on-cd
