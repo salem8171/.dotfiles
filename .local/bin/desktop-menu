@@ -66,15 +66,27 @@ build-prompt() {
 ###############################################################################
 
 filter-entries() {
+  overrides="$(mktemp overrides.XXXXX)"
   while read -r entry; do
     local entry_path try_exec
     entry_path=$(cut -f 2 -d : <<< "$entry")
+    entry_name=$(cut -f 3 -d : <<< "$entry")
+
+    # Skip if entry with similar name already exist
+    grep -q -m 1 "$entry_name" "$overrides" && continue
+    echo "$entry_name" >> "$overrides"
+
+    # Hide if NoDisplay is true
     grep -q -m 1 "^NoDisplay=true" "$entry_path" && continue
+
+    # Hide if executable not found
     try_exec=$(grep -m 1 "^TryExec=" "$entry_path")
     [ -n "$try_exec" ] &&
       [ ! -x "$(command -v "$(cut -f 2 -d = <<< "$try_exec")")" ] && continue
+
     echo "$entry"
   done
+  rm -rf "$overrides"
 }
 
 # shellcheck disable=SC2120
