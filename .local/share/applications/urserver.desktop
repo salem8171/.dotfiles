@@ -6,5 +6,5 @@ Type=Application
 Categories=Network;
 Icon=urserver
 Exec=/opt/urserver/urserver --daemon
-TryExec=urserver
+TryExec=/opt/urserver/urserver
 X-GNOME-Autostart-enabled=true
