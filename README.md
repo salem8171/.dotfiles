@@ -42,5 +42,54 @@ do
 done
 ```
 
+# Installation (system)
+
+Some configuration only make sense to be installed system wide (package manager,
+grub, user autologin). Start by switching to the root user and cloning the
+repository
+
+```sh
+su
+git clone https://github.com/salem8171/.dotfiles.git /opt/.dotfiles
+```
+
+It is highly recommended to create symlinks manually on a file by file basis to
+avoid breaking anything on your system, but if you are feeling adventurous, you
+can do that in one go
+
+```sh
+cd /opt/.dotfiles
+find etc -type f | while read -r file; do ln -sfib "$(pwd)/$file" "/$file"; done
+```
+
+## Autologin
+
+The choices made in this configuration are very opinionated; No display manager
+is used, instead, xinit is launched directly from .zprofile on tty1 (already
+covered in the previous section), and autologin can be optionally be configured.
+If you haven't done so already, you need to symlink (or copy) the override to
+agetty systemd service
+
+```sh
+ln -s /opt/.dotfiles/etc/systemd/system/getty@tty1.service.d/override.conf \
+  /etc/systemd/system/getty@tty1.service.d/override.conf
+```
+
+Unfortuantely the username is currently hardcoded to `salem` and needs to be
+changed manually (replace `you` with your username or with `$USER` if you are
+logged in with your user instead of `root`)
+
+```sh
+sed -i 's/salem/you/' /etc/systemd/system/getty@tty1.service.d/override.conf
+```
+
+Finally add your user to the autologin group
+
+```sh
+usermod -aG autologin you
+```
+
+More information about [autologin](https://wiki.archlinux.org/title/getty#Automatic_login_to_virtual_console)
+
 # Dependencies
 (TODO)
