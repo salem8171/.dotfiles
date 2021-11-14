@@ -39,6 +39,8 @@ export LESSHISTFILE=/dev/null
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export ICEAUTHORITY="${XDG_CACHE_HOME:-$HOME/.cache}/ICEauthority"
 
+export VAGRANT_DEFAULT_PROVIDER=libvirt
+
 export FZF_DEFAULT_OPTS=""
 FZF_DEFAULT_OPTS+=" --color='bg+:-1,border:#1f201a'"
 FZF_DEFAULT_OPTS+=" --reverse"
