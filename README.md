@@ -59,7 +59,10 @@ can do that in one go
 
 ```sh
 cd /opt/.dotfiles
-find etc -type f | while read -r file; do ln -sfib "$(pwd)/$file" "/$file"; done
+find etc -type f | while read -r file; do
+  mkdir -p "$(dirname "/$file")"
+  ln -sb "$(pwd)/$file" "/$file"
+done
 ```
 
 ## Autologin
