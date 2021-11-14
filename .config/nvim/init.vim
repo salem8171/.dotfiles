@@ -128,7 +128,7 @@ set noswapfile
 set foldmethod=syntax
 set clipboard=unnamedplus
 set colorcolumn=80
-" set scrolloff=10
+set scrolloff=10
 set sidescrolloff=10
 " set pumblend=10
 set diffopt=internal,algorithm:histogram,indent-heuristic,filler,closeoff,iwhite
