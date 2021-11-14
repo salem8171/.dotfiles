@@ -234,14 +234,14 @@ bind --description "Scroll to top of log messages" \
      --context main <alt-home> log scroll top
 bind --description "Scroll to bottom of log messages" \
      --context main <alt-end> log scroll bottom
-bind --description "Increase global download rate limit by 100 kilobytes" \
-     --context main <shift-up> rate --quiet dn -- +=100kB global
-bind --description "Decrease global download rate limit by 100 kilobytes" \
-     --context main <shift-down> rate --quiet dn -- -=100kB global
-bind --description "Increase global upload rate limit by 100 kilobytes" \
-     --context main <shift-right> rate --quiet up -- +=100kB global
-bind --description "Decrease global upload rate limit by 100 kilobytes" \
-     --context main <shift-left> rate --quiet up -- -=100kB global
+bind --description "Increase global download rate limit by 50 kilobytes" \
+     --context main <shift-up> rate --quiet dn -- +=50kB global
+bind --description "Decrease global download rate limit by 50 kilobytes" \
+     --context main <shift-down> rate --quiet dn -- -=50kB global
+bind --description "Increase global upload rate limit by 50 kilobytes" \
+     --context main <shift-right> rate --quiet up -- +=50kB global
+bind --description "Decrease global upload rate limit by 50 kilobytes" \
+     --context main <shift-left> rate --quiet up -- -=50kB global
 
 bind --description "Sort peers by estimated remaining download time" \
      --context peerlist "<s> <e>" sort --add eta
