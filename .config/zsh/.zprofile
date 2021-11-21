@@ -34,6 +34,24 @@ export ANDROID_AVD_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/android"
 export ANDROID_EMULATOR_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/android"
 export ADB_VENDOR_KEY="${XDG_CONFIG_HOME:-$HOME/.config}/android"
 
+export GOPATH="$XDG_DATA_HOME/go"
+
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+
+export GEM_HOME="$XDG_DATA_HOME/gem"
+export GEM_SPEC_CACHE="$XDG_CACHE_HOME/gem"
+
+export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
+
+export NVM_DIR="$XDG_DATA_HOME/nvm"
+
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+
+export VAGRANT_HOME="$XDG_DATA_HOME/vagrant"
+export VAGRANT_ALIAS_FILE="$XDG_DATA_HOME/vagrant/aliases"
+
 export LESSHISTFILE=/dev/null
 
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
