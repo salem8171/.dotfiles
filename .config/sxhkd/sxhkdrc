@@ -10,7 +10,7 @@ super+{F,f}
   gtk-launch toggle-{maximized,fullscreen}
 
 ctrl+{alt+Delete,shift+Escape}
-  gtk-launch htop
+  gtk-launch btop
 
 ctrl+alt+x
   gtk-launch xkill
