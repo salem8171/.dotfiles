@@ -1,5 +1,6 @@
 [Desktop Entry]
 Type=Application
 Name=Reboot router
-Exec=reboot-router
-# Description=
+Exec=terminal-adapter -u "reboot-router" -p reboot-router
+TryExec=reboot-router
+Icon=terminal
