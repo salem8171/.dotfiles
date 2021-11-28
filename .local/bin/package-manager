@@ -64,6 +64,10 @@ handle-action() {
     "remove-selected") echo "$@" | cut -d ' ' -f 2 |
       xargs -ro "${REMOVE_CMD[@]}";;
     "clean") "${CLEAN_CMD[@]}";;
+    "open-url") echo "$@" | cut -d ' ' -f 2 | while read -r pkg; do
+      "${PREVIEW_CMD[@]}" "$pkg" | awk '/URL/ { print $3 }' |
+        xargs -ro setsid -f xdg-open > /dev/null
+    done;;
   esac
   [ $? -eq 130 ] || pause
 }
@@ -76,7 +80,8 @@ handle-key() {
     "alt-enter")
       local header action
       header=$(build-prompt "Actions")
-      action=$(choose-action "$header" "Update" "Remove selected" "Clean")
+      action=$(
+        choose-action "$header" "Update" "Remove selected" "Clean" "Open URL")
       [ -n "$action" ] && handle-action "$action" "$@"
   esac
 }
