@@ -3,7 +3,7 @@
 ### TABS
 
 tab --title " All" ls \
-  -c status,seeds,ratio,size,uploaded,path,name
+  -c status,seeds,ratio,size,uploaded,downloaded,%downloaded,rate-down,eta,name
 tab --title " Downloading" ls downloading \
   -c size,downloaded,%downloaded,%available,rate-down,completed,eta,path,name
 tab --title " Uploading" ls uploading \
