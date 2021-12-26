@@ -9,7 +9,7 @@ set incsearch
 map g/ cd /
 map gA cd /usr/share/applications
 map gB cd /usr/bin
-map gG cd ~/.games
+map gG cd ~/Games
 map gM cd /mnt
 map ga cd ~/.local/share/applications
 map gb cd ~/.local/bin
