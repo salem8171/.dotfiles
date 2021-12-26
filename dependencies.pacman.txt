@@ -1,0 +1,6 @@
+git
+zsh
+man
+i3-gaps
+xorg-xinit
+xorg-server
