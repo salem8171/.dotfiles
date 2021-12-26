@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 " Install plugins if missing
 let plugged_path = has('nvim') ?
       \ stdpath('data') . '/site/autoload/plug.vim' :
@@ -100,44 +102,58 @@ call plug#end()
 "##############################################################################
 " General
 "##############################################################################
-set number relativenumber
+lua << EOF
+vim.o.number = true
+vim.o.relativenumber = true
+
+vim.cmd [[
 augroup number
   autocmd!
-  autocmd FileType vim-plug setlocal nonumber norelativenumber
+  autocmd FileType vim-plug lua vim.bo.number = false
+  autocmd FileType vim-plug lua vim.bo.relativenumber = false
 augroup END
+]]
 
-set signcolumn=yes
+vim.o.signcolumn = "yes"
+
+vim.cmd [[
 augroup signcolumn
   autocmd!
-  autocmd FileType help,vim-plug setlocal signcolumn=no
+  autocmd FileType help,vim-plug lua vim.wo.signcolumn = "no"
 augroup END
+]]
 
+vim.cmd [[
 augroup cursorline
   autocmd!
-  autocmd BufEnter * if &diff == 0 | setlocal cursorline | endif
-  autocmd BufLeave * setlocal nocursorline
+  autocmd BufEnter * lua if vim.wo.diff == false then vim.wo.cursorline = true end
+  autocmd BufLeave * lua vim.wo.cursorline = false
 augroup END
+]]
 
-set mouse=a
-set confirm
-set expandtab shiftwidth=2 autoindent smartindent
-set noshowmode
-set nowrap
-set nohlsearch
-set noswapfile
-set foldmethod=syntax
-set clipboard=unnamedplus
-set colorcolumn=80
-set scrolloff=10
-set sidescrolloff=10
-" set pumblend=10
-set diffopt=internal,algorithm:histogram,indent-heuristic,filler,closeoff,iwhite
-set fillchars=eob:\ ,diff:\ ,
-scriptencoding utf-8
-if has('nvim') | set inccommand=split | else | set incsearch | endif
-let mapleader = ' '
-cnoreabbrev h vertical h
-let &guicursor .= ',a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor'
+vim.o.mouse = "a"
+vim.o.confirm = true
+vim.o.expandtab = true
+vim.o.shiftwidth = 2
+vim.o.autoindent = true
+vim.o.smartindent = true
+vim.o.showmode = false
+vim.o.wrap = false
+vim.o.hlsearch = false
+vim.o.swapfile = false
+vim.o.foldmethod = "syntax"
+vim.o.clipboard = "unnamedplus"
+vim.o.colorcolumn = "80"
+vim.o.scrolloff = 10
+vim.o.sidescrolloff = 10
+vim.o.pumblend = 10
+vim.o.diffopt = "internal,algorithm:histogram,indent-heuristic,filler,closeoff,iwhite"
+vim.o.fillchars = "eob: ,diff: ,"
+vim.o.inccommand = "split"
+vim.cmd [[let mapleader = ' ']]
+vim.cmd [[cnoreabbrev h vertical h]]
+-- vim.o.guicursor:append("a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor")
+EOF
 
 command! -nargs=0 Vimrc :edit $MYVIMRC
 
@@ -145,7 +161,7 @@ inoremap <c-b> <left>
 inoremap <c-f> <right>
 
 inoremap <c-v> <c-r>+
-vnoremap <c-c> "+y
+vnoremap <c-c> "+ygv
 vnoremap <c-v> "+p
 vnoremap <c-x> "+d
 
