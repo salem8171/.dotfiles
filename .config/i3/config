@@ -15,6 +15,10 @@ for_window [title="popup-terminal"] floating enable
 for_window [title="popup-terminal"] [floating] resize set 1000 500
 for_window [title="popup-terminal"] [floating] move position center
 
+for_window [title="Assassin's Creed.*Unity"] floating disable
+for_window [title="Assassin's Creed Rogue"] fullscreen disable
+for_window [title="Hades"] fullscreen disable
+
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
