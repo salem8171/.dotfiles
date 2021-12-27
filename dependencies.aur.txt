@@ -2,6 +2,7 @@ android-emulator
 android-google-apis-playstore-x86-64-system-image
 antigen
 antimicrox
+antimicrox
 clang-format-static-bin
 i3lock-color
 js-beautify
