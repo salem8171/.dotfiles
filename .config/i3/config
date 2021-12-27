@@ -43,6 +43,9 @@ bindsym $mod+t layout toggle splith splitv tabbed
 bindsym $mod+u focus parent
 bindsym $mod+Shift+u focus child
 
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
 gaps inner 15
 for_window [class="^.*"] border pixel 2
 
