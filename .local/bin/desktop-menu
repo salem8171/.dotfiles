@@ -73,7 +73,7 @@ filter-entries() {
     entry_name=$(cut -f 3 -d : <<< "$entry")
 
     # Skip if entry with similar name already exist
-    grep -q -m 1 "$entry_name" "$overrides" && continue
+    grep -q -m 1 "^$entry_name$" "$overrides" && continue
     echo "$entry_name" >> "$overrides"
 
     # Hide if NoDisplay is true
