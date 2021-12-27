@@ -1,8 +1,6 @@
 [Desktop Entry]
 Type=Application
 Name=Toggle Fullscreen
-Exec=wmctrl -r :ACTIVE: -b toggle,fullscreen
-Comment=
-Path=
+Exec=xdotool getactivewindow windowstate --toggle FULLSCREEN
 Terminal=false
 StartupNotify=false

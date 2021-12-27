@@ -1,9 +1,6 @@
 [Desktop Entry]
 Type=Application
 Name=Toggle Maximized
-Exec=wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz
-Comment=
-Path=
-Icon=
+Exec=xdotool getactivewindow windowstate --toggle MAXIMIZED_VERT windowstate --toggle MAXIMIZED_HORZ
 Terminal=false
 StartupNotify=false
