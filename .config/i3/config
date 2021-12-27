@@ -12,8 +12,8 @@ focus_follows_mouse no
 floating_modifier $mod
 for_window [title=".*Android Emulator.*"] floating enable
 for_window [title="popup-terminal"] floating enable
-for_window [title="popup-terminal"] [floating] resize set 1000 500
-for_window [title="popup-terminal"] [floating] move position center
+for_window [title="popup-terminal"] resize set 1000 500
+for_window [title="popup-terminal"] move position center
 
 for_window [title="Assassin's Creed.*Unity"] floating disable
 for_window [title="Assassin's Creed Rogue"] fullscreen disable
