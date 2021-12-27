@@ -5,7 +5,7 @@ set $mod Mod4
 font pango:monospace 11
 title_align center
 
-exec --no-startup-id dex --autostart
+exec --no-startup-id dex --autostart --environment i3
 
 focus_follows_mouse no
 
