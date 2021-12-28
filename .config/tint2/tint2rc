@@ -19,29 +19,39 @@ rounded = 0
 background_color = #48483e 100
 border_width = 0
 
-# Background 4: Default task, Iconified task
+# Background 4: Workspace
+rounded = 0
+background_color = #76715e 100
+border_width = 0
+
+# Background 5: Workspace Info
+rounded = 0
+background_color = #48483e 100
+border_width = 0
+
+# Background 6: Default task, Iconified task
 rounded = 0
 background_color = #272822 100
 border_width = 0
 
-# Background 5: Active task
+# Background 7: Active task
 rounded = 0
 background_color = #272822 100
 border_width = 3
 border_sides = B
 border_color = #76715e 100
 
-# Background 6: Urgent task
+# Background 8: Urgent task
 rounded = 0
 background_color = #aa4400 100
 border_width = 0
 
-# Background 7: System tray
+# Background 9: System tray
 rounded = 0
 background_color = #48483e 100
 border_width = 0
 
-# Background 8: Clock
+# Background 10: Clock
 rounded = 0
 background_color = #76715e 100
 border_width = 0
@@ -50,7 +60,7 @@ border_width = 0
 # Panel
 ###############################################################################
 
-panel_items = PELETESEC
+panel_items = PELEEEEETESEC
 panel_size = 100% 25
 panel_margin = 0 0
 panel_padding = 2 0 0
@@ -90,7 +100,7 @@ button_centered = 1
 button_max_icon_size = 0
 
 ###############################################################################
-# Powerline Separator 1
+# Powerline Separator
 ###############################################################################
 
 execp = new
@@ -104,6 +114,7 @@ execp_padding = 0 0 0
 ###############################################################################
 # Launcher
 ###############################################################################
+
 launcher_item_app = terminal.desktop
 launcher_item_app = chromium.desktop
 launcher_item_app = nvim.desktop
@@ -116,7 +127,58 @@ launcher_tooltip = 1
 startup_notifications = 1
 
 ###############################################################################
-# Powerline Separator 2
+# Powerline Separator
+###############################################################################
+
+execp = new
+execp_command = echo ""
+execp_interval = 0
+execp_background_id = 4
+execp_font = MesloLGS NF Bold 16
+execp_font_color = #48483e 100
+execp_padding = 0 0 0
+
+###############################################################################
+# Workspace
+###############################################################################
+
+execp = new
+execp_command = echo "WS"
+execp_interval = 0
+execp_background_id = 4
+execp_font = MesloLGS NF Bold 10
+execp_font_color = #acada1 100
+execp_padding = 4 4 4
+
+###############################################################################
+# Powerline Separator
+###############################################################################
+
+execp = new
+execp_command = echo ""
+execp_interval = 0
+execp_background_id = 5
+execp_font = MesloLGS NF Bold 16
+execp_font_color = #76715e 100
+execp_padding = 0 0 0
+
+###############################################################################
+# Workspace Info
+###############################################################################
+
+execp = new
+execp_command = get-current-workspace
+execp_uwheel_command = xdotool set_desktop --relative 1
+execp_dwheel_command = xdotool set_desktop --relative -- -1
+execp_interval = 0
+execp_continuous = 1
+execp_font = MesloLGS NF Bold 10
+execp_font_color = #acada1 100
+execp_background_id = 5
+execp_padding = 4 4 4
+
+###############################################################################
+# Powerline Separator
 ###############################################################################
 
 execp = new
@@ -143,8 +205,8 @@ taskbar_hide_different_monitor = 0
 taskbar_hide_different_desktop = 1
 taskbar_always_show_all_desktop_tasks = 0
 taskbar_name_padding = 4 4
-taskbar_name_background_id = 4
-taskbar_name_active_background_id = 5
+taskbar_name_background_id = 6
+taskbar_name_active_background_id = 7
 taskbar_name_font = MesloLGS NF Bold 10
 taskbar_name_font_color = #76715e 100
 taskbar_name_active_font_color = #acada1 100
@@ -167,11 +229,11 @@ task_tooltip = 0
 task_thumbnail = 0
 task_thumbnail_size = 250
 task_font_color = #76715e 100
-task_background_id = 4
+task_background_id = 6
 task_active_font_color = #acada1 100
-task_active_background_id = 5
-task_urgent_background_id = 6
-task_iconified_background_id = 4
+task_active_background_id = 7
+task_urgent_background_id = 8
+task_iconified_background_id = 6
 mouse_left = toggle_iconify
 mouse_middle = close
 mouse_right = none
@@ -179,7 +241,7 @@ mouse_scroll_up = none
 mouse_scroll_down = none
 
 ###############################################################################
-# Powerline Separator 3
+# Powerline Separator
 ###############################################################################
 
 execp = new
@@ -195,7 +257,7 @@ execp_padding = 0 0 0
 ###############################################################################
 
 systray_padding = 0 4 2
-systray_background_id = 7
+systray_background_id = 9
 systray_sort = ascending
 systray_icon_size = 24
 systray_icon_asb = 100 0 0
@@ -203,13 +265,13 @@ systray_monitor = 1
 systray_name_filter =
 
 ###############################################################################
-# Powerline Separator 4
+# Powerline Separator
 ###############################################################################
 
 execp = new
 execp_command = echo ""
 execp_interval = 0
-execp_background_id = 7
+execp_background_id = 9
 execp_font = MesloLGS NF Bold 16
 execp_font_color = #76715e 100
 execp_padding = 0 0 0
@@ -222,17 +284,8 @@ time1_format = %A %d %B %H:%M
 time1_font = MesloLGS NF Bold 10
 clock_font_color = #acada1 100
 clock_padding = 2 0
-clock_background_id = 8
+clock_background_id = 10
 clock_lclick_command =
-
-# execp = new
-# execp_command = gpu-info-pango
-# execp_interval = 0
-# execp_continuous = 1
-# execp_markup = 1
-# execp_font = MesloLGS NF Bold 10
-# execp_font_color = #acada1 100
-# execp_background_id = 7
 
 ###############################################################################
 # Tooltip

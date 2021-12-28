@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+prop_names="_NET_DESKTOP_NAMES"
+prop_current="_NET_CURRENT_DESKTOP"
+
+{
+  xprop -root -notype "$prop_names" "$prop_current"
+  xprop -root -notype -spy "$prop_names" "$prop_current" |
+    while read -r line; do
+      echo "$line"
+      echo "print(${prop_names}[${prop_current}])"
+    done
+} | python -uc "for line in __import__('sys').stdin: exec(line)"
