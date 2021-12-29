@@ -35,8 +35,8 @@ XF86AudioMicMute
 XF86Audio{Prev,Play,Next}
   mpc {prev,toggle,next}
 
-super+o;{l,t,b,n,p;g,c,s;c,a,s;t,h,p;m}
-  gtk-launch {lf,terminal,chromium,nvim,ping-archlinux,config,scripts,anime,stig,htop,package-manager}
+super+o;{l,t,b;r,n,p;g,c,s;c,a,s;t,h,p;m,b;t}
+  gtk-launch {lf,terminal,chromium,nvim,ping-archlinux,config,scripts,anime,stig,htop,package-manager,btop}
 
 # super+b
 #   gtk-launch web-browser
