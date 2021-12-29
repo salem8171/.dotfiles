@@ -1,7 +1,5 @@
 android-emulator
 android-google-apis-playstore-x86-64-system-image
-antigen
-antimicrox
 antimicrox
 clang-format-static-bin
 i3lock-color
@@ -16,7 +14,6 @@ soundwire
 stig
 trackma
 ungoogled-chromium
-unified-remot-server
 unified-remote-server
 vim-language-server
 vimpc-git
