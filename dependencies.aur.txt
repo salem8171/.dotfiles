@@ -11,11 +11,14 @@ nodejs-neovim
 optimus-manager
 polkit-dumb-agent-git
 rxvt-unicode-pixbuf-patched
+skippy-xd
 soundwire
 stig
 trackma
 ungoogled-chromium
 unified-remot-server
+unified-remote-server
 vim-language-server
 vimpc-git
 xdg-utils-mimeo
+yay
