@@ -2,6 +2,7 @@ alsa-utils
 astyle
 avahi
 barrier
+base-devel
 bash-completion
 bash-language-server
 bat
