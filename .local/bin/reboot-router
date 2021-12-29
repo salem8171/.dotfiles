@@ -1,8 +1,10 @@
 #!/bin/bash
 
+# ROUTER_ADDR="myrouter.home"
+ROUTER_ADDR="10.10.10.1"
 read -r -p "Username: " username
 read -r -s -p "Password: " password
 auth_string="$(printf "%s" "${username}:${password}" | base64)"
 
-curl --location --request GET 'myrouter.home:80/rebootinfo.cgi' \
+curl --location --request GET "$ROUTER_ADDR:80/rebootinfo.cgi" \
   --header "Authorization: Basic $auth_string" > /dev/null
