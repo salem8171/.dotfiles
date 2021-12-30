@@ -14,12 +14,14 @@ assert-exist() {
 
 assert-exist youtube-dl
 
-YOUTUBE_DL_CMD=(youtube-dl)
-YOUTUBE_DL_CMD+=("-ciw")
-YOUTUBE_DL_CMD+=("--yes-playlist")
-YOUTUBE_DL_CMD+=("--extract-audio")
-YOUTUBE_DL_CMD+=("--audio-format" "mp3")
-YOUTUBE_DL_CMD+=("--download-archive" "ytdl_archive.txt")
+YOUTUBE_DL_CMD=(
+  youtube-dl
+  "-ciw"
+  "--yes-playlist"
+  "--extract-audio"
+  "--audio-format" "mp3"
+  "--download-archive" "ytdl_archive.txt"
+)
 
 [ -f "$PLAYLISTS_FILE" ] || {
   mkdir -p "$(dirname "$PLAYLISTS_FILE")"

@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
 
-nvidia_query_opts=("utilization.gpu")
-nvidia_query_opts+=("utilization.memory")
-nvidia_query_opts+=("temperature.gpu")
-# nvidia_query_opts+=("encoder.stats.averageFps")
-# nvidia_query_opts+=("pstate")
+nvidia_query_opts=(
+  "utilization.gpu"
+  "utilization.memory"
+  "temperature.gpu"
+  # "encoder.stats.averageFps"
+  # "pstate"
+)
 
-nvidia_cmd=(nvidia-smi)
-nvidia_cmd+=("--loop=1")
-nvidia_cmd+=("--format=csv,noheader")
-nvidia_cmd+=("--query-gpu=$(printf "%q," "${nvidia_query_opts[@]}")")
+nvidia_cmd=(
+  nvidia-smi
+  "--loop=1"
+  "--format=csv,noheader"
+  "--query-gpu=$(printf "%q," "${nvidia_query_opts[@]}")"
+)
 
 # shellcheck disable=SC2016
 awk_script='
