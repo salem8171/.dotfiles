@@ -72,7 +72,6 @@ xorg-xwininfo
 xsel
 yarn
 youtube-dl
-z
 zathura
 zathura-pdf-poppler
 zenity
