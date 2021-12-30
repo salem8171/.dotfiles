@@ -12,6 +12,7 @@ rxvt-unicode-pixbuf-patched
 skippy-xd
 soundwire
 stig
+themix-full
 trackma
 ungoogled-chromium
 unified-remote-server
