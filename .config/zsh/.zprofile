@@ -59,7 +59,7 @@ export ICEAUTHORITY="${XDG_CACHE_HOME:-$HOME/.cache}/ICEauthority"
 
 export VAGRANT_DEFAULT_PROVIDER=libvirt
 
-export FZF_DEFAULT_OPTS=(
+FZF_DEFAULT_OPTS_ARRAY=(
   "--color='bg+:-1,border:#1f201a'"
   "--reverse"
   "--padding 1,2"
@@ -71,7 +71,7 @@ export FZF_DEFAULT_OPTS=(
   "--info=inline"
   "--bind change:top"
 )
-FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS[*]}"
+export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS_ARRAY[*]}"
 
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0" ] &&
   export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
