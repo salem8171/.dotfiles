@@ -21,6 +21,7 @@ fzf
 gcolor3
 gparted
 i3-gaps
+imagemagick
 interception-caps2esc
 ipython
 keynav
