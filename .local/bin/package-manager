@@ -65,7 +65,7 @@ handle-action() {
       xargs -ro "${REMOVE_CMD[@]}";;
     "clean") "${CLEAN_CMD[@]}";;
     "open-url") echo "$@" | cut -d ' ' -f 2 | while read -r pkg; do
-      "${PREVIEW_CMD[@]}" "$pkg" | awk '/URL/ { print $3 }' |
+      "${PREVIEW_CMD[@]}" "$pkg" | awk '/URL/ { print $3; exit; }' |
         xargs -ro setsid -f xdg-open > /dev/null
     done;;
   esac
