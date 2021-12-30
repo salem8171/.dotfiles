@@ -107,43 +107,30 @@ configured as the login shell for the current user
 sudo usermod -s "$(which zsh)" $USER
 ```
 
-## Create backups
-
-Create backups (optional but highly recommended).
-Skip this step if only partial installation is needed (e.g. creating symlinks
-for specific files rather than the whole config folders)
-
-```sh
-mv $HOME/.config $HOME/.config.bak
-mv $HOME/.local $HOME/.local.bak
-```
-
 ## Configuration Deployment
 
 Create symlinks
 
 ```sh
-ln -s $HOME/.dotfiles/.config $HOME/.config
-ln -s $HOME/.dotfiles/.local $HOME/.local
+ln -sb $HOME/.dotfiles/.config $HOME/.config
+ln -sb $HOME/.dotfiles/.local $HOME/.local
 ```
 
 Some files/folders were relocated from their default locations, so they also
 need to be symlinked
 
 ```sh
-ln -s $HOME/.config/zsh/.zprofile $HOME/.zprofile
-ln -s $HOME/.local/share/themes $HOME/.themes
+ln -sb $HOME/.config/zsh/.zprofile $HOME/.zprofile
+ln -sb $HOME/.local/share/themes $HOME/.themes
 ```
 
 XDG Autostart is used to run some programs at startup, enabling autostart is
 done via symlinks
 
 ```sh
-for desktop_file in (
-  cbatticon copyq-daemon keynav mpd reload-config sxhkd-daemon tint2 tint2-top
-  transmission-daemon unclutter urxvt-daemon web-patcher)
+for desktop_file in cbatticon copyq-daemon keynav mpd reload-config sxhkd-daemon tint2 tint2-top transmission-daemon unclutter urxvt-daemon web-patcher
 do
-  ln -s $HOME/.local/share/applications/$deskopt_file.desktop $HOME/.config/autostart/
+  ln -sb $HOME/.local/share/applications/$desktop_file.desktop $HOME/.config/autostart/
 done
 ```
 
