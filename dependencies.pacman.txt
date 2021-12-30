@@ -45,6 +45,8 @@ perl-file-mimeinfo
 pulsemixer
 python-pylint
 qt5ct
+reflector
+rsync
 scrcpy
 shellcheck
 shfmt
@@ -60,6 +62,7 @@ unclutter
 vimiv
 vint
 volumeicon
+wget
 xdg-user-dirs
 xorg-server
 xorg-xev
