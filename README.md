@@ -39,9 +39,9 @@ Some packages are required to be installed, without them, this configuration
 could make the system misbehave or not startup correctly after boot (due to
 missing packages for X and login shell setup).
 
-Package names are listed in `dependencies.*.txt` files, grouped in different
-files depending on how they are installed. It is recommended to check the
-contents of these files before installing. The most important packages are
+Package names are listed in `dependencies/dependencies.*.txt` files, grouped in
+different files depending on how they are installed. It is recommended to check
+the contents of these files before installing. The most important packages are
 contained in `dependencies.pacman.txt` and `dependencies.aur.txt`.
 
 ### Official Repos Packages
@@ -50,7 +50,7 @@ Start by installing dependencies from the official repos
 (`dependencies.pacman.txt`)
 
 ```sh
-sudo pacman -Sy - < $HOME/.dotfiles/dependencies.pacman.txt
+sudo pacman -Sy - < $HOME/.dotfiles/dependencies/dependencies.pacman.txt
 ```
 
 ### AUR Packages
@@ -69,7 +69,7 @@ makepkg -si
 Now install AUR dependencies
 
 ```sh
-yay -Sy - < $HOME.dotfiles/dependencies.aur.txt
+yay -Sy - < $HOME.dotfiles/dependencies/dependencies.aur.txt
 ```
 
 ### NPM Packages
@@ -77,7 +77,7 @@ yay -Sy - < $HOME.dotfiles/dependencies.aur.txt
 Next step would be to install npm packages
 
 ```sh
-xargs sudo npm install -g < $HOME/.dotfiles/dependencies.npm.txt
+xargs sudo npm install -g < $HOME/.dotfiles/dependencies/dependencies.npm.txt
 ```
 
 ### Multilib Packages
@@ -95,7 +95,7 @@ in the Archwiki [here](https://wiki.archlinux.org/title/official_repositories#mu
 Once multilib is configured, install packages
 
 ```sh
-sudo pacman -Sy - < $HOME/.dotfiles/dependencies.multilib.txt
+sudo pacman -Sy - < $HOME/.dotfiles/dependencies/dependencies.multilib.txt
 ```
 
 ## Login Shell
