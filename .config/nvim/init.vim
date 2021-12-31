@@ -109,8 +109,8 @@ vim.o.relativenumber = true
 vim.cmd [[
 augroup number
   autocmd!
-  autocmd FileType vim-plug lua vim.bo.number = false
-  autocmd FileType vim-plug lua vim.bo.relativenumber = false
+  autocmd FileType vim-plug lua vim.wo.number = false
+  autocmd FileType vim-plug lua vim.wo.relativenumber = false
 augroup END
 ]]
 
