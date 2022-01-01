@@ -128,7 +128,7 @@ XDG Autostart is used to run some programs at startup, enabling autostart is
 done via symlinks
 
 ```sh
-for desktop_file in cbatticon volumeicon copyq-daemon keynav mpd reload-config sxhkd-daemon tint2 tint2-top transmission-daemon unclutter urxvt-daemon web-patcher
+for desktop_file in cbatticon volumeicon copyq-daemon keynav mpd polkit-dumb-agent reload-config sxhkd-daemon tint2 tint2-top transmission-daemon unclutter urxvt-daemon web-patcher
 do
   ln -sb $HOME/.local/share/applications/$desktop_file.desktop $HOME/.config/autostart/
 done
