@@ -5,6 +5,7 @@ clang-format-static-bin
 i3lock-color
 js-beautify
 lf
+mimeo
 nodejs-neovim
 optimus-manager
 polkit-dumb-agent-git
