@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Chromium
 Comment=Access the internet
-Exec=chromium-wrapper %U
+Exec=chromium %U
 TryExec=chromium
 StartupNotify=true
 Terminal=false

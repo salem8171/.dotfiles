@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Web App
 Comment=Access the internet
-Exec=chromium-wrapper --app=%U
+Exec=chromium --app=%U
 TryExec=chromium
 # Exec=firefox %U
 StartupNotify=true

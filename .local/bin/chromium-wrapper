@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-CONFIG="${XDG_CONFIG_HOME-:$HOME/.config}/$(basename "$0")/config.sh"
-# shellcheck disable=SC1090
-[ -f "$CONFIG" ] && source "$CONFIG"
-
-chromium "${CHROMIUM_ARGS[@]}" "$@"

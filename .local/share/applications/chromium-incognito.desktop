@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Chromium Incognito
 Comment=Access the internet in Incognito mode
-Exec=chromium-wrapper --incognito %U
+Exec=chromium --incognito %U
 TryExec=chromium
 StartupNotify=true
 Terminal=false
