@@ -305,6 +305,8 @@ let g:airline_symbols.whitespace = 'Ξ'
 "##############################################################################
 let g:autoformat_autoindent=0
 
+nnoremap <silent> <c-a-f> :Autoformat<cr>
+
 augroup autoformat
   autocmd!
   " autocmd BufWritePre * :Autoformat
@@ -443,6 +445,7 @@ command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(opts), <bang>0)
 
 nnoremap <silent> <c-p> :Files<cr>
+nnoremap <silent> <c-k>m :Filetypes<cr>
 nnoremap <silent> <a-tab> :Buffers<CR>
 nnoremap <silent> <a-s> :Commands<cr>
 
