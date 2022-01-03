@@ -1,3 +1,5 @@
 *
 !.gitignore
+!Default
+Default/*
 !Default/Preferences.template

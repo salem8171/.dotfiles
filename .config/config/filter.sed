@@ -2,7 +2,8 @@
 /.*\/accels.scm/d
 /^autostart/d
 /^blender/d
-/^chromium-wrapper/p
+/^chromium-flags/p
+/^chromium\/.*\/Preferences/p
 /^chromium/d
 /^coc/d
 /^Code - OSS/d
