@@ -44,6 +44,11 @@ different files depending on how they are installed. It is recommended to check
 the contents of these files before installing. The most important packages are
 contained in `dependencies.pacman.txt` and `dependencies.aur.txt`.
 
+Throughout the installation of dependencies, pacman configuration may need to be
+changed, a quick solution is to copy the `pacman.conf` from this repository.
+Eventually the same config will be properly installed anyway in the
+[Installation (system)](#installation-system) section.
+
 ### Official Repos Packages
 
 Start by installing dependencies from the official repos
@@ -57,7 +62,7 @@ sudo pacman -Sy - < $HOME/.dotfiles/dependencies/dependencies.pacman.txt
 
 To install AUR packages, an AUR helper is recommended. In this guide, `yay`
 will be used. `yay` itself can be manually installed as an AUR package by
-cloning its repo and running `makepkg`.
+cloning its repo and running `makepkg`
 
 ```sh
 mkdir -p $HOME/.cache/yay
@@ -65,6 +70,25 @@ git clone https://aur.archlinux.org/yay.git $HOME/.cache/yay/yay
 cd $HOME/.cache/yay/yay
 makepkg -si
 ```
+
+For more information and up to date instructions, check the [yay](https://github.com/Jguer/yay)
+git repository.
+
+Since some AUR packages take significantly long download and build times, it is
+recommended to add the unoffical [Chaotic-AUR](https://aur.chaotic.cx)
+repository for pacman
+
+```sh
+sudo pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
+sudo pacman-key --lsign-key FBA220DFC880C036
+sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+
+# pacman.conf is already adapted to use Chaotic AUR in this repository
+sudo cp -b $HOME/.dotfiles/etc/pacman.conf /etc/pacman.conf
+```
+
+For more information and up to date instructions, check the [Chaotic-AUR](https://aur.chaotic.cx)
+website.
 
 Now install AUR dependencies
 
@@ -83,11 +107,13 @@ xargs sudo npm install -g < $HOME/.dotfiles/dependencies/dependencies.npm.txt
 ### Multilib Packages
 
 Before installing multilib packages, the `multilib` repository needs to be
-enabled in pacman configuration file. This is already preconfigured once system
-configuration is installed in later steps (under [Installation (system)](#installation-system)).
+enabled in pacman configuration file. This is already preconfigured in the
+`pacman.conf` in this repository.
 
-Since the multilib dependencies are not urgently required at this point, they
-can be installed after finishing with the configuration.
+Install a copy of `pacman.conf` to the system wide config path
+```sh
+sudo cp -b $HOME/.dotfiles/etc/pacman.conf /etc/pacman.conf
+```
 
 Alternatively, multilib can be configured manually following the instructions
 in the Archwiki [here](https://wiki.archlinux.org/title/official_repositories#multilib)
@@ -157,8 +183,8 @@ find etc -type f | while read -r file; do
 done
 ```
 
-At this point pacman is configured to install packages from the `multilib` repo,
-if it wasn't done already, [install multilib dependencies](#multilib-packages).
+At this point pacman is configured to install packages from the `multilib` and
+`Chaotic-AUR` repositories, if it wasn't done already, [install multilib dependencies](#multilib-packages).
 
 ### Autologin
 
