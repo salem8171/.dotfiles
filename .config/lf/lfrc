@@ -23,7 +23,12 @@ map gmn cd /mnt
 map gmu cd ~/Music
 map go cd /opt
 map gt cd /tmp
-map gu cd /usr
+map gub cd /usr/bin
+map gulo cd /usr/lib
+map gulo cd /usr/local
+map gush cd /usr/share
+map gusr cd /usr
+map gv cd /var
 
 # Set terminal title
 cmd on-cd &{{ printf "\033]0; $(pwd | sed "s|$HOME|~|") - lf\007" > /dev/tty }}
