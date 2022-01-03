@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+DRIVE_SIZE="50G"
+IMG_FILE="${XDG_DATA_HOME:-$HOME/.local/share}/vm/$(basename "$0").img"
+
+# shellcheck disable=SC2054
+QEMU_ARGS=(
+  -smp 8
+  -m 8G
+  -drive file="$IMG_FILE",if=virtio
+  # -cdrom file.iso
+  -nic user,model=virtio-net-pci,hostfwd=tcp::2222-:22
+  # -nic user,model=virtio-net-pci,smb="$HOME"
+  -device intel-hda -device hda-duplex
+  -enable-kvm
+
+  # GTK display looks nice but does can get stuck in black screen with opengl on
+  -display gtk,zoom-to-fit=on -vga virtio
+  # SDL is looks buggy but supports opengl
+  # -device virtio-vga-gl -display sdl,gl=on
+
+  # https://wiki.qemu.org/Documentation/9psetup
+  # mount -t 9p -o trans=virtio share /mnt -oversion 9p2000.L
+  # share /mnt 9p trans=virtio,version=9p2000.L,_netdev 0 0
+  -virtfs local,path="$HOME",mount_tag=share,security_model=mapped
+
+  # -daemonize
+  "$@"
+)
+
+test -f "$IMG_FILE" || {
+  mkdir -p "$(dirname "$IMG_FILE")"
+  qemu-img create -f qcow2 "$IMG_FILE" "$DRIVE_SIZE"
+}
+
+qemu-system-x86_64 "${QEMU_ARGS[@]}"
