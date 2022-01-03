@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         webpatcher
-// @namespace    http://tampermonkey.net/
 // @version      0.1.0
+// @downloadURL  http://localhost:3000/js/webpatcher-user.js
 // @description  try to take over the world!
 // @author       salem8171
 // @match        https://**/*

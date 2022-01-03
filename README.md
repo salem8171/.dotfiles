@@ -195,5 +195,69 @@ After installing all the necessary configuration files, double check all the
 steps. If everything is verified, reboot the system. It should now boot into
 a graphical environment.
 
+## Initialising Tools For First Time Use
+
+Some installed packages need additional setup before they can be used normally.
+These are mostly applications which require the use of plugins.
+
+### ZSH
+
+Setting up ZSH is pretty stright forward, simply open up a terminal
+(`super+o t`), plugins will be installed automatically.
+
+If for any reason some plugin failed to install, try installing manually with
+
+```sh
+antigen bundle plugin_name
+```
+
+### Ungoogled Chromium
+
+Chromium, being primarly a GUI application, is not easily configurable using the
+command line, and requires a few extra steps to setup.
+
+Start by creating a preferences file from template. This file contains most of
+the needed default settings, plus a list of chromium extensions to be installed.
+The reason for maintaining a template is that the actual file is modified
+excessively by chromium, and it is not a good idea to track.
+
+```sh
+cp $HOME/.config/chromium/Default/Preferences.template $HOME/.config/chromium/Default/Preferences
+```
+
+Next open chromium (`super+o b r`) to install extensions. Click on the
+extensions icon, a popup menu with a list of extensions should appear, look for
+`Chromium Web Store` extension, and click on `More actions` (3 dots), then
+`Update all extensions`.
+
+This is the list of extensions which will be installed:
+- Chromium Web Store
+- Dark Reader
+- Privacy Badger
+- uBlock Origin
+- Vimium C
+- Violentmonkey
+
+A couple of extensions also need to be configured.
+
+Go to `Extensions` > Violentmonkey > `More actions` > `Options` > `Settings` > `Import from zip`,
+then browse for the zip file under `$HOME/.config/violentmonkey/scripts.zip`.
+
+Similarly, go to `Extensions` > Vimium C > `More actions` > Options > `Import Settings`,
+then browse for the file `$HOME/.config/vimium/vimium_c.json`.
+
+Additionaly for Vimium, some options need to be set manually, since they are not
+imported/exported. In the options window, go under `Advanced Options`, check
+everything in the `Optional permissions` section. Save all changes and approve
+the permission popup.
+
+### Neovim
+
+Setting up plugins in neovim should be stright forward, open up neovim
+(`super+o n`), then execute the vim command
+```
+:PlugInstall
+```
+
 # Usage
 (TODO)

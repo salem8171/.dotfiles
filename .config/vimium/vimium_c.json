@@ -1,0 +1,43 @@
+{
+	"name": "Vimium C",
+	"@time": "1/2/2022, 11:57:19 PM",
+	"time": 1641164239078,
+	"environment": {
+		"extension": "1.96.1",
+		"platform": "linux",
+		"chrome": "96"
+	},
+	"allBrowserUrls": true,
+	"autoReduceMotion": true,
+	"exclusionRules": [
+		{
+			"pattern": ":https://www.youtube.com/",
+			"passKeys": "N P "
+		}
+	],
+	"filterLinkHints": true,
+	"grabBackFocus": true,
+	"hideHud": true,
+	"ignoreCapsLock": 2,
+	"nextPatterns": "next,more,newer,>,›,→,»,≫,>>",
+	"notifyUpdate": false,
+	"previousPatterns": "prev,previous,back,older,<,‹,←,«,≪,<<",
+	"searchUrl": "https://searx.be/search?q=$s Searx",
+	"showActionIcon": false,
+	"userDefinedCss": [
+		".LH {",
+		"  color: #acada1;",
+		"  background: #272722 !important;",
+		"  border-color: #acada1;",
+		"}",
+		""
+	],
+	"vomnibarOptions": {
+		"maxMatches": 10,
+		"queryInterval": 333,
+		"sizes": "77,3,44,0.8",
+		"styles": "dark",
+		"actions": ""
+	},
+	"vomnibarPage": "http://localhost:3000/vomnibar.html"
+}
