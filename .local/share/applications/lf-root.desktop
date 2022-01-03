@@ -1,9 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=lf root
-Exec=terminal-adapter sudo -E lf
-Comment=
-Path=
+Exec=terminal-adapter pkexec lf
 Icon=terminal
 Terminal=false
 StartupNotify=false
