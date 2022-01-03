@@ -15,7 +15,7 @@ fzf="$(command -v fzf)"
 [ -x "$fzf" ] && antigen bundle junegunn/fzf shell
 [ -x "$fzf" ] && antigen bundle Aloxaf/fzf-tab
 
-antigen bundle zdharma/fast-syntax-highlighting
+antigen bundle zdharma-continuum/fast-syntax-highlighting
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle rupa/z
