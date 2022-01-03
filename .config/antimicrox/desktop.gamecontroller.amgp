@@ -21,18 +21,6 @@
             <stick index="2">
                 <calibrated>false</calibrated>
                 <summary></summary>
-                <stickbutton index="3">
-                    <slots>
-                        <slot>
-                            <code>0x1000020</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                        <slot>
-                            <code>5</code>
-                            <mode>mousebutton</mode>
-                        </slot>
-                    </slots>
-                </stickbutton>
                 <stickbutton index="1">
                     <slots>
                         <slot>
@@ -61,29 +49,23 @@
                         </slot>
                     </slots>
                 </stickbutton>
+                <stickbutton index="3">
+                    <slots>
+                        <slot>
+                            <code>0x1000020</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                        <slot>
+                            <code>5</code>
+                            <mode>mousebutton</mode>
+                        </slot>
+                    </slots>
+                </stickbutton>
             </stick>
             <stick index="1">
                 <calibrated>false</calibrated>
                 <summary></summary>
                 <diagonalRange>65</diagonalRange>
-                <stickbutton index="8">
-                    <mousespeedx>30</mousespeedx>
-                    <mousespeedy>30</mousespeedy>
-                </stickbutton>
-                <stickbutton index="3">
-                    <mousespeedx>30</mousespeedx>
-                    <mousespeedy>30</mousespeedy>
-                    <slots>
-                        <slot>
-                            <code>4</code>
-                            <mode>mousemovement</mode>
-                        </slot>
-                    </slots>
-                </stickbutton>
-                <stickbutton index="2">
-                    <mousespeedx>30</mousespeedx>
-                    <mousespeedy>30</mousespeedy>
-                </stickbutton>
                 <stickbutton index="1">
                     <mousespeedx>30</mousespeedx>
                     <mousespeedy>30</mousespeedy>
@@ -93,6 +75,10 @@
                             <mode>mousemovement</mode>
                         </slot>
                     </slots>
+                </stickbutton>
+                <stickbutton index="8">
+                    <mousespeedx>30</mousespeedx>
+                    <mousespeedy>30</mousespeedy>
                 </stickbutton>
                 <stickbutton index="7">
                     <mousespeedx>30</mousespeedx>
@@ -122,24 +108,22 @@
                     <mousespeedx>30</mousespeedx>
                     <mousespeedy>30</mousespeedy>
                 </stickbutton>
+                <stickbutton index="3">
+                    <mousespeedx>30</mousespeedx>
+                    <mousespeedy>30</mousespeedy>
+                    <slots>
+                        <slot>
+                            <code>4</code>
+                            <mode>mousemovement</mode>
+                        </slot>
+                    </slots>
+                </stickbutton>
+                <stickbutton index="2">
+                    <mousespeedx>30</mousespeedx>
+                    <mousespeedy>30</mousespeedy>
+                </stickbutton>
             </stick>
             <dpad index="1">
-                <dpadbutton index="8">
-                    <slots>
-                        <slot>
-                            <code>0x1000012</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                    </slots>
-                </dpadbutton>
-                <dpadbutton index="2">
-                    <slots>
-                        <slot>
-                            <code>0x1000014</code>
-                            <mode>keyboard</mode>
-                        </slot>
-                    </slots>
-                </dpadbutton>
                 <dpadbutton index="1">
                     <slots>
                         <slot>
@@ -148,10 +132,26 @@
                         </slot>
                     </slots>
                 </dpadbutton>
+                <dpadbutton index="8">
+                    <slots>
+                        <slot>
+                            <code>0x1000012</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </dpadbutton>
                 <dpadbutton index="4">
                     <slots>
                         <slot>
                             <code>0x1000015</code>
+                            <mode>keyboard</mode>
+                        </slot>
+                    </slots>
+                </dpadbutton>
+                <dpadbutton index="2">
+                    <slots>
+                        <slot>
+                            <code>0x1000014</code>
                             <mode>keyboard</mode>
                         </slot>
                     </slots>
@@ -187,6 +187,23 @@
                     </slots>
                 </triggerbutton>
             </trigger>
+            <button index="9">
+                <slots>
+                    <slot>
+                        <code>2</code>
+                        <mode>mousebutton</mode>
+                    </slot>
+                </slots>
+            </button>
+            <button index="7">
+                <slots>
+                    <slot>
+                        <path>/usr/bin/gtk-launch</path>
+                        <arguments>desktop-menu</arguments>
+                        <mode>execute</mode>
+                    </slot>
+                </slots>
+            </button>
             <button index="2">
                 <slots>
                     <slot>
@@ -200,23 +217,6 @@
                     <slot>
                         <code>0x1000004</code>
                         <mode>keyboard</mode>
-                    </slot>
-                </slots>
-            </button>
-            <button index="7">
-                <slots>
-                    <slot>
-                        <path>/usr/bin/gtk-launch</path>
-                        <arguments>desktop-menu</arguments>
-                        <mode>execute</mode>
-                    </slot>
-                </slots>
-            </button>
-            <button index="9">
-                <slots>
-                    <slot>
-                        <code>2</code>
-                        <mode>mousebutton</mode>
                     </slot>
                 </slots>
             </button>
