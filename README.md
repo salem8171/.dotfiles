@@ -282,7 +282,7 @@ the permission popup.
 Setting up plugins in neovim should be stright forward, open up neovim
 (`super+o n`), then execute the vim command
 ```
-:PlugInstall
+:PackerSync
 ```
 
 # Usage

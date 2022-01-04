@@ -1,103 +1,6 @@
 scriptencoding utf-8
 
-" Install plugins if missing
-let plugged_path = has('nvim') ?
-      \ stdpath('data') . '/site/autoload/plug.vim' :
-      \ '~/.vim/autoload/plug.vim'
-if empty(glob(plugged_path))
-  let install_cmd = "!sh -c '" .
-        \ 'curl --create-dirs -fLo ' . plugged_path . ' ' .
-        \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'"
-  execute install_cmd
-  augroup pluginstall
-    autocmd!
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-  augroup END
-endif
-
-"##############################################################################
-" Plugins
-"##############################################################################
-let plugins_dir = has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged'
-call plug#begin(plugins_dir)
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'airblade/vim-gitgutter'
-Plug 'scrooloose/nerdcommenter'
-Plug 'junegunn/fzf'
-Plug 'vim-airline/vim-airline'
-Plug 'mcmartelle/vim-monokai-bold'
-Plug 'dense-analysis/ale'
-Plug 'Chiel92/vim-autoformat'
-Plug 'easymotion/vim-easymotion'
-Plug 'norcalli/nvim-colorizer.lua'
-Plug '907th/vim-auto-save'
-Plug 'mhinz/vim-startify'
-Plug 'sheerun/vim-polyglot'
-Plug 'voldikss/vim-floaterm'
-Plug 'junegunn/fzf.vim'
-Plug 'liuchengxu/vim-which-key'
-Plug 'mboughaba/i3config.vim'
-Plug 'VebbNix/lf-vim'
-Plug 'junegunn/vim-peekaboo'
-Plug 'skywind3000/asyncrun.vim'
-Plug 'thinca/vim-quickrun'
-Plug 'moll/vim-bbye'
-Plug 'zhaocai/GoldenView.Vim'
-" Plug 'yuki-ycino/fzf-preview.vim',
-"       \ { 'branch': 'release', 'do': ':UpdateRemotePlugins' }
-" Plug 'vim-airline/vim-airline-themes'
-" Plug 'dylanaraps/wal.vim'
-" Plug 'thaerkh/vim-workspace'
-" Plug 'ryanoasis/vim-devicons'
-" Plug 'edkolev/tmuxline.vim'
-" Plug 'dkprice/vim-easygrep'
-" Plug 'OmniSharp/omnisharp-vim'
-
-" coc extensions
-if executable('node') && executable('npm') && executable('yarn')
-  Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-  Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-  Plug 'neoclide/coc-pairs', {'do': 'yarn install --frozen-lockfile'}
-  Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-  Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-  Plug 'neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
-  Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-  Plug 'iamcco/coc-vimlsp', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'iamcco/coc-post', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'neoclide/coc-stylelint', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'bmatcuk/coc-stylelintplus', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'neoclide/coc-java', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'neoclide/coc-yaml', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'neoclide/coc-lists', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'neoclide/coc-git', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'iamcco/coc-angular', {'do': 'npm install --no-package-lock'}
-  " Plug 'fannheyward/coc-xml', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'yatli/coc-powershell', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'fannheyward/coc-markdownlint', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'weirongxu/coc-explorer', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'fannheyward/coc-marketplace', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'neoclide/coc-tslint', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'voldikss/coc-template', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'fannheyward/coc-sql', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'iamcco/coc-gitignore', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'voldikss/coc-github', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'josa42/coc-docker', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'yatli/coc-omnisharp', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'jberglinds/coc-jira-complete', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'balta2ar/coc-jira', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'neoclide/coc-yank', {'do': 'yarn install --frozen-lockfile'}
-  " Plug 'fannheyward/coc-terminal', {'do': 'npm install --no-package-lock'}
-endif
-call plug#end()
+lua require('plugins')
 
 "##############################################################################
 " General
@@ -150,6 +53,8 @@ vim.o.pumblend = 10
 vim.o.diffopt = "internal,algorithm:histogram,indent-heuristic,filler,closeoff,iwhite"
 vim.o.fillchars = "eob: ,diff: ,"
 vim.o.inccommand = "split"
+vim.o.updatetime = 1000
+vim.o.shortmess = vim.o.shortmess.."c"
 vim.cmd [[let mapleader = ' ']]
 vim.cmd [[cnoreabbrev h vertical h]]
 -- vim.o.guicursor:append("a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor")
@@ -534,45 +439,40 @@ let g:goldenview__enable_default_mapping = 0
 "##############################################################################
 " coc
 "##############################################################################
-if !empty(glob(plugins_dir . '/coc.nvim'))
-  set updatetime=1000
-  set shortmess+=c
+command! -nargs=0 Editsnippets :CocCommand snippets.editSnippets
 
-  command! -nargs=0 Editsnippets :CocCommand snippets.editSnippets
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
-  function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-  endfunction
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ?
+      \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
 
-  inoremap <silent><expr> <TAB>
-        \ pumvisible() ? coc#_select_confirm() :
-        \ coc#expandableOrJumpable() ?
-        \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
-        \ coc#refresh()
+let g:coc_snippet_next = '<tab>'
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-  let g:coc_snippet_next = '<tab>'
-  inoremap <silent><expr> <c-space> coc#refresh()
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
-  nmap <silent> gd <Plug>(coc-definition)
-  nmap <silent> gy <Plug>(coc-type-definition)
-  nmap <silent> gi <Plug>(coc-implementation)
-  nmap <silent> gr <Plug>(coc-references)
+call coc#config('diagnostic.displayByAle', 'true')
 
-  call coc#config('diagnostic.displayByAle', 'true')
-
-  call coc#config('languageserver', {
-        \  'ccls': {
-        \    'command': 'ccls',
-        \    'filetypes': ['c', 'cpp', 'cuda', 'objc', 'objcpp'],
-        \    'rootPatterns': ['.ccls-root', 'compile_commands.json'],
-        \    'initializationOptions': {
-        \      'cache': {
-        \        'directory': '.ccls-cache'
-        \      }
-        \    }
-        \  }
-        \})
-endif
+call coc#config('languageserver', {
+      \  'ccls': {
+      \    'command': 'ccls',
+      \    'filetypes': ['c', 'cpp', 'cuda', 'objc', 'objcpp'],
+      \    'rootPatterns': ['.ccls-root', 'compile_commands.json'],
+      \    'initializationOptions': {
+      \      'cache': {
+      \        'directory': '.ccls-cache'
+      \      }
+      \    }
+      \  }
+      \})
