@@ -9,20 +9,12 @@ lua << EOF
 vim.o.number = true
 vim.o.relativenumber = true
 
-vim.cmd [[
-augroup number
-  autocmd!
-  autocmd FileType vim-plug lua vim.wo.number = false
-  autocmd FileType vim-plug lua vim.wo.relativenumber = false
-augroup END
-]]
-
 vim.o.signcolumn = "yes"
 
 vim.cmd [[
 augroup signcolumn
   autocmd!
-  autocmd FileType help,vim-plug lua vim.wo.signcolumn = "no"
+  autocmd FileType help lua vim.wo.signcolumn = "no"
 augroup END
 ]]
 
