@@ -19,7 +19,7 @@ return require('packer').startup({function(use)
   use 'scrooloose/nerdcommenter'
   use 'junegunn/fzf'
   use 'vim-airline/vim-airline'
-  use 'mcmartelle/vim-monokai-bold'
+  use { 'mcmartelle/vim-monokai-bold', config = function() require('colorscheme') end }
   use 'dense-analysis/ale'
   use 'Chiel92/vim-autoformat'
   use 'easymotion/vim-easymotion'
