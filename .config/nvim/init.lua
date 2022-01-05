@@ -216,7 +216,6 @@ vim.g.floaterm_borderchars = '─│─│╭╮╯╰'
 
 local map = vim.api.nvim_set_keymap
 map('n', '<c-o>', ':FloatermNew --title=Open lf<cr>', { noremap = true, silent = true })
-vim.cmd [[highlight! link FloatermBorder Comment]]
 
 -- ############################################################################
 -- # Startify
