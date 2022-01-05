@@ -21,6 +21,7 @@ augroup END
 vim.cmd [[
 augroup cursorline
   autocmd!
+  autocmd OptionSet diff lua if vim.wo.diff == true then vim.wo.cursorline = false end
   autocmd BufEnter * lua if vim.wo.diff == false then vim.wo.cursorline = true end
   autocmd BufLeave * lua vim.wo.cursorline = false
 augroup END
@@ -37,6 +38,7 @@ vim.o.wrap = false
 vim.o.hlsearch = false
 vim.o.swapfile = false
 vim.o.foldmethod = "syntax"
+vim.o.foldlevel = 15
 vim.o.clipboard = "unnamedplus"
 vim.o.colorcolumn = "80"
 vim.o.scrolloff = 10
@@ -47,378 +49,472 @@ vim.o.fillchars = "eob: ,diff: ,"
 vim.o.inccommand = "split"
 vim.o.updatetime = 1000
 vim.o.shortmess = vim.o.shortmess.."c"
+vim.o.lazyredraw = true
 vim.o.termguicolors = true
+vim.o.splitbelow = true
+vim.o.splitright = true
+vim.o.equalalways = true
+vim.o.completeopt = "longest,menuone,preview"
 vim.cmd [[let mapleader = ' ']]
-vim.cmd [[cnoreabbrev h vertical h]]
--- vim.o.guicursor:append("a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor")
+
+local map = vim.api.nvim_set_keymap
+map('i', '<c-b>', '<left>', { noremap = true })
+map('i', '<c-f>', '<right>', { noremap = true })
+map('i', '<c-v>', '<c-r>+', { noremap = true })
+map('v', '<c-c>', '"+ygv', { noremap = true })
+map('v', '<c-v>', '"+p', { noremap = true })
+map('v', '<c-x>', '"+d', { noremap = true })
+map('v', 'y', 'ygv', { noremap = true })
+map('v', 'p', 'pgv', { noremap = true })
+
+map('n', '<c-z>', 'u', { noremap = true })
+map('i', '<c-z>', '<c-o>u', { noremap = true })
+map('n', '<bs>', 'X', { noremap = true })
+map('v', '<bs>', 'x', { noremap = true })
+map('', '<c-f>', '<esc>/', { noremap = true })
+map('', '<c-h>', ':%s/', { noremap = true })
+map('v', '<c-h>', ':s/', { noremap = true })
+
+map('', '<c-a>', '<esc>ggVG', { noremap = true, silent = true })
+map('', '<c-s>', '<esc>:w<cr>', { noremap = true, silent = true })
+map('i', '<c-s>', '<c-o>:w<cr>', { noremap = true, silent = true })
+map('', '<c-n>', '<esc>:enew<cr>', { noremap = true, silent = true })
+map('', '<c-q>', '<esc>:quitall<cr>', { noremap = true, silent = true })
+map('', '<a-q>', '<esc>:quit<cr>', { noremap = true, silent = true })
+map('n', 'H', '<c-o>', { noremap = true })
+map('n', 'L', '<c-i>', { noremap = true })
+map('n', 'gJ', 'J', { noremap = true })
+map('n', 'gK', 'K', { noremap = true })
 EOF
-
-command! -nargs=0 Vimrc :edit $MYVIMRC
-
-inoremap <c-b> <left>
-inoremap <c-f> <right>
-
-inoremap <c-v> <c-r>+
-vnoremap <c-c> "+ygv
-vnoremap <c-v> "+p
-vnoremap <c-x> "+d
-
-nnoremap <c-z> u
-inoremap <c-z> <esc>u
-nnoremap <bs> X
-vnoremap <bs> x
-noremap <c-f> <esc>/
-noremap <c-h> :%s/
-vnoremap <c-h> :s/
-noremap <silent> <c-a> <esc>ggVG
-noremap <silent> <c-s> <esc>:w<cr>
-inoremap <silent> <c-s> <esc>:w<cr>
-noremap <silent> <c-n> <esc>:enew<cr>
-" noremap <silent> <c-w> <esc>:bdelete<cr>
-noremap <silent> <c-q> <esc>:qa<cr>
-noremap <silent> <a-q> <esc>:q<cr>
-noremap <silent> H <c-o>
-noremap <silent> L <c-i>
 
 "##############################################################################
 " Terminal
 "##############################################################################
-if has('nvim')
-  tnoremap <esc><esc><esc> <c-\><c-n>
-  augroup terminal
-    autocmd!
-    autocmd BufEnter term://* startinsert
-    autocmd TermOpen * startinsert
-    autocmd TermOpen * setlocal nobuflisted foldcolumn=0
-    autocmd TermOpen * setlocal nonumber norelativenumber signcolumn=no
-    " autocmd TermOpen,TermEnter * setlocal scrolloff=0
-    " autocmd TermLeave * setlocal scrolloff=10
-  augroup END
-endif
+lua << EOF
+local map = vim.api.nvim_set_keymap
+map('t', '<esc><esc>', '<c-\\><c-n>', { noremap = true })
+vim.cmd [[
+augroup terminal
+  autocmd!
+  autocmd BufEnter term://* lua vim.cmd("startinsert")
+  autocmd TermOpen * lua vim.cmd("startinsert")
+  autocmd TermOpen * lua vim.bo.buflisted = false
+  autocmd TermOpen * lua vim.wo.foldcolumn = "0"
+  autocmd TermOpen * lua vim.wo.number = false
+  autocmd TermOpen * lua vim.wo.relativenumber = false
+  autocmd TermOpen * lua vim.wo.signcolumn = "no"
+augroup END
+]]
+EOF
 
 "##############################################################################
 " Window management
 "##############################################################################
-" Splits
-set splitbelow splitright equalalways
-noremap <A-/> <esc><c-w>v
-noremap <A--> <esc><c-w>s
-inoremap <A-/> <esc><c-w>v
-inoremap <A--> <esc><c-w>s
-tnoremap <A-/> <C-\><C-n><c-w>vi
-tnoremap <A--> <C-\><C-n><c-w>si
+lua << EOF
+local map = vim.api.nvim_set_keymap
 
-" Movement
-nnoremap <silent><expr> <tab> &buflisted ? ":bnext<cr>" : "<nop>"
-nnoremap <silent><expr> <s-tab> &buflisted ? ":bprevious<cr>" : "<nop>"
-noremap <A-h> <esc><C-w>h
-noremap <A-j> <esc><C-w>j
-noremap <A-k> <esc><C-w>k
-noremap <A-l> <esc><C-w>l
-inoremap <A-h> <esc><C-w>h
-inoremap <A-j> <esc><C-w>j
-inoremap <A-k> <esc><C-w>k
-inoremap <A-l> <esc><C-w>l
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
+-- Splits
+map('', '<a-/>', '<esc><c-w>v', { noremap = true })
+map('', '<a-->', '<esc><c-w>s', { noremap = true })
+map('i', '<a-/>', '<c-o><c-w>v', { noremap = true })
+map('i', '<a-->', '<c-o><c-w>s', { noremap = true })
+map('t', '<a-/>', '<c-\\><c-n><c-w>vi', { noremap = true })
+map('t', '<a-->', '<c-\\><c-n><c-w>vs', { noremap = true })
 
-" Resizing
-noremap <silent> <AS-h> <esc>:vertical resize -1<cr>
-noremap <silent> <AS-l> <esc>:vertical resize +1<cr>
-noremap <silent> <AS-k> <esc>:resize -1<cr>
-noremap <silent> <AS-j> <esc>:resize +1<cr>
-inoremap <silent> <AS-h> <esc>:vertical resize -1<cr>
-inoremap <silent> <AS-l> <esc>:vertical resize +1<cr>
-inoremap <silent> <AS-k> <esc>:resize -1<cr>
-inoremap <silent> <AS-j> <esc>:resize +1<cr>
-tnoremap <silent> <AS-h> <c-\><c-n>:vertical resize -1<cr>i
-tnoremap <silent> <AS-l> <c-\><c-n>:vertical resize +1<cr>i
-tnoremap <silent> <AS-k> <c-\><c-n>:resize -1<cr>i
-tnoremap <silent> <AS-j> <c-\><c-n>:resize +1<cr>i
+-- Movement
+map('n', '<s-tab>', '&buflisted ? ":bprevious<cr>" : "<nop>"', { noremap = true, silent = true, expr = true })
+map('n', '<tab>', '&buflisted ? ":bnext<cr>" : "<nop>"', { noremap = true, silent = true, expr = true })
+map('n', 'J', '&buflisted ? ":bprevious<cr>" : "<nop>"', { noremap = true, silent = true, expr = true })
+map('n', 'K', '&buflisted ? ":bnext<cr>" : "<nop>"', { noremap = true, silent = true, expr = true })
+map('', '<a-h>', '<esc><c-w>h', { noremap = true })
+map('', '<a-j>', '<esc><c-w>j', { noremap = true })
+map('', '<a-k>', '<esc><c-w>k', { noremap = true })
+map('', '<a-l>', '<esc><c-w>l', { noremap = true })
+map('i', '<a-h>', '<esc><c-w>h', { noremap = true })
+map('i', '<a-j>', '<esc><c-w>j', { noremap = true })
+map('i', '<a-k>', '<esc><c-w>k', { noremap = true })
+map('i', '<a-l>', '<esc><c-w>l', { noremap = true })
+map('t', '<a-h>', '<c-\\><c-n><c-w>h', { noremap = true })
+map('t', '<a-j>', '<c-\\><c-n><c-w>j', { noremap = true })
+map('t', '<a-k>', '<c-\\><c-n><c-w>k', { noremap = true })
+map('t', '<a-l>', '<c-\\><c-n><c-w>l', { noremap = true })
+
+-- Resizing
+map('', '<as-h>', '<esc>3<c-w><', { noremap = true })
+map('', '<as-l>', '<esc>3<c-w>>', { noremap = true })
+map('', '<as-k>', '<esc>3<c-w>-', { noremap = true })
+map('', '<as-j>', '<esc>3<c-w>+', { noremap = true })
+map('i', '<as-h>', '<c-o>3<c-w><', { noremap = true })
+map('i', '<as-l>', '<c-o>3<c-w>>', { noremap = true })
+map('i', '<as-k>', '<c-o>3<c-w>-', { noremap = true })
+map('i', '<as-j>', '<c-o>3<c-w>+', { noremap = true })
+map('t', '<as-h>', '<c-\\><c-n>3<c-w><i', { noremap = true })
+map('t', '<as-l>', '<c-\\><c-n>3<c-w>>i', { noremap = true })
+map('t', '<as-k>', '<c-\\><c-n>3<c-w>-i', { noremap = true })
+map('t', '<as-j>', '<c-\\><c-n>3<c-w>+i', { noremap = true })
+EOF
 
 "##############################################################################
 " Airline
 "##############################################################################
-let g:airline_theme = 'monokaish'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline_stl_path_style = 'short'
+lua << EOF
+vim.g.airline_theme = 'monokaish'
+vim.g['airline#extensions#tabline#enabled'] = 1
+vim.g.airline_powerline_fonts = 1
+vim.g['airline#extensions#tabline#formatter'] = 'unique_tail'
+vim.g.airline_stl_path_style = 'short'
 
-let g:airline_symbols = exists('g:airline_symbols') ? g:airline_symbols : {}
-let g:airline_symbols.linenr = 'Ξ'
-let g:airline_symbols.whitespace = 'Ξ'
+local airline_symbols = vim.g.airline_symbols or {}
+airline_symbols.colnr = 'Col'
+airline_symbols.linenr = ' Ln'
+airline_symbols.maxlinenr = ' '
+airline_symbols.crypt = '[crypt]'
+airline_symbols.whitespace = 'Ξ'
+vim.g.airline_symbols = airline_symbols
+EOF
 
 "##############################################################################
 " Autoformat
 "##############################################################################
-let g:autoformat_autoindent=0
+lua << EOF
+vim.g.autoformat_autoindent = 0
 
-nnoremap <silent> <c-a-f> :Autoformat<cr>
+local map = vim.api.nvim_set_keymap
+map('', '<c-a-f>', '<esc>:Autoformat<cr>', { noremap = true, silent = true })
+map('i', '<c-a-f>', '<o>:Autoformat<cr>', { noremap = true, silent = true })
 
+vim.cmd [[
 augroup autoformat
   autocmd!
-  " autocmd BufWritePre * :Autoformat
-  autocmd FileType vim let b:autoformat_autoindent=1
-  autocmd FileType desktop let b:autoformat_autoindent=1
+  autocmd FileType vim lua vim.b.autoformat_autoindent = 1
+  autocmd FileType desktop lua vim.b.autoformat_autoindent = 1
 augroup END
+]]
 
-let g:formatdef_htmlbeautify =
-      \'"html-beautify - -w ".&colorcolumn." -".(&expandtab ? "s ".shiftwidth() : "t")'
-let g:formatdef_astyle_cs =
-      \'"astyle --mode=cs --style=ansi --max-code-length=".&colorcolumn." --indent-namespaces -pcH".(&expandtab ? "s".shiftwidth() : "t")'
+vim.g.formatdef_htmlbeautify = '"html-beautify - -w ".&colorcolumn." -".(&expandtab ? "s ".shiftwidth() : "t")'
+vim.g.formatdef_astyle_cs = '"astyle --mode=cs --style=ansi --max-code-length=".&colorcolumn." --indent-namespaces -pcH".(&expandtab ? "s".shiftwidth() : "t")'
+EOF
 
 "##############################################################################
 " Autosave
 "##############################################################################
-let g:auto_save = 1
-let g:auto_save_silent = 1
+lua << EOF
+vim.g.auto_save = 1
+vim.g.auto_save_silent = 1
+EOF
 
 "##############################################################################
 " Fugitive
 "##############################################################################
+lua << EOF
+vim.cmd [[
 augroup fugitive_user
   autocmd!
-  autocmd FileType fugitive setlocal nobuflisted
+  autocmd FileType fugitive lua vim.bo.buflisted = false
 augroup END
-
+]]
+EOF
 
 "##############################################################################
 " Floaterm
 "##############################################################################
-let g:floaterm_width = 0.99
-let g:floaterm_height = 0.99
-" let g:floaterm_width = 0.7
-" let g:floaterm_height = 0.7
-let g:floaterm_opener = 'edit'
-nnoremap <silent> <c-o> :FloatermNew --title=Open lf<cr>
-hi FloatermBorder ctermbg=None guibg=None
+lua << EOF
+vim.g.floaterm_width = 0.85
+vim.g.floaterm_height = 0.85
+vim.g.floaterm_opener = 'edit'
+vim.g.floaterm_borderchars = '─│─│╭╮╯╰'
+
+local map = vim.api.nvim_set_keymap
+map('n', '<c-o>', ':FloatermNew --title=Open lf<cr>', { noremap = true, silent = true })
+vim.cmd [[highlight! link FloatermBorder Comment]]
+EOF
 
 "##############################################################################
 " Startify
 "##############################################################################
-let g:startify_custom_header = [
-      \'     _   _                 _',
-      \'    | \ | | ___  _____   _(_)_ __ ___  ',
-      \'    |  \| |/ _ \/ _ \ \ / / | `_ ` _ \ ',
-      \'    | |\  |  __/ (_) \ V /| | | | | | |',
-      \'    |_| \_|\___|\___/ \_/ |_|_| |_| |_|',
-      \''
-      \]
+lua << EOF
+vim.g.startify_session_persistence = 1
+vim.g.startify_session_before_save = { 'silent! NERDTreeClose' }
+vim.g.startify_custom_header = {
+  [[     _   _                 _               ]],
+  [[    | \ | | ___  _____   _(_)_ __ ___      ]],
+  [[    |  \| |/ _ \/ _ \ \ / / | `_ ` _ \     ]],
+  [[    | |\  |  __/ (_) \ V /| | | | | | |    ]],
+  [[    |_| \_|\___|\___/ \_/ |_|_| |_| |_|    ]],
+  [[                                           ]]
+}
 
+local map = vim.api.nvim_set_keymap
+map('n', '<c-k>f', ':SClose<cr>', { noremap = true, silent = true })
+
+vim.cmd [[
 augroup startify
   autocmd!
-  autocmd User Startified setlocal cursorline
+  autocmd User Startified lua vim.wo.cursorline = true
 augroup END
-
-nnoremap <silent> <c-k>f :SClose<cr>
-let g:startify_session_persistence = 1
-let g:startify_session_before_save = [
-      \ 'silent! NERDTreeClose'
-      \ ]
+]]
+EOF
 
 "##############################################################################
 " Surround
 "##############################################################################
-let g:surround_no_mappings=1
-nmap dS <plug>Dsurround
-nmap cS <plug>Csurround
-nmap cSS <plug>CSurround
-nmap yS <plug>Ysurround
-nmap ySS <plug>Yssurround
-xmap S <plug>VSurround
-xmap gS <plug>VgSurround
+lua << EOF
+vim.g.surround_no_mappings = 1
+
+local map = vim.api.nvim_set_keymap
+map('n', 'dS', '<plug>Dsurround', {})
+map('n', 'cS', '<plug>Csurround', {})
+map('n', 'cSS', '<plug>CSurround', {})
+map('n', 'yS', '<plug>Ysurround', {})
+map('n', 'ySS', '<plug>Yssurround', {})
+map('x', 'S', '<plug>VSurround', {})
+map('x', 'gS', '<plug>VgSurround', {})
+EOF
 
 "##############################################################################
 " Easymotion
 "##############################################################################
-map <Leader> <Plug>(easymotion-prefix)
-let g:EasyMotion_do_mapping = 0
-map s <Plug>(easymotion-bd-f)
-xmap s <Plug>(easymotion-bd-f)
-omap s <Plug>(easymotion-bd-f)
-nmap s <Plug>(easymotion-bd-f)
-let g:EasyMotion_smartcase = 1
-map <leader>j <Plug>(easymotion-j)
-xmap <leader>j <Plug>(easymotion-j)
-omap <leader>j <Plug>(easymotion-j)
-map <leader>k <Plug>(easymotion-k)
-xmap <leader>k <Plug>(easymotion-k)
-map <leader>k <Plug>(easymotion-k)
+lua << EOF
+vim.g.EasyMotion_do_mapping = 0
+vim.g.EasyMotion_smartcase = 1
+
+local map = vim.api.nvim_set_keymap
+map('', '<leader>', '<plug>(easymotion-prefix)', {})
+map('', 's', '<Plug>(easymotion-bd-f)', {})
+map('', '<leader>j', '<Plug>(easymotion-j)', {})
+map('', '<leader>k', '<Plug>(easymotion-k)', {})
+map('x', 's', '<Plug>(easymotion-bd-f)', {})
+map('x', '<leader>j', '<Plug>(easymotion-j)', {})
+map('x', '<leader>k', '<Plug>(easymotion-k)', {})
+map('o', 's', '<Plug>(easymotion-bd-f)', {})
+map('o', '<leader>j', '<Plug>(easymotion-j)', {})
+map('o', '<leader>k', '<Plug>(easymotion-k)', {})
+EOF
 
 "##############################################################################
 " NerdTree
 "##############################################################################
-nnoremap <silent> <c-b> :NERDTreeToggle<cr>
-nnoremap <silent> <c-k><c-o> :NERDTree<cr>
-let g:NERDTreeHijackNetrw = 1
-let g:NERDTreeShowHidden = 1
-let g:NERDTreeMinimalUI = 1
-let g:NERDTreeIgnore = ['\.meta$']
-let g:NERDTreeMapToggleHidden = 'H'
+lua << EOF
+vim.g.NERDTreeHijackNetrw = 1
+vim.g.NERDTreeShowHidden = 1
+vim.g.NERDTreeMinimalUI = 1
+vim.g.NERDTreeAutoDeleteBuffer=1
+vim.g.NERDTreeIgnore = { [[\.meta$]] }
+vim.g.NERDTreeMapToggleHidden = 'H'
 
-augroup nerdtree
+local map = vim.api.nvim_set_keymap
+map('n', '<c-b>', ':NERDTreeToggle<cr>', { noremap = true, silent = true })
+map('n', '<c-k><c-o>', ':NERDTree<cr>', { noremap = true, silent = true })
+
+function OnNERDTreeEnter()
+  local fn = vim.fn
+  if fn.winnr('$') == 1 and vim.b.NERDTree and vim.b.NERDTree._type == 'tab' then
+    if fn.len(fn.getbufinfo({ buflisted = 1 })) == 0 then
+      vim.cmd [[quitall]]
+    end
+    vim.cmd [[bnext]]
+    vim.cmd [[NERDTreeToggle]]
+    vim.cmd [[wincmd w]]
+  end
+end
+
+function OnNERDTreeVimEnter()
+  local fn = vim.fn
+  if fn.argc() == 1 and fn.isdirectory(fn.argv(0)) == 1 then
+    vim.cmd [[enew]]
+    vim.cmd [[exec 'cd '.argv(0)]]
+    vim.cmd [[exec 'NERDTree' argv(0)]]
+    vim.cmd [[wincmd p]]
+  end
+end
+
+vim.cmd [[
+augroup nerdtree_user
   autocmd!
-  autocmd bufenter * call OnNERDTreeEnter()
-
-  autocmd FileType nerdtree nnoremap <buffer> l <nop>
-  autocmd FileType nerdtree nnoremap <buffer> h <nop>
-  autocmd FileType nerdtree setlocal cursorline signcolumn=auto
-  autocmd FileType nerdtree setlocal winwidth=30 winminwidth=25 winfixwidth
-
-  autocmd VimEnter *
-        \ if argc() == 1 && isdirectory(argv()[0]) |
-        \   exec 'NERDTree' argv()[0] | wincmd p | enew | exec 'cd '.argv()[0] |
-        \ endif
+  autocmd BufEnter * lua OnNERDTreeEnter()
+  autocmd VimEnter * lua OnNERDTreeVimEnter()
+  autocmd FileType nerdtree lua vim.api.nvim_buf_set_keymap(0, 'n', 'l', '', {})
+  autocmd FileType nerdtree lua vim.api.nvim_buf_set_keymap(0, 'n', 'h', '', {})
+  autocmd FileType nerdtree lua vim.wo.cursorline = true
+  autocmd FileType nerdtree lua vim.wo.signcolumn = 'auto'
+  autocmd FileType nerdtree lua vim.o.winwidth = 30
+  autocmd FileType nerdtree lua vim.o.winminwidth = 25
+  autocmd FileType nerdtree lua vim.wo.winfixwidth = true
 augroup END
-
-function! OnNERDTreeEnter()
-  if (winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree())
-    if (len(getbufinfo({'buflisted':1})) == 0) | qa | endif
-    bnext
-    NERDTreeToggle
-    wincmd w
-  endif
-endfunction
+]]
+EOF
 
 "##############################################################################
 " fzf
 "##############################################################################
-let g:fzf_layout = { 'window': { 'width': 1, 'height': 1 } }
-" let g:fzf_layout = { 'window': { 'width': 0.7, 'height': 0.7 } }
-let g:fzf_preview_floating_window_rate = 0.7
+lua << EOF
+vim.g.fzf_layout = { window = { width = 0.85, height = 0.85 } }
+vim.g.fzf_preview_floating_window_rate = 0.7
 
-let opts = {'source': 'find -type f'}
-if executable('fd') | let opts.source='fd --type file --hidden' | endif
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(opts), <bang>0)
+local map = vim.api.nvim_set_keymap
+map('n', '<c-p>', ':Files<cr>', { noremap = true, silent = true })
+map('n', '<c-k>m', ':Filetypes<cr>', { noremap = true, silent = true })
+map('n', '<a-tab>', ':Buffers<cr>', { noremap = true, silent = true })
+map('n', '<a-s>', ':Commands<cr>', { noremap = true, silent = true })
 
-nnoremap <silent> <c-p> :Files<cr>
-nnoremap <silent> <c-k>m :Filetypes<cr>
-nnoremap <silent> <a-tab> :Buffers<CR>
-nnoremap <silent> <a-s> :Commands<cr>
+function fzf_files(qargs)
+  local opts
+  if vim.fn.executable('fd') == 1 then
+    opts = { source = 'fd --type file --hidden' }
+  else
+    opts = { source = 'find -type f' }
+  end
+  vim.fn['fzf#vim#files'](qargs, vim.fn['fzf#vim#with_preview'](opts), 0)
+end
+
+vim.cmd [[command! -nargs=? -complete=dir Files lua fzf_files(<q-args>)]]
+EOF
 
 "##############################################################################
 " NerdCommenter
 "##############################################################################
-let g:NERDSpaceDelims = 1
-let g:NERDCompactSexyComs = 1
-let g:NERDDefaultAlign = 'left'
-let g:NERDCommentEmptyLines = 0
-let g:NERDTrimTrailingWhitespace = 1
-let g:NERDToggleCheckAllLines = 1
-nnoremap <silent> yc :call nerdcommenter#Comment("n", "Toggle")<cr>
-xnoremap <silent> yc :call nerdcommenter#Comment("x", "Toggle")<cr>
-nnoremap <silent>  :call nerdcommenter#Comment("n", "Toggle")<cr>
-vnoremap <silent>  :call nerdcommenter#Comment("n", "Toggle")<cr>
+lua << EOF
+vim.g.NERDSpaceDelims = 1
+vim.g.NERDCompactSexyComs = 1
+vim.g.NERDDefaultAlign = 'left'
+vim.g.NERDCommentEmptyLines = 0
+vim.g.NERDTrimTrailingWhitespace = 1
+vim.g.NERDToggleCheckAllLines = 1
 
-augroup nerdcommenter
+local map = vim.api.nvim_set_keymap
+map('n', 'yc', ':call nerdcommenter#Comment("n", "Toggle")<cr>', { noremap = true, silent = true })
+map('n', '<c-_>', ':call nerdcommenter#Comment("n", "Toggle")<cr>', { noremap = true, silent = true })
+map('x', 'yc', ':call nerdcommenter#Comment("x", "Toggle")<cr>', { noremap = true, silent = true })
+map('x', '<c-_>', ':call nerdcommenter#Comment("x", "Toggle")<cr>', { noremap = true, silent = true })
+
+vim.cmd [[
+augroup nerdcommenter_user
   autocmd!
-  autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+  autocmd BufEnter * lua vim.bo.formatoptions = vim.bo.formatoptions:gsub('c', '')
+  autocmd BufEnter * lua vim.bo.formatoptions = vim.bo.formatoptions:gsub('r', '')
+  autocmd BufEnter * lua vim.bo.formatoptions = vim.bo.formatoptions:gsub('o', '')
 augroup END
+]]
+EOF
 
 "##############################################################################
 " OmniSharp
 "##############################################################################
-let g:OmniSharp_server_stdio = 1
-let g:OmniSharp_timeout = 5
-set completeopt=longest,menuone,preview
-let g:OmniSharp_highlight_types = 3
+lua << EOF
+vim.g.OmniSharp_server_stdio = 1
+vim.g.OmniSharp_timeout = 5
+vim.g.OmniSharp_highlight_types = 3
+EOF
 
 "##############################################################################
 " ALE
 "##############################################################################
-let g:ale_linters = {
-      \ 'cs': ['OmniSharp']
-      \}
-let g:ale_set_quickfix = 1
+lua << EOF
+vim.g.ale_linters = { cs = { 'OmniSharp' } }
+vim.g.ale_set_quickfix = 1
+EOF
 
 "##############################################################################
 " WhichKey
 "##############################################################################
-let g:which_key_vertical = 0
-let g:which_key_timeout = 20
-let g:which_key_use_floating_win = 0
-let g:which_key_fallback_to_native_key=1
-highlight WhichKeyFloating guibg=None
+lua << EOF
+vim.g.which_key_vertical = 0
+vim.g.which_key_timeout = 20
+vim.g.which_key_use_floating_win = 0
+vim.g.which_key_fallback_to_native_key=1
+vim.cmd [[highlight WhichKeyFloating guibg=None]]
+EOF
 
 "##############################################################################
 " Peekaboo
 "##############################################################################
-let g:peekaboo_window = 'vert bo new'
+lua << EOF
+vim.g.peekaboo_window = 'vert bo new'
+EOF
 
 "##############################################################################
 " Asyncrun
 "##############################################################################
-let g:asyncrun_open = 10
+lua << EOF
+vim.g.asyncrun_open = 10
+vim.cmd [[
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
-
-" command! -bang -bar -nargs=* Gpush execute 'AsyncRun<bang> -cwd=' .
-"           \ fnameescape(FugitiveGitDir()) 'git push' <q-args>
-" command! -bang -bar -nargs=* Gfetch execute 'AsyncRun<bang> -cwd=' .
-"           \ fnameescape(FugitiveGitDir()) 'git fetch' <q-args>
-
-" let g:asyncrun_status = ''
-" let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
+]]
+EOF
 
 "##############################################################################
 " Quickrun
 "##############################################################################
-" nnoremap R <plug>(quickrun)
-nnoremap <silent> R :QuickRun -runner shell<cr>
-let g:quickrun_config = {}
-" let g:quickrun_config.runner = 'shell'
-" let g:quickrun_config.haskell = {'command' : 'runhugs'}
+lua << EOF
+vim.g.quickrun_config = {}
+local map = vim.api.nvim_set_keymap
+-- map('', 'R', ':QuickRun -runner shell<cr>', { noremap = true, silent = true })
+map('', 'R', ':QuickRun<cr>', { noremap = true, silent = true })
+EOF
 
 "##############################################################################
 " Bbye
 "##############################################################################
-nnoremap <silent> <c-w> :Bdelete<cr>
+lua << EOF
+local map = vim.api.nvim_set_keymap
+map('n', '<c-w>', ':Bdelete<cr>', { noremap = true, silent = true })
+EOF
 
 "##############################################################################
 " GoldenView
 "##############################################################################
-let g:goldenview__enable_default_mapping = 0
+lua << EOF
+vim.g.goldenview__enable_default_mapping = 0
+EOF
 
 "##############################################################################
 " coc
 "##############################################################################
-command! -nargs=0 Editsnippets :CocCommand snippets.editSnippets
+lua << EOF
+vim.g.coc_snippet_next = '<tab>'
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+vim.cmd [[command! -nargs=0 Editsnippets :CocCommand snippets.editSnippets]]
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ?
-      \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+function is_space_prev_char()
+  local col = vim.fn.col('.') - 1
+  if col == 0 or vim.regex('\\s'):match_str(vim.fn.getline('.'):sub(col, col)) then
+    return true
+  end
+  return false
+end
 
-let g:coc_snippet_next = '<tab>'
-inoremap <silent><expr> <c-space> coc#refresh()
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+function tab_completion()
+  if vim.fn.pumvisible() == 1 then
+    return vim.fn['coc#_select_confirm']()
+  elseif vim.fn['coc#expandableOrJumpable']() then
+    return "<c-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])<cr>"
+  elseif is_space_prev_char() then
+    return "<tab>"
+  else
+    return vim.fn['coc#refresh']()
+  end
+end
 
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+local map = vim.api.nvim_set_keymap
+map('i', '<tab>', 'v:lua.tab_completion()', { noremap = true, expr = true })
+map('i', '<c-space>', 'coc#refresh()', { noremap = true, expr = true })
+map('i', '<cr>', 'pumvisible() ? "<c-y>" : "<c-g>u<cr>"', { noremap = true, expr = true })
+map('n', 'gd', '<plug>(coc-definition)', { noremap = true })
+map('n', 'gy', '<plug>(coc-type-definition)', { noremap = true })
+map('n', 'gi', '<plug>(coc-implementation)', { noremap = true })
+map('n', 'gr', '<plug>(coc-references)', { noremap = true })
 
-call coc#config('diagnostic.displayByAle', 'true')
-
-call coc#config('languageserver', {
-      \  'ccls': {
-      \    'command': 'ccls',
-      \    'filetypes': ['c', 'cpp', 'cuda', 'objc', 'objcpp'],
-      \    'rootPatterns': ['.ccls-root', 'compile_commands.json'],
-      \    'initializationOptions': {
-      \      'cache': {
-      \        'directory': '.ccls-cache'
-      \      }
-      \    }
-      \  }
-      \})
+vim.fn['coc#config']('diagnostic.displayByAle', 'true')
+vim.fn['coc#config']('languageserver', {
+  ccls = {
+    command = 'ccls',
+    filetypes = { 'c', 'cpp', 'cuda', 'objc', 'objcpp' },
+    rootPatterns = { '.ccls-root', 'compile_commands.json' },
+    initializationOptions = {
+      cache = {
+        directory = '.ccls-cache'
+      }
+    }
+  }
+})
+EOF
