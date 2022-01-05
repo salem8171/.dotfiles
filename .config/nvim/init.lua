@@ -5,25 +5,7 @@ require('plugins')
 -- ############################################################################
 vim.o.number = true
 vim.o.relativenumber = true
-
 vim.o.signcolumn = "yes"
-
-vim.cmd [[
-augroup signcolumn
-  autocmd!
-  autocmd FileType help lua vim.wo.signcolumn = "no"
-augroup END
-]]
-
-vim.cmd [[
-augroup cursorline
-  autocmd!
-  autocmd OptionSet diff lua if vim.wo.diff == true then vim.wo.cursorline = false end
-  autocmd BufEnter * lua if vim.wo.diff == false then vim.wo.cursorline = true end
-  autocmd BufLeave * lua vim.wo.cursorline = false
-augroup END
-]]
-
 vim.o.mouse = "a"
 vim.o.confirm = true
 vim.o.expandtab = true
@@ -54,34 +36,59 @@ vim.o.equalalways = true
 vim.o.completeopt = "longest,menuone,preview"
 vim.cmd [[let mapleader = ' ']]
 
+vim.cmd [[
+augroup signcolumn
+  autocmd!
+  autocmd FileType help lua vim.wo.signcolumn = "no"
+augroup END
+]]
+
+vim.cmd [[
+augroup cursorline
+  autocmd!
+  autocmd OptionSet diff lua if vim.wo.diff == true then vim.wo.cursorline = false end
+  autocmd BufEnter * lua if vim.wo.diff == false then vim.wo.cursorline = true end
+  autocmd BufLeave * lua vim.wo.cursorline = false
+augroup END
+]]
+
 local map = vim.api.nvim_set_keymap
+
+-- Emacs
 map('i', '<c-b>', '<left>', { noremap = true })
 map('i', '<c-f>', '<right>', { noremap = true })
+map('c', '<c-a>', '<c-b>', { noremap = true })
+map('c', '<c-b>', '<left>', { noremap = true })
+map('c', '<c-f>', '<right>', { noremap = true })
+map('c', '<c-g>', '<c-f>', { noremap = true })
+
+-- Normie
 map('i', '<c-v>', '<c-r>+', { noremap = true })
 map('v', '<c-c>', '"+ygv', { noremap = true })
-map('v', '<c-v>', '"+p', { noremap = true })
+map('v', '<c-v>', '"+pgv', { noremap = true })
 map('v', '<c-x>', '"+d', { noremap = true })
-map('v', 'y', 'ygv', { noremap = true })
-map('v', 'p', 'pgv', { noremap = true })
-
 map('n', '<c-z>', 'u', { noremap = true })
 map('i', '<c-z>', '<c-o>u', { noremap = true })
-map('n', '<bs>', 'X', { noremap = true })
-map('v', '<bs>', 'x', { noremap = true })
+map('n', '<bs>', 'Xi', { noremap = true })
+map('v', '<bs>', 'xi', { noremap = true })
 map('', '<c-f>', '<esc>/', { noremap = true })
 map('', '<c-h>', ':%s/', { noremap = true })
 map('v', '<c-h>', ':s/', { noremap = true })
-
 map('', '<c-a>', '<esc>ggVG', { noremap = true, silent = true })
 map('', '<c-s>', '<esc>:w<cr>', { noremap = true, silent = true })
 map('i', '<c-s>', '<c-o>:w<cr>', { noremap = true, silent = true })
 map('', '<c-n>', '<esc>:enew<cr>', { noremap = true, silent = true })
+
+-- Personal pref
+map('v', 'y', 'ygv', { noremap = true })
+map('v', 'p', 'pgv', { noremap = true })
+map('n', '<cr>', 'o', { noremap = true })
 map('', '<c-q>', '<esc>:quitall<cr>', { noremap = true, silent = true })
 map('', '<a-q>', '<esc>:quit<cr>', { noremap = true, silent = true })
 map('n', 'H', '<c-o>', { noremap = true })
 map('n', 'L', '<c-i>', { noremap = true })
-map('n', 'gJ', 'J', { noremap = true })
-map('n', 'gK', 'K', { noremap = true })
+map('n', 'gJ', 'J', { noremap = true }) -- J is used for buffer movement
+map('n', 'gK', 'K', { noremap = true }) -- K is used for buffer movement
 
 -- ############################################################################
 -- # Terminal
