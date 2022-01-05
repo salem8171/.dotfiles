@@ -457,16 +457,18 @@ map('n', 'gy', '<plug>(coc-type-definition)', { noremap = true })
 map('n', 'gi', '<plug>(coc-implementation)', { noremap = true })
 map('n', 'gr', '<plug>(coc-references)', { noremap = true })
 
-vim.fn['coc#config']('diagnostic.displayByAle', 'true')
-vim.fn['coc#config']('languageserver', {
-  ccls = {
-    command = 'ccls',
-    filetypes = { 'c', 'cpp', 'cuda', 'objc', 'objcpp' },
-    rootPatterns = { '.ccls-root', 'compile_commands.json' },
-    initializationOptions = {
-      cache = {
-        directory = '.ccls-cache'
+if packer_plugins and packer_plugins["coc.nvim"] and packer_plugins["coc.nvim"].loaded then
+  vim.fn['coc#config']('diagnostic.displayByAle', 'true')
+  vim.fn['coc#config']('languageserver', {
+      ccls = {
+        command = 'ccls',
+        filetypes = { 'c', 'cpp', 'cuda', 'objc', 'objcpp' },
+        rootPatterns = { '.ccls-root', 'compile_commands.json' },
+        initializationOptions = {
+          cache = {
+            directory = '.ccls-cache'
+          }
+        }
       }
-    }
-  }
-})
+    })
+end
