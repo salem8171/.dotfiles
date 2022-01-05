@@ -336,6 +336,7 @@ map('n', '<c-p>', ':Files<cr>', { noremap = true, silent = true })
 map('n', '<c-k>m', ':Filetypes<cr>', { noremap = true, silent = true })
 map('n', '<a-tab>', ':Buffers<cr>', { noremap = true, silent = true })
 map('n', '<a-s>', ':Commands<cr>', { noremap = true, silent = true })
+map('n', '<a-c>', ':Commits<cr>', { noremap = true, silent = true })
 
 function fzf_files(qargs)
   local opts
