@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=fxrandr
+Exec=terminal-adapter -u "fxrandr" -p fxrandr
+TryExec=fxrandr
+Icon=terminal

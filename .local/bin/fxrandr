@@ -1,4 +1,22 @@
 #!/usr/bin/env bash
 
-CONFIG_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/$(basename "$0")"
+xrandr_output="$(xrandr)"
+xrandr_monitors="$(awk '/\Wconnected/ { print $1 }' <<< "$xrandr_output")"
+xrandr_resolutions="$(awk '/\Wconnec/ { mon = $1 }; /^\s+[0-9]+x/ { print mon " " $1 }' <<< "$xrandr_output")"
 
+for mon1 in $xrandr_monitors; do
+  echo "xrandr --output $mon1 --off"
+  echo "xrandr --output $mon1 --auto"
+  mon1_resolutions="$(awk "/^$mon1/ { print \$2 }" <<< "$xrandr_resolutions")"
+  for resolution in $mon1_resolutions; do
+    echo "xrandr --output $mon1 --auto --mode $resolution"
+  done
+  for mon2 in $xrandr_monitors; do
+    if [ "$mon1" = "$mon2" ]; then continue; fi
+    for resolution in $mon1_resolutions; do
+      for arrangement in "--left-of" "--right-of" "--above" "--below" "--same-as"; do
+        echo "xrandr --output $mon1 --auto --mode $resolution $arrangement $mon2"
+      done
+    done
+  done
+done | fzf | xargs -ro -I _ sh -c "_"
