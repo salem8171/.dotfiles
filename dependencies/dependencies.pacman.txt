@@ -6,6 +6,8 @@ base-devel
 bash-completion
 bash-language-server
 bat
+browserpass
+browserpass-chromium
 btop
 cbatticon
 copyq
@@ -40,6 +42,7 @@ nodejs
 npm
 nvtop
 openssh
+pass
 pavucontrol
 perl-file-mimeinfo
 pulsemixer
