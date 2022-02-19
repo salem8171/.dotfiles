@@ -70,6 +70,8 @@ FZF_DEFAULT_OPTS_ARRAY=(
   "--prompt='❯ '"
   "--info=inline"
   "--bind change:top"
+  "--scroll-off=5"
+  "--bind ctrl-a:toggle-all"
 )
 export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS_ARRAY[*]}"
 
