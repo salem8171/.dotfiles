@@ -65,11 +65,11 @@ map <esc> quit
 
 # Create directory
 cmd mkdir %mkdir -p "$@"
-map a push :mkdir<space>
+map ad push :mkdir<space>
 
 # Create file
 cmd touch %touch "$@"
-map t push :touch<space>
+map af push :touch<space>
 
 # Open file
 cmd open ${{
@@ -86,3 +86,21 @@ cmd ask-and-open !{{
   exit 0
 }}
 map o ask-and-open
+
+# Extract archive
+cmd extract !{{
+  7z x "$f" -o"${f%.*}"
+}}
+map x extract
+
+# Add to archive
+cmd add-to-archive !{{
+  if [ "$fs" = "" ]; then
+    7z a "$f".7z "$f"
+    exit 0
+  fi
+  set -- $(echo $fs)
+  7z a "$(basename "$(pwd)").7z" "$@"
+  lf -remote "send unselect"
+}}
+map aa add-to-archive
