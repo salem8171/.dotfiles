@@ -29,3 +29,4 @@ URxvt.color15: #acada1
 URxvt.perl-ext: default,-searchable-scrollback
 URxvt.scrollBar: False
 URxvt.cursorBlink: True
+URxvt.pointerShape: left_ptr
