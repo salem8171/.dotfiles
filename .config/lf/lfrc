@@ -61,6 +61,7 @@ map L :link
 map S :link
 
 map D delete
+map <esc> quit
 
 # Create directory
 cmd mkdir %mkdir -p "$@"
