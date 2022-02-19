@@ -1,4 +1,5 @@
 require('plugins')
+local map = vim.api.nvim_set_keymap
 
 -- ############################################################################
 -- # General
@@ -52,7 +53,6 @@ augroup cursorline
 augroup END
 ]]
 
-local map = vim.api.nvim_set_keymap
 
 -- Emacs
 map('i', '<c-b>', '<left>', { noremap = true })
@@ -93,7 +93,6 @@ map('n', 'gK', 'K', { noremap = true }) -- K is used for buffer movement
 -- ############################################################################
 -- # Terminal
 -- ############################################################################
-local map = vim.api.nvim_set_keymap
 map('t', '<esc><esc>', '<c-\\><c-n>', { noremap = true })
 vim.cmd [[
 augroup terminal
@@ -111,7 +110,6 @@ augroup END
 -- ############################################################################
 -- # Window management
 -- ############################################################################
-local map = vim.api.nvim_set_keymap
 
 -- Splits
 map('', '<a-/>', '<esc><c-w>v', { noremap = true })
@@ -175,7 +173,6 @@ vim.g.airline_symbols = airline_symbols
 -- ############################################################################
 vim.g.autoformat_autoindent = 0
 
-local map = vim.api.nvim_set_keymap
 map('', '<c-a-f>', '<esc>:Autoformat<cr>', { noremap = true, silent = true })
 map('i', '<c-a-f>', '<o>:Autoformat<cr>', { noremap = true, silent = true })
 
@@ -214,7 +211,6 @@ vim.g.floaterm_height = 0.85
 vim.g.floaterm_opener = 'edit'
 vim.g.floaterm_borderchars = '─│─│╭╮╯╰'
 
-local map = vim.api.nvim_set_keymap
 map('n', '<c-o>', ':FloatermNew --title=Open lf<cr>', { noremap = true, silent = true })
 
 -- ############################################################################
@@ -231,7 +227,6 @@ vim.g.startify_custom_header = {
   [[                                           ]]
 }
 
-local map = vim.api.nvim_set_keymap
 map('n', '<c-k>f', ':SClose<cr>', { noremap = true, silent = true })
 
 vim.cmd [[
@@ -246,7 +241,6 @@ augroup END
 -- ############################################################################
 vim.g.surround_no_mappings = 1
 
-local map = vim.api.nvim_set_keymap
 map('n', 'dS', '<plug>Dsurround', {})
 map('n', 'cS', '<plug>Csurround', {})
 map('n', 'cSS', '<plug>CSurround', {})
@@ -261,7 +255,6 @@ map('x', 'gS', '<plug>VgSurround', {})
 vim.g.EasyMotion_do_mapping = 0
 vim.g.EasyMotion_smartcase = 1
 
-local map = vim.api.nvim_set_keymap
 map('', '<leader>', '<plug>(easymotion-prefix)', {})
 map('', 's', '<Plug>(easymotion-bd-f)', {})
 map('', '<leader>j', '<Plug>(easymotion-j)', {})
@@ -283,7 +276,6 @@ vim.g.NERDTreeAutoDeleteBuffer=1
 vim.g.NERDTreeIgnore = { [[\.meta$]] }
 vim.g.NERDTreeMapToggleHidden = 'H'
 
-local map = vim.api.nvim_set_keymap
 map('n', '<c-b>', ':NERDTreeToggle<cr>', { noremap = true, silent = true })
 map('n', '<c-k><c-o>', ':NERDTree<cr>', { noremap = true, silent = true })
 
@@ -330,7 +322,6 @@ augroup END
 vim.g.fzf_layout = { window = { width = 0.85, height = 0.85 } }
 vim.g.fzf_preview_floating_window_rate = 0.7
 
-local map = vim.api.nvim_set_keymap
 map('n', '<c-p>', ':Files<cr>', { noremap = true, silent = true })
 map('n', '<c-k>m', ':Filetypes<cr>', { noremap = true, silent = true })
 map('n', '<a-tab>', ':Buffers<cr>', { noremap = true, silent = true })
@@ -359,7 +350,6 @@ vim.g.NERDCommentEmptyLines = 0
 vim.g.NERDTrimTrailingWhitespace = 1
 vim.g.NERDToggleCheckAllLines = 1
 
-local map = vim.api.nvim_set_keymap
 map('n', 'yc', ':call nerdcommenter#Comment("n", "Toggle")<cr>', { noremap = true, silent = true })
 map('n', '<c-_>', ':call nerdcommenter#Comment("n", "Toggle")<cr>', { noremap = true, silent = true })
 map('x', 'yc', ':call nerdcommenter#Comment("x", "Toggle")<cr>', { noremap = true, silent = true })
@@ -413,14 +403,12 @@ command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 -- # Quickrun
 -- ############################################################################
 vim.g.quickrun_config = {}
-local map = vim.api.nvim_set_keymap
 -- map('', 'R', ':QuickRun -runner shell<cr>', { noremap = true, silent = true })
 map('', 'R', ':QuickRun<cr>', { noremap = true, silent = true })
 
 -- ############################################################################
 -- # Bbye
 -- ############################################################################
-local map = vim.api.nvim_set_keymap
 map('n', '<c-w>', ':Bdelete<cr>', { noremap = true, silent = true })
 
 -- ############################################################################
@@ -455,7 +443,6 @@ function tab_completion()
   end
 end
 
-local map = vim.api.nvim_set_keymap
 map('i', '<tab>', 'v:lua.tab_completion()', { noremap = true, expr = true })
 map('i', '<c-space>', 'coc#refresh()', { noremap = true, expr = true })
 map('i', '<cr>', 'pumvisible() ? "<c-y>" : "<c-g>u<cr>"', { noremap = true, expr = true })
