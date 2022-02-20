@@ -18,6 +18,9 @@ ctrl+alt+x
 super+g
   gtk-launch i3-split-double-tab-layout
 
+super+p
+  gtk-launch fxrandr
+
 # super+l
 #   gtk-launch lock-session
 
