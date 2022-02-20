@@ -73,17 +73,16 @@ map af push :touch<space>
 
 # Open file
 cmd open ${{
-  mimeopen "$f" 2>/dev/null
-  exit 0
+  xdg-open "$f"
 }}
 map <enter> :open
 
 # Open file and ask which application to use
-cmd ask-and-open !{{
-  echo "Opening $f..."
-  echo
-  mimeopen -a "$f" 2>/dev/null
-  exit 0
+cmd ask-and-open ${{
+  mimeo -d "$f" --show-all |
+    sed '1d; s/\.desktop$//' |
+    fzf --header="Opening $(basename "$f")..." |
+    xargs -ro -I _ gtk-launch _ "$f"
 }}
 map o ask-and-open
 

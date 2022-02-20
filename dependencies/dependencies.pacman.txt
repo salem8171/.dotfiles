@@ -44,7 +44,6 @@ nvtop
 openssh
 pass
 pavucontrol
-perl-file-mimeinfo
 pulsemixer
 python-pylint
 python-pynvim

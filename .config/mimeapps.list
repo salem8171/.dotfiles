@@ -31,7 +31,5 @@ x-scheme-handler/postman=Postman.desktop
 x-scheme-handler/torrent=add-torrent.desktop
 
 [Added Associations]
-inode/directory=mpv.desktop
-inode/directory=nvim.desktop
-inode/directory=vimiv.desktop
+inode/directory=mpv.desktop;vimiv.desktop;nvim.desktop
 audio/mpeg=mpv.desktop;

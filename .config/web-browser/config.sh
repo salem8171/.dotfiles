@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 export SEARCH_ENGINE_QUERY='https://searx.be/search?q={}'
-# BROWSER_CMD='mimeopen {}'
+# BROWSER_CMD='xdg-open {}'
 export BROWSER_CMD='gtk-launch chromium {}'
 
 # Declare the list-history function to provide history for fuzzy search

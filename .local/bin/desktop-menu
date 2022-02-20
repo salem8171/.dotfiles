@@ -121,7 +121,7 @@ preview() {
 
 edit-files() {
   [ "$USE_MIME" -eq 0 ] && assert-editor && "$EDITOR" "$@"
-  [ "$USE_MIME" -eq 1 ] && assert-exist mimeopen && mimeopen "$@"
+  [ "$USE_MIME" -eq 1 ] && xdg-open "$@"
 }
 
 edit-selected() {

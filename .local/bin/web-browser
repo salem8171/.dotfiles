@@ -1,13 +1,13 @@
 #!/bin/bash
 
 DEFAULT_SEARCH_ENGINE_QUERY="https://duckduckgo.com/?q={}"
-DEFAULT_BROWSER_CMD="mimeopen {}"
+DEFAULT_BROWSER_CMD="xdg-open {}"
 
 CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/$(basename "$0")/config.sh"
 CONFIG_TEMPLATE="\
 #!/usr/bin/bash
 SEARCH_ENGINE_QUERY='https://duckduckgo.com/?q={}'
-BROWSER_CMD='mimeopen {}'
+BROWSER_CMD='xdg-open {}'
 
 # Declare the list-history function to provide history for fuzzy search
 # firefox

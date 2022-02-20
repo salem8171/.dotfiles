@@ -89,7 +89,7 @@ create-new() {
 edit() {
   cd "$HOME/.local/bin" || error "Could not open $HOME/.local/bin/"
   [ "$USE_MIME" -eq 0 ] && assert-editor && xargs -ro "$EDITOR" <<< "$@"
-  [ "$USE_MIME" -eq 1 ] && assert-exist mimeopen && xargs -ro mimeopen <<< "$@"
+  [ "$USE_MIME" -eq 1 ] && xargs -ro xdg-open <<< "$@"
 }
 
 remove() {
