@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+BMARK_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/chromium/Default/Bookmarks"
+USER_APPS="${XDG_DATA_HOME:-$HOME/.local/share}/applications"
+TEMPLATE="\
+[Desktop Entry]
+Type=Application
+Name=%NAME
+Exec=gtk-launch web-app %URL
+Icon=chromium
+Terminal=false
+StartupNotify=false
+"
+
+jq_filter=".roots | .bookmark_bar, .other | .children[] | \"\\(.name)\t\\(.url)\""
+jq "$jq_filter" "$BMARK_FILE" --raw-output |
+  while read -r line; do
+    name="$(cut -f 1 <<< "$line")"
+    url="$(cut -f 2 <<< "$line")"
+    file="$USER_APPS/bmark-$(tr "[:upper:] :" "[:lower:]-" <<< "$name").desktop"
+    mkdir -p "$(dirname "$file")"
+    sed "s^%NAME^$name^g; s^%URL^$url^g" <<< "$TEMPLATE" > "$file"
+  done

@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Anime
-Exec=gtk-launch web-app https://9anime.to/user/watchlist
-Icon=chrome-kjcconcndocemdnkiogcjhoihebnomjd-Default
-Comment=
-Path=
-Terminal=false
-StartupNotify=false

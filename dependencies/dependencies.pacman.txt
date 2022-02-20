@@ -26,6 +26,7 @@ i3-gaps
 imagemagick
 interception-caps2esc
 ipython
+jq
 keynav
 lsd
 lxappearance-gtk3

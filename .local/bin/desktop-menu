@@ -7,6 +7,7 @@
 SYS_APPS=/usr/share/applications
 USER_APPS=$HOME/.local/share/applications
 CACHE_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/$(basename "$0")/entries"
+SOURCES="${XDG_CONFIG_HOME:-$HOME/.config}/$(basename "$0")/sources.d"
 USE_MIME=${USE_MIME:-0}
 
 ###############################################################################
@@ -66,11 +67,11 @@ build-prompt() {
 ###############################################################################
 
 filter-entries() {
-  overrides="$(mktemp overrides.XXXXX)"
+  overrides="$(mktemp /tmp/overrides.XXXXX)"
   while read -r entry; do
     local entry_path try_exec
-    entry_path=$(cut -f 2 -d : <<< "$entry")
-    entry_name=$(cut -f 3 -d : <<< "$entry")
+    entry_path=$(cut -f 2 <<< "$entry")
+    entry_name=$(cut -f 3 <<< "$entry")
 
     # Skip if entry with similar name already exist
     grep -q -m 1 "^$entry_name$" "$overrides" && continue
@@ -92,10 +93,16 @@ filter-entries() {
 # shellcheck disable=SC2120
 list() {
   mkdir -p "$(dirname "$CACHE_FILE")"
-  [ ! -f "$CACHE_FILE" ] || [ "$1" = "--refresh" ] && cat \
-    <(grep -m 1 -oRP '(?<=^Name=).*$' "$USER_APPS" | sort | sed 's/^/user:/') \
-    <(grep -m 1 -oRP '(?<=^Name=).*$' "$SYS_APPS" | sort | sed 's/^/sys:/') |
+  if [ ! -f "$CACHE_FILE" ] || [ "$1" = "--refresh" ]; then
+    [ ! -d "$SOURCES" ] && mkdir -p "$SOURCES"
+    find "$SOURCES" -type f | while read -r entry_source; do
+      [ -x "$entry_source" ] && "$entry_source"
+    done
+    cat \
+    <(grep -m 1 -oRP '(?<=^Name=).*$' "$USER_APPS" | sort | sed 's/^/user\t/; s/:/\t/') \
+    <(grep -m 1 -oRP '(?<=^Name=).*$' "$SYS_APPS" | sort | sed 's/^/sys\t/; s/:/\t/') |
     filter-entries > "$CACHE_FILE"
+  fi
   cat "$CACHE_FILE"
 }
 
@@ -126,9 +133,9 @@ edit-files() {
 
 edit-selected() {
   export USE_MIME
-  echo "$@" | grep '^sys' | cut -d ":" -f 2 | sed "s|$SYS_APPS/||" |
+  echo "$@" | grep '^sys' | cut -f 2 | sed "s|$SYS_APPS/||" |
     xargs -roI "{}" cp -nv "$SYS_APPS/{}" "$USER_APPS/{}"
-  echo "$@" | cut -d ":" -f 2 | sed "s|$SYS_APPS|$USER_APPS|" |
+  echo "$@" | cut -f 2 | sed "s|$SYS_APPS|$USER_APPS|" |
     xargs "$0" edit-files
 }
 
@@ -149,14 +156,14 @@ create-new() {
 open-selected() {
   while read -r entry; do
     local entry_file
-    entry_file="$(cut -d ":" -f 2 <<< "$entry")"
+    entry_file="$(cut -f 2 <<< "$entry")"
     setsid -f gtk-launch "$(basename "$entry_file")" &>/dev/null
   done <<< "$@"
   sleep 0.15
 }
 
 remove-selected() {
-  echo "$@" | grep "^user" | cut -d ":" -f 2 | xargs -ro rm -rfIv
+  echo "$@" | grep "^user" | cut -f 2 | xargs -ro rm -rfIv
 }
 
 handle-action() {
@@ -187,7 +194,7 @@ find-and-process() {
   local entries header key
   header="$(build-prompt "Desktop Entries")"
   entries=$(list | fzf --multi --header="$header" --preview="$0 preview {2}" \
-    --bind "ctrl-r:reload($0 list --refresh)" -d ":" --with-nth=3 \
+    --bind "ctrl-r:reload($0 list --refresh)" --with-nth=3.. \
     --expect="enter,double-click,alt-enter")
   key=$(head -1 <<< "$entries") && entries=$(sed '1d' <<< "$entries")
   [ -n "$key" ] && handle-key "$key" "$entries"
