@@ -28,6 +28,7 @@ interception-caps2esc
 ipython
 jq
 keynav
+kitty
 lsd
 lxappearance-gtk3
 man-db
