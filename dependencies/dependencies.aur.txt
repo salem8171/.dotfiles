@@ -1,5 +1,3 @@
-android-emulator
-android-google-apis-playstore-x86-64-system-image
 antimicrox
 chromium-extension-web-store
 clang-format-static-bin
