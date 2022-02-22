@@ -209,9 +209,11 @@ with your user instead of `root`)
 sed -i 's/salem/username/' /opt/.dotfiles/etc/systemd/system/getty@tty1.service.d/override.conf
 ```
 
-Finally add your user to the autologin group
+Finally create the autologin group if it does not exist and add your user to
+the autologin group
 
 ```sh
+grep -q autologin /etc/group || groupadd autologin
 usermod -aG autologin username
 ```
 
