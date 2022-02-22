@@ -13,7 +13,7 @@ Please read this entire document before making any changes to your system.
 This is a list of the most important desktop environment components used in
 this configuration:
 - [i3-gaps](https://github.com/Airblader/i3) (window manager)
-- [urxvt](http://software.schmorp.de/pkg/rxvt-unicode.html) (terminal emulator)
+- [kitty](https://sw.kovidgoyal.net/kitty/) (terminal emulator)
 - [neovim](https://neovim.io) (text editor)
 - [tint2](https://gitlab.com/o9000/tint2) (taskbar and statusbar)
 - [ungoogled-chromium](https://github.com/Eloston/ungoogled-chromium) (web browser)
@@ -93,7 +93,7 @@ website.
 Now install AUR dependencies
 
 ```sh
-yay -Sy - < $HOME.dotfiles/dependencies/dependencies.aur.txt
+yay -Sy - < $HOME/.dotfiles/dependencies/dependencies.aur.txt
 ```
 
 ### NPM Packages
@@ -154,7 +154,7 @@ XDG Autostart is used to run some programs at startup, enabling autostart is
 done via symlinks
 
 ```sh
-for desktop_file in cbatticon volumeicon copyq-daemon keynav mpd polkit-dumb-agent reload-config sxhkd-daemon tint2 tint2-top transmission-daemon unclutter urxvt-daemon web-patcher
+for desktop_file in cbatticon volumeicon copyq-daemon keynav mpd polkit-dumb-agent reload-config sxhkd-daemon tint2 tint2-top transmission-daemon unclutter web-patcher
 do
   ln -sb $HOME/.local/share/applications/$desktop_file.desktop $HOME/.config/autostart/
 done
