@@ -138,9 +138,9 @@ sudo usermod -s "$(which zsh)" $USER
 Back up old folders and create symlinks for `.config` and `.local`
 
 ```sh
-mv $HOME/.dotfiles/.config $HOME/.dotfiles/.config.bak
+mv $HOME/.config $HOME/.config.bak
 ln -s $HOME/.dotfiles/.config $HOME/
-mv $HOME/.dotfiles/.local $HOME/.dotfiles/.local.bak
+mv $HOME/.local $HOME/.local.bak
 ln -s $HOME/.dotfiles/.local $HOME/
 ```
 
