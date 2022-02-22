@@ -206,7 +206,7 @@ The username is currently hardcoded to `salem` and needs to be changed manually
 with your user instead of `root`)
 
 ```sh
-sed -i 's/salem/username/' /etc/systemd/system/getty@tty1.service.d/override.conf
+sed -i 's/salem/username/' /opt/.dotfiles/etc/systemd/system/getty@tty1.service.d/override.conf
 ```
 
 Finally add your user to the autologin group
