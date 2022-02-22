@@ -135,19 +135,21 @@ sudo usermod -s "$(which zsh)" $USER
 
 ## Configuration Deployment
 
-Create symlinks
+Back up old folders and create symlinks for `.config` and `.local`
 
 ```sh
-ln -sb $HOME/.dotfiles/.config $HOME/.config
-ln -sb $HOME/.dotfiles/.local $HOME/.local
+mv $HOME/.dotfiles/.config $HOME/.dotfiles/.config.bak
+ln -s $HOME/.dotfiles/.config $HOME/
+mv $HOME/.dotfiles/.local $HOME/.dotfiles/.local.bak
+ln -s $HOME/.dotfiles/.local $HOME/
 ```
 
 Some files/folders were relocated from their default locations, so they also
 need to be symlinked
 
 ```sh
-ln -sb $HOME/.config/zsh/.zprofile $HOME/.zprofile
-ln -sb $HOME/.local/share/themes $HOME/.themes
+ln -sb $HOME/.config/zsh/.zprofile $HOME/
+ln -sb $HOME/.local/share/themes $HOME/
 ```
 
 XDG Autostart is used to run some programs at startup, enabling autostart is
