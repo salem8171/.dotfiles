@@ -242,6 +242,11 @@ If for any reason some plugin failed to install, try installing manually with
 antigen bundle plugin_name
 ```
 
+If the install process is not triggered or was not completed, try cleaning up
+by removing the `$HOME/.local/share/antigen` folder. Opening a new terminal
+window will reinitialize `antigen` and install all the plugins as if it was
+opened for the first time.
+
 ### Ungoogled Chromium
 
 Chromium, being primarly a GUI application, is not easily configurable using the
