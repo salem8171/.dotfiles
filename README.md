@@ -149,7 +149,8 @@ need to be symlinked
 
 ```sh
 ln -sb $HOME/.config/zsh/.zprofile $HOME/
-ln -sb $HOME/.local/share/themes $HOME/
+ln -sb $HOME/.local/share/themes $HOME/.themes
+ln -sb $HOME/.local/share/icons $HOME/.icons
 ```
 
 XDG Autostart is used to run some programs at startup, enabling autostart is
