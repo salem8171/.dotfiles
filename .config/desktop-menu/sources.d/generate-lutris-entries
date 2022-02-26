@@ -12,6 +12,10 @@ TryExec=lutris
 Categories=Game
 "
 
+error() { echo -e "$@" >&2 && exit 1; }
+
+[ -f "$DB_FILE" ] || error "Could not find $DB_FILE, skipping..."
+
 sql_query="SELECT id,name,slug FROM games WHERE installed=1"
 sqlite3 "$DB_FILE" "$sql_query" -separator "$(echo -en "\t")" |
   while read -r line; do
