@@ -4,6 +4,7 @@
 # Config
 ###############################################################################
 
+TITLE="Terminal"
 POPUP_TITLE="popup-terminal"
 TMP_FILE="/tmp/$(basename "$0")"
 
