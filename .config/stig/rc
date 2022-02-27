@@ -100,10 +100,6 @@ set sort.torrents name
 # Default: domain
 set sort.trackers domain
 
-# Directory where histories of user input are stored
-# Default: /home/salem/.local/share/stig/histories
-#set tui.cli.history-dir /home/salem/.local/share/stig/histories
-
 # Maximum number of lines to keep in history files
 # Default: 10k
 set tui.cli.history-size 10k
