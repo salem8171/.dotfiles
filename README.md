@@ -234,7 +234,11 @@ These are mostly applications which require the use of plugins.
 ### ZSH
 
 Setting up ZSH is pretty stright forward, simply open up a terminal
-(`super+o t`), plugins will be installed automatically.
+(`super+o t`), and then run the `zsh-init` command.
+
+```sh
+zsh-init
+```
 
 If for any reason some plugin failed to install, try installing manually with
 
@@ -244,8 +248,8 @@ antigen bundle plugin_name
 
 If the install process is not triggered or was not completed, try cleaning up
 by removing the `$HOME/.local/share/antigen` folder. Opening a new terminal
-window will reinitialize `antigen` and install all the plugins as if it was
-opened for the first time.
+window and running `zsh-init` will reinitialize `antigen` and install all the
+plugins.
 
 ### Ungoogled Chromium
 

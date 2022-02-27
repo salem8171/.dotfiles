@@ -2,27 +2,36 @@ p10k_ipr="${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 [ -r "$p10k_ipr" ] && source "$p10k_ipr"
 
 antigen="${XDG_DATA_HOME:-$HOME/.local/share}/antigen/antigen.zsh"
-[ -f $antigen ] || curl -fLo $antigen --create-dirs "git.io/antigen"
 
-source $antigen
+antigen-init() {
+  source "$antigen"
 
-antigen use oh-my-zsh
+  antigen use oh-my-zsh
 
-antigen bundle colored-man-pages
-antigen bundle vi-mode
+  antigen bundle colored-man-pages
+  antigen bundle vi-mode
 
-fzf="$(command -v fzf)"
-[ -x "$fzf" ] && antigen bundle junegunn/fzf shell
-[ -x "$fzf" ] && antigen bundle Aloxaf/fzf-tab
+  fzf="$(command -v fzf)"
+  [ -x "$fzf" ] && antigen bundle junegunn/fzf shell
+  [ -x "$fzf" ] && antigen bundle Aloxaf/fzf-tab
 
-antigen bundle zdharma-continuum/fast-syntax-highlighting
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle rupa/z
+  antigen bundle zdharma-continuum/fast-syntax-highlighting
+  antigen bundle zsh-users/zsh-completions
+  antigen bundle zsh-users/zsh-autosuggestions
+  antigen bundle rupa/z
 
-antigen theme romkatv/powerlevel10k
+  antigen theme romkatv/powerlevel10k
 
-antigen apply
+  antigen apply
+}
+
+zsh-init() {
+  curl -fLo "$antigen" --create-dirs "git.io/antigen"
+  [ -f "$antigen" ] && antigen-init
+}
+
+[ -f "$antigen" ] || echo 'Run zsh-init to install plugins'
+[ -f "$antigen" ] && antigen-init
 
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zsh_history"
 [ -f "$HISTFILE" ] || mkdir -p "$(dirname "$HISTFILE")"
