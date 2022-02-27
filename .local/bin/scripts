@@ -125,7 +125,7 @@ find-and-process() {
   header="$(build-prompt "Scripts")"
   fzf_cmd=(fzf --multi --header="$header" --expect="enter,alt-enter")
   fzf_cmd+=(--preview="$0 preview {}")
-  [ "$(tput cols)" -le "100" ] && fzf_cmd+=(--preview-window=down)
+  [ "$(tput cols)" -le "120" ] && fzf_cmd+=(--preview-window=down)
   scripts=$(list | "${fzf_cmd[@]}")
   key=$(head -1 <<< "$scripts") && scripts=$(sed '1d' <<< "$scripts")
   [ -n "$key" ] && handle-key "$key" "$scripts"

@@ -93,7 +93,7 @@ find-and-process() {
   reload_cmd="${AUR_LIST_CMD[*]}"
   fzf_cmd=(fzf --multi --header="$header" --expect="enter,alt-enter" --nth 2)
   fzf_cmd+=(--preview="$preview_cmd {2}" --bind="ctrl-r:reload($reload_cmd)")
-  [ "$(tput cols)" -le "100" ] && fzf_cmd+=(--preview-window=down)
+  [ "$(tput cols)" -le "120" ] && fzf_cmd+=(--preview-window=down)
   packages=$("${LIST_CMD[@]}" | "${fzf_cmd[@]}")
   [ $? -eq 130 ] && exit
   key=$(head -1 <<< "$packages") && packages=$(sed '1d' <<< "$packages")

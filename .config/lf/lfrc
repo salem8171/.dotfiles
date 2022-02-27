@@ -30,19 +30,24 @@ map gush cd /usr/share
 map gusr cd /usr
 map gv cd /var
 
-# Set terminal title
-cmd on-cd &{{ printf "\033]0; $(pwd | sed "s|$HOME|~|") - lf\007" > /dev/tty }}
-on-cd
+cmd on-cd ${{
+  # Set terminal title
+  printf "\033]0; $(pwd | sed "s|$HOME|~|") - lf\007" > /dev/tty
 
-# Set number of columns in dynamically depending on terminal width
-%{{
+  # Set number of columns in dynamically depending on terminal width
   w=$(tput cols)
-  if [ $w -le 160 ]; then
-    lf -remote "send $id set ratios 1:2"
-  else
+  if [ $w -ge 120 ]; then
     lf -remote "send $id set ratios 1:2:3"
+    lf -remote "send $id set preview"
+  elif [ $w -ge 80 ]; then
+    lf -remote "send $id set ratios 1:2"
+    lf -remote "send $id set preview"
+  else
+    lf -remote "send $id set nopreview"
+    lf -remote "send $id set ratios 1"
   fi
 }}
+on-cd
 
 # Soft links
 cmd link %{{

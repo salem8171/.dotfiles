@@ -74,7 +74,7 @@ find-and-handle() {
   header="$(build-prompt Services)"
   fzf_cmd=(fzf -m -n 2 --multi --header="$header" --expect="enter,alt-enter")
   fzf_cmd+=(--preview="$0 preview {}")
-  [ "$(tput cols)" -le "100" ] && fzf_cmd+=(--preview-window=down)
+  [ "$(tput cols)" -le "120" ] && fzf_cmd+=(--preview-window=down)
   services=$(list-unit-files | "${fzf_cmd[@]}")
   [ "$(head -1 <<< "$services")" = alt-enter ] && alt_enter=true
   [ "$(head -1 <<< "$services")" = alt-enter ] &&

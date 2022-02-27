@@ -61,7 +61,7 @@ find-and-edit() {
   cd "${XDG_CONFIG_HOME:-$HOME/.config}" || error "Could not find config dir"
   header="$(build-prompt "Edit Config")"
   fzf_cmd=(fzf --multi --header="$header" --preview="$0 preview {}")
-  [ "$(tput cols)" -le "100" ] && fzf_cmd+=(--preview-window=down)
+  [ "$(tput cols)" -le "120" ] && fzf_cmd+=(--preview-window=down)
   find -- * -type f | filter | "${fzf_cmd[@]}" | xargs -r "$EDITOR"
 }
 
