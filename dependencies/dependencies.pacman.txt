@@ -68,6 +68,7 @@ vimiv
 vint
 volumeicon
 wget
+xclip
 xdg-user-dirs
 xorg-server
 xorg-xev
