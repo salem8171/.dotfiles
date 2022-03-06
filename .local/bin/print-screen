@@ -2,6 +2,9 @@
 
 TMP_FILE="/tmp/$(basename "$0")"
 
+SCREENCASTS_FOLDER="$HOME/Videos/screencasts"
+SCREENSHOTS_FOLDER="$HOME/Pictures/screenshots"
+
 error() { echo -e "$@" >&2 && exit 1; }
 
 assert-exist() {
@@ -40,30 +43,39 @@ choose-action() {
 fullscreen() {
   assert-exist import
   assert-exist xclip
-  sleep 0.1 && import -window root png:- |
+  file="$SCREENSHOTS_FOLDER/screenshot-$(date "+%Y-%m-%d-%H-%M-%S").png"
+  mkdir -p "$(dirname "$file")"
+  sleep 0.1 && import -window root png:- | tee "$file" |
     xclip -selection clipboard -t image/png
 }
 
 snip() {
   assert-exist import
   assert-exist xclip
-  import png:- | xclip -selection clipboard -t image/png
+  file="$SCREENSHOTS_FOLDER/screenshot-$(date "+%Y-%m-%d-%H-%M-%S").png"
+  mkdir -p "$(dirname "$file")"
+  pgrep unclutter &> /dev/null && { assert-exist xdotool; xdotool click 10; }
+  import png:- | tee "$file" | xclip -selection clipboard -t image/png
 }
 
 window() {
   assert-exist import
   assert-exist xclip
   assert-exist xdotool
+  file="$SCREENSHOTS_FOLDER/screenshot-$(date "+%Y-%m-%d-%H-%M-%S").png"
+  mkdir -p "$(dirname "$file")"
   wid=$(xdotool selectwindow)
-  import -window "$wid" png:- | xclip -selection clipboard -t image/png
+  import -window "$wid" png:- | tee "$file" |
+    xclip -selection clipboard -t image/png
 }
 
 start-recording() {
   assert-exist ffmpeg
   is-recording && exit
   ffmpeg_procs=$(pgrep ffmpeg)
-  setsid -f ffmpeg -f x11grab -i :0.0 \
-    "$HOME/$(date "+%Y-%m-%d-%H-%M-%S").mp4" &>/dev/null
+  file="$SCREENCASTS_FOLDER/screencast-$(date "+%Y-%m-%d-%H-%M-%S").mp4"
+  mkdir -p "$(dirname "$file")"
+  setsid -f ffmpeg -f x11grab -i :0.0 "$file" &>/dev/null
   pid=$(comm -23 <(pgrep ffmpeg) <(cat <<< "$ffmpeg_procs"))
   echo "$pid" > "$TMP_FILE"
 }
@@ -87,4 +99,4 @@ esac
 header="$(build-prompt "Print Screen")"
 is-recording && record="Stop Recording" || record="Start Recording"
 action=$(choose-action "$header" Fullscreen Snip Window "$record")
-[ -n "$action" ] && setsid -f "$0" "$action" &> /dev/null
+[ -n "$action" ] && setsid -f "$0" "$action" &>/dev/null
