@@ -1,48 +1,91 @@
+# Show Start Menu
 super+s
   gtk-launch desktop-menu
+
+# List and switch windows
 super+Tab
   gtk-launch switch-window
 
+# Close current window
 super+q
   gtk-launch close-window
 
+# Toggle maximize/fullscreen
 super+{F,f}
   gtk-launch toggle-{maximized,fullscreen}
 
+# Show Task manager
 ctrl+{alt+Delete,shift+Escape}
   gtk-launch btop
 
+# Kill window with mouse
 ctrl+alt+x
   gtk-launch xkill
 
+# Organize windows in a double pane layout
 super+g
   gtk-launch i3-split-double-tab-layout
 
+# Set display settings (resolution, active monitors..)
 super+p
   gtk-launch fxrandr
 
-# super+l
-#   gtk-launch lock-session
-
+# Print screen, window, snip, even record screen
 {Print,shift+Print}
   gtk-launch print-{fullscreen,screen}
 super+shift+s
   gtk-launch print-screen
 
+# Set volume, mute audio/mic
 XF86Audio{Raise,Lower}Volume
   pactl set-sink-volume @DEFAULT_SINK@ {+,-}10%
 XF86AudioMute
   pactl set-sink-mute @DEFAULT_SINK@ toggle
 XF86AudioMicMute
   pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# Control MPD using media keys
 XF86Audio{Prev,Play,Next}
   mpc {prev,toggle,next}
 
-super+o;{l,t,b;r,n,p;g,c,s;c,a,s;t,h,p;m,b;t,f;k}
-  gtk-launch {lf,terminal,chromium,nvim,ping-archlinux,config,scripts,anime,stig,htop,package-manager,btop,fkill}
+# Open applications
+super+o;a
+  gtk-launch anime
+super+o;b;r
+  gtk-launch chromium
+super+o;b;t
+  gtk-launch btop
+super+o;c
+  gtk-launch config
+super+o;f;k
+  gtk-launch fkill
+super+o;l;f
+  gtk-launch lf
+super+o;l;r
+  gtk-launch lf-root
+super+o;m;o
+  gtk-launch mount-manager
+super+o;n;v
+  gtk-launch nvim
+super+o;n;m
+  gtk-launch network-manager
+super+o;p;g
+  gtk-launch ping-archlinux
+super+o;p;m
+  gtk-launch package-manager
+super+o;r;l
+  gtk-launch reload-config
+super+o;s;c
+  gtk-launch scripts
+super+o;s;v
+  gtk-launch service-manager
+super+o;s;t
+  gtk-launch stig
+super+o;t
+  gtk-launch terminal
+super+o;v;p
+  gtk-launch vimpc
 
-# super+b
-#   gtk-launch web-browser
-
+# Show clipboard manager
 super+v
   copyq show
