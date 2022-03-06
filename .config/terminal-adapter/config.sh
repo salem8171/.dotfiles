@@ -21,6 +21,17 @@
 # [ -n "$CMD" ] && TERM_CMD+=(-e sh -c "$CMD")
 
 # Kitty
-TERM_CMD=(kitty -1)
-[ -n "$TITLE" ] && TERM_CMD+=(--title="$TITLE")
-[ -n "$CMD" ] && TERM_CMD+=(sh -c "$CMD")
+# TERM_CMD=(kitty -1)
+# [ -n "$TITLE" ] && TERM_CMD+=(--title="$TITLE")
+# [ -n "$CMD" ] && TERM_CMD+=(sh -c "$CMD")
+
+if [ -n "$POPUP" ]; then
+  TERM_CMD=(urxvtc)
+  TERM_CMD+=(-icon "$HOME/.local/share/icons/oomox-Monokaish/64x64/apps/terminal.svg")
+  [ -n "$TITLE" ] && TERM_CMD+=(-title "$TITLE")
+  [ -n "$CMD" ] && TERM_CMD+=(-e sh -c "$CMD")
+else
+  TERM_CMD=(kitty -1)
+  [ -n "$TITLE" ] && TERM_CMD+=(--title="$TITLE")
+  [ -n "$CMD" ] && TERM_CMD+=(sh -c "$CMD")
+fi

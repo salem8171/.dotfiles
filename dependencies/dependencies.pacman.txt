@@ -52,6 +52,7 @@ python-pynvim
 qt5ct
 reflector
 rsync
+rxvt-unicode
 scrcpy
 shellcheck
 shfmt
