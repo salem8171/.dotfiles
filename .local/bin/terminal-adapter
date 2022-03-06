@@ -61,7 +61,7 @@ assert-unique() {
   window_id=$(cut -d ' ' -f 2 <<< "$existing_window")
   window_pid=$(cut -d ' ' -f 3 <<< "$existing_window")
   running_window_pid="$(xdotool getwindowpid "$window_id")"
-  if [ "$window_pid" -eq "$running_window_pid" ]; then
+  if [ "$window_pid" = "$running_window_pid" ]; then
     xdotool windowactivate "$window_id"
     exit
   fi
