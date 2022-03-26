@@ -13,10 +13,8 @@ for mon1 in $xrandr_monitors; do
   done
   for mon2 in $xrandr_monitors; do
     if [ "$mon1" = "$mon2" ]; then continue; fi
-    for resolution in $mon1_resolutions; do
-      for arrangement in "--left-of" "--right-of" "--above" "--below" "--same-as"; do
-        echo "xrandr --output $mon1 --auto --mode $resolution $arrangement $mon2"
-      done
+    for arrangement in "--left-of" "--right-of" "--above" "--below" "--same-as"; do
+      echo "xrandr --output $mon1 --auto $arrangement $mon2"
     done
   done
 done | fzf | xargs -ro -I _ sh -c "_"
