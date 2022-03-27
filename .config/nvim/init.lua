@@ -423,6 +423,10 @@ vim.g.coc_snippet_next = '<tab>'
 
 vim.cmd [[command! -nargs=0 Editsnippets :CocCommand snippets.editSnippets]]
 
+local function t(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
 function is_space_prev_char()
   local col = vim.fn.col('.') - 1
   if col == 0 or vim.regex('\\s'):match_str(vim.fn.getline('.'):sub(col, col)) then
@@ -435,9 +439,9 @@ function tab_completion()
   if vim.fn.pumvisible() == 1 then
     return vim.fn['coc#_select_confirm']()
   elseif vim.fn['coc#expandableOrJumpable']() then
-    return "<c-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])<cr>"
+    return t"<c-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])<cr>"
   elseif is_space_prev_char() then
-    return "<tab>"
+    return t"<tab>"
   else
     return vim.fn['coc#refresh']()
   end
