@@ -44,14 +44,14 @@ augroup signcolumn
 augroup END
 ]]
 
-vim.cmd [[
-augroup cursorline
-  autocmd!
-  autocmd OptionSet diff lua if vim.wo.diff == true then vim.wo.cursorline = false end
-  autocmd BufEnter * lua if vim.wo.diff == false then vim.wo.cursorline = true end
-  autocmd BufLeave * lua vim.wo.cursorline = false
-augroup END
-]]
+-- vim.cmd [[
+-- augroup cursorline
+--   autocmd!
+--   autocmd OptionSet diff lua if vim.wo.diff == true then vim.wo.cursorline = false end
+--   autocmd BufEnter * lua if vim.wo.diff == false then vim.wo.cursorline = true end
+--   autocmd BufLeave * lua vim.wo.cursorline = false
+-- augroup END
+-- ]]
 
 
 -- Emacs
@@ -231,12 +231,12 @@ vim.g.startify_custom_header = {
 
 map('n', '<c-k>f', ':SClose<cr>', { noremap = true, silent = true })
 
-vim.cmd [[
-augroup startify
-  autocmd!
-  autocmd User Startified lua vim.wo.cursorline = true
-augroup END
-]]
+-- vim.cmd [[
+-- augroup startify
+--   autocmd!
+--   autocmd User Startified lua vim.wo.cursorline = true
+-- augroup END
+-- ]]
 
 -- ############################################################################
 -- # Surround
@@ -310,7 +310,7 @@ augroup nerdtree_user
   autocmd VimEnter * lua OnNERDTreeVimEnter()
   autocmd FileType nerdtree lua vim.api.nvim_buf_set_keymap(0, 'n', 'l', '', {})
   autocmd FileType nerdtree lua vim.api.nvim_buf_set_keymap(0, 'n', 'h', '', {})
-  autocmd FileType nerdtree lua vim.wo.cursorline = true
+  " autocmd FileType nerdtree lua vim.wo.cursorline = true
   autocmd FileType nerdtree lua vim.wo.signcolumn = 'auto'
   autocmd FileType nerdtree lua vim.o.winwidth = 30
   autocmd FileType nerdtree lua vim.o.winminwidth = 25
