@@ -82,7 +82,7 @@ map('', '<c-n>', '<esc>:enew<cr>', { noremap = true, silent = true })
 -- Personal pref
 map('v', 'y', 'ygv', { noremap = true })
 map('v', 'p', 'pgv', { noremap = true })
-map('n', '<cr>', 'o', { noremap = true })
+-- map('n', '<cr>', 'o', { noremap = true })
 map('', '<c-q>', '<esc>:quitall<cr>', { noremap = true, silent = true })
 map('', '<a-q>', '<esc>:quit<cr>', { noremap = true, silent = true })
 map('n', 'H', '<c-o>', { noremap = true })
