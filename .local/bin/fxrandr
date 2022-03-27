@@ -1,20 +1,183 @@
 #!/usr/bin/env bash
 
-xrandr_output="$(xrandr)"
-xrandr_monitors="$(awk '/\Wconnected/ { print $1 }' <<< "$xrandr_output")"
-xrandr_resolutions="$(awk '/\Wconnec/ { mon = $1 }; /^\s+[0-9]+x/ { print mon " " $1 }' <<< "$xrandr_output")"
+###############################################################################
+# Utilities
+###############################################################################
 
-for mon1 in $xrandr_monitors; do
-  echo "xrandr --output $mon1 --off"
-  echo "xrandr --output $mon1 --auto"
-  mon1_resolutions="$(awk "/^$mon1/ { print \$2 }" <<< "$xrandr_resolutions")"
-  for resolution in $mon1_resolutions; do
-    echo "xrandr --output $mon1 --auto --mode $resolution"
+error() { echo -e "$@" >&2 && exit 1; }
+
+assert-exist() {
+  for exe; do
+    [ ! -x "$(command -v "$exe")" ] && error "fzf not found in PATH";
   done
-  for mon2 in $xrandr_monitors; do
-    if [ "$mon1" = "$mon2" ]; then continue; fi
-    for arrangement in "--left-of" "--right-of" "--above" "--below" "--same-as"; do
-      echo "xrandr --output $mon1 --auto $arrangement $mon2"
+  return 0
+}
+
+build-prompt() {
+  PL_LEFT_HARD=""
+  PL_SOFT_EDGE="╱"
+  PL_DOWN_EDGE=""
+  PROMPT_FG="\033[38;2;118;113;94m"
+  PROMPT_BG="\033[48;2;118;113;94m"
+  PROMPT_TEXT="\e[37m"
+  DEFAULT="\e[0m"
+
+  local prompt="$PROMPT_FG$PL_DOWN_EDGE$PROMPT_BG$PROMPT_TEXT "
+  prompt+="$1" && shift
+  for segment; do
+    prompt+=" $PL_SOFT_EDGE $segment"
+  done
+  prompt+=" $DEFAULT$PROMPT_FG$PL_LEFT_HARD$DEFAULT "
+  echo -e "$prompt"
+}
+
+draw() {
+  box_type="$1"
+  [ "$box_type" = "1box" ] && box_name="$2"
+  [ "$box_type" = "2vbox" ] && { box1_name="$2"; box2_name="$3"; }
+  [ "$box_type" = "2hbox" ] && { box1_name="$2"; box2_name="$3"; }
+
+  screen_width="${FZF_PREVIEW_COLUMNS}"
+  screen_height="${FZF_PREVIEW_LINES}"
+  [ -z "$screen_width" ] && screen_width="$(tput cols)"
+  [ -z "$screen_height" ] && screen_height="$(tput lines)"
+  screen_width=$((screen_width / 2))
+
+  aspect_ratio_t10="$((screen_width * 10 / screen_height))"
+  [ "$box_type" = "1box" ] && aspect_ratio_thresh=$((16 * 10 / 9))
+  [ "$box_type" = "2vbox" ] && aspect_ratio_thresh=$((16 * 10 / 9 / 2))
+  [ "$box_type" = "2hbox" ] && aspect_ratio_thresh=$((16 * 2 * 10 / 9))
+
+  if [ $aspect_ratio_t10 -ge $aspect_ratio_thresh ]; then
+    box_height=$screen_height
+    [ "$box_type" = "1box" ] && box_width=$((box_height * 16 / 9))
+    [ "$box_type" = "2vbox" ] && box_width=$((box_height * 16 / 9 / 2))
+    [ "$box_type" = "2hbox" ] && box_width=$((box_height * 16 * 2 / 9))
+  else
+    box_width=$screen_width
+    [ "$box_type" = "1box" ] && box_height=$((box_width * 9 / 16))
+    [ "$box_type" = "2vbox" ] && box_height=$((box_width * 9 * 2 / 16))
+    [ "$box_type" = "2hbox" ] && box_height=$((box_width * 9 / 16 / 2))
+  fi
+
+  voffset=$(((screen_height - box_height) / 2))
+  hoffset=$(((screen_width - box_width) / 2))
+
+  for _ in $(seq $voffset); do printf "\n"; done
+  for _ in $(seq $hoffset); do printf "  "; done
+  printf "╭"
+  for _ in $(seq $((box_width - 1))); do printf "%s" "──"; done
+  printf "╮\n"
+  for l in $(seq $((box_height - 2))); do
+    for _ in $(seq $hoffset); do printf "  "; done
+    printf "│"
+    for c in $(seq $((box_width * 2 - 2))); do
+      if [ "$box_type" = "2vbox" ] && [ "$l" -eq $((box_height / 2)) ]; then
+        printf "─"
+      elif [ "$box_type" = "2hbox" ] && [ "$c" -eq $((box_width * 2 / 2)) ]; then
+        printf "│"
+      elif [ "$box_type" = "1box" ] && [ "$l" -eq $((box_height / 2)) ] &&
+          [ "$c" -eq $((box_width * 2 / 2 - ${#box_name} / 2)) ]; then
+        printf "%s" "$box_name"
+      elif [ "$box_type" = "1box" ] && [ "$l" -eq $((box_height / 2)) ] &&
+          [ ! "$c" -lt $((box_width * 2 / 2 - ${#box_name} / 2)) ] &&
+          [ ! "$c" -ge $((box_width * 2 / 2 + (${#box_name} - ${#box_name} / 2))) ]; then
+        true
+      elif [ "$box_type" = "2vbox" ] && [ "$l" -eq $((box_height / 4)) ] &&
+          [ "$c" -eq $((box_width * 2 / 2 - ${#box1_name} / 2)) ]; then
+        printf "%s" "$box1_name"
+      elif [ "$box_type" = "2vbox" ] && [ "$l" -eq $((box_height / 4)) ] &&
+          [ ! "$c" -lt $((box_width * 2 / 2 - ${#box1_name} / 2)) ] &&
+          [ ! "$c" -ge $((box_width * 2 / 2 + (${#box1_name} - ${#box1_name} / 2))) ]; then
+        true
+      elif [ "$box_type" = "2vbox" ] && [ "$l" -eq $((box_height * 3 / 4)) ] &&
+          [ "$c" -eq $((box_width * 2 / 2 - ${#box2_name} / 2)) ]; then
+        printf "%s" "$box2_name"
+      elif [ "$box_type" = "2vbox" ] && [ "$l" -eq $((box_height * 3 / 4)) ] &&
+          [ ! "$c" -lt $((box_width * 2 / 2 - ${#box2_name} / 2)) ] &&
+          [ ! "$c" -ge $((box_width * 2 / 2 + (${#box2_name} - ${#box2_name} / 2))) ]; then
+        true
+      elif [ "$box_type" = "2hbox" ] && [ "$l" -eq $((box_height / 2)) ] &&
+          [ "$c" -eq $((box_width * 2 / 4 - ${#box1_name} / 2)) ]; then
+        printf "%s" "$box1_name"
+      elif [ "$box_type" = "2hbox" ] && [ "$l" -eq $((box_height / 2)) ] &&
+          [ ! "$c" -lt $((box_width * 2 / 4 - ${#box1_name} / 2)) ] &&
+          [ ! "$c" -ge $((box_width * 2 / 4 + (${#box1_name} - ${#box1_name} / 2))) ]; then
+        true
+      elif [ "$box_type" = "2hbox" ] && [ "$l" -eq $((box_height / 2)) ] &&
+          [ "$c" -eq $((box_width * 2 * 3 / 4 - ${#box2_name} / 2)) ]; then
+        printf "%s" "$box2_name"
+      elif [ "$box_type" = "2hbox" ] && [ "$l" -eq $((box_height / 2)) ] &&
+          [ ! "$c" -lt $((box_width * 2 * 3 / 4 - ${#box2_name} / 2)) ] &&
+          [ ! "$c" -ge $((box_width * 2 * 3 / 4 + (${#box2_name} - ${#box2_name} / 2))) ]; then
+        true
+      else
+        printf " "
+      fi
+    done
+    printf "│\n"
+  done
+  for _ in $(seq $hoffset); do printf "  "; done
+  printf "╰"
+  for _ in $(seq $((box_width - 1))); do printf "%s" "──"; done
+  printf "╯\n"
+}
+
+list-monitors() {
+  assert-exist xrandr
+  xrandr_output="$(xrandr)"
+  xrandr_monitors="$(awk '/\Wconnected/ { print $1 }' <<< "$xrandr_output")"
+  xrandr_resolutions="$(echo "$xrandr_output" | awk '
+    /\Wconnec/ { mon = $1 };
+    /^\s+[0-9]+x/ { print mon " " $1 }
+  ')"
+
+  for mon1 in $xrandr_monitors; do
+    printf "%s\t%s\n" "$mon1 off" "xrandr --output $mon1 --off"
+    printf "%s\t%s\n" "$mon1 on" "xrandr --output $mon1 --auto"
+    mon1_resolutions="$(awk "/^$mon1/ { print \$2 }" <<< "$xrandr_resolutions")"
+    for resolution in $mon1_resolutions; do
+      printf "%s\t%s\n" "$mon1 $resolution" \
+        "xrandr --output $mon1 --auto --mode $resolution"
+    done
+    for mon2 in $xrandr_monitors; do
+      if [ "$mon1" = "$mon2" ]; then continue; fi
+      for arrangement in "left-of" "right-of" "above" "below" "same-as"; do
+        printf "%s\t%s\n" "$mon1 $arrangement $mon2" \
+          "xrandr --output $mon1 --auto --$arrangement $mon2"
+      done
     done
   done
-done | fzf | xargs -ro -I _ sh -c "_"
+}
+
+preview() {
+  mon1="$(echo "$@" | cut -d ' ' -f 1)"
+  action="$(echo "$@" | cut -d ' ' -f 2)"
+  mon2="$(echo "$@" | cut -d ' ' -f 3)"
+  case "$action" in
+    "on"|"off"|*"x"*) draw 1box "$mon1 $action";;
+    "same-as") draw 1box "$mon1/$mon2";;
+    "left-of") draw 2hbox "$mon1" "$mon2";;
+    "right-of") draw 2hbox "$mon2" "$mon1";;
+    "above") draw 2vbox "$mon1" "$mon2";;
+    "below") draw 2vbox "$mon2" "$mon1";;
+  esac
+}
+
+find-and-process() {
+  assert-exist fzf
+  header="$(build-prompt "Monitors")"
+  list-monitors |
+    fzf --with-nth=1 --delimiter="$(printf "\t")" --preview="$0 preview {1}" \
+      --header="$header" |
+    cut -f 2 | xargs -ro -I _ sh -c "_"
+}
+
+###############################################################################
+# Main
+###############################################################################
+
+case "$1" in
+  "preview") "$@";;
+  *) find-and-process;;
+esac
