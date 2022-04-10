@@ -9,6 +9,9 @@
 /^Code - OSS/d
 /^Code/d
 /^configstore/d
+/^copyq\/\.gitignore/p
+/^copyq\/copyq.conf/p
+/^copyq/d
 /^csharp/d
 /^dconf/d
 /^draw\.io/d
@@ -16,6 +19,9 @@
 /^Element/d
 /^falkon/d
 /^GIMP/d
+/^gnome-pie\/gnome-pie.conf/p
+/^gnome-pie\/pies.conf/p
+/^gnome-pie/d
 /^godot/d
 /^inkscape/d
 /^libreoffice/d
@@ -28,6 +34,8 @@
 /^transmission-daemon/d
 /^unity3d/d
 /^UnityHub/d
+/^Vieb\/Preferences/p
+/^Vieb/d
 /^VirtualBox/d
 /^VSCodium\/User\/settings\.json/p
 /^VSCodium/d
