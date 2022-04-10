@@ -49,43 +49,43 @@ XF86Audio{Prev,Play,Next}
   mpc {prev,toggle,next}
 
 # Open applications
-super+o;a
+super+{o,r};a
   gtk-launch anime
-super+o;b;r
+super+{o,r};b;r
   gtk-launch chromium
-super+o;b;t
+super+{o,r};b;t
   gtk-launch btop
-super+o;c
+super+{o,r};c;f
   gtk-launch config
-super+o;f;k
+super+{o,r};f;k
   gtk-launch fkill
-super+o;l;f
+super+{o,r};l;f
   gtk-launch lf
-super+o;l;r
+super+{o,r};l;r
   gtk-launch lf-root
-super+o;m;o
+super+{o,r};m;o
   gtk-launch mount-manager
-super+o;n;v
+super+{o,r};n;v
   gtk-launch nvim
-super+o;n;m
+super+{o,r};n;m
   gtk-launch network-manager
-super+o;p;g
+super+{o,r};p;g
   gtk-launch ping-archlinux
-super+o;p;m
+super+{o,r};p;m
   gtk-launch package-manager
-super+o;r;l
+super+{o,r};r;l
   gtk-launch reload-config
-super+o;s;c
+super+{o,r};s;c
   gtk-launch scripts
-super+o;s;v
+super+{o,r};s;v
   gtk-launch service-manager
-super+o;s;t
+super+{o,r};s;t
   gtk-launch stig
-super+o;t
+super+{o,r};t
   gtk-launch terminal
-super+o;v;p
+super+{o,r};v;p
   gtk-launch vimpc
 
 # Show clipboard manager
-super+v
+{super+v,ctrl+alt+v}
   copyq show
