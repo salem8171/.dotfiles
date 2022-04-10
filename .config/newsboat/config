@@ -1,0 +1,230 @@
+###############################################################################
+# General
+###############################################################################
+auto-reload yes
+reload-threads 4
+cleanup-on-quit yes
+scrolloff 10
+
+browser "mimeo --assoc ~/.config/newsboat/mimeo-assoc.txt %u"
+
+always-display-description yes
+bookmark-interactive yes
+display-article-progress yes
+external-url-viewer ""
+goto-first-unread true
+history-limit 1000
+html-renderer "internal"
+ignore-mode "download"
+keep-articles-days 0
+max-downloads 4
+notify-format "Newsboat: finished reload, %f unread feeds (%n unread articles total)"
+notify-program ""
+pager "internal"
+player ""
+save-path "~/"
+search-highlight-colors "black" "yellow" "bold"
+show-keymap-hint yes
+show-title-bar yes
+text-width 80
+
+###############################################################################
+# Key Bindings
+###############################################################################
+
+bind-key "h" quit article
+bind-key "h" quit articlelist
+bind-key "h" quit dialogs
+bind-key "h" quit dirbrowser
+bind-key "q" quit feedlist
+bind-key "h" quit filebrowser
+bind-key "h" quit filterselection
+bind-key "h" quit help
+bind-key "h" quit podboat
+bind-key "h" quit tagselection
+bind-key "h" quit urlview
+
+bind-key "j" down article
+bind-key "j" down articlelist
+bind-key "j" down dialogs
+bind-key "j" down dirbrowser
+bind-key "j" down feedlist
+bind-key "j" down filebrowser
+bind-key "j" down filterselection
+bind-key "j" down help
+bind-key "j" down podboat
+bind-key "j" down tagselection
+bind-key "j" down urlview
+
+bind-key "k" up article
+bind-key "k" up articlelist
+bind-key "k" up dialogs
+bind-key "k" up dirbrowser
+bind-key "k" up feedlist
+bind-key "k" up filebrowser
+bind-key "k" up filterselection
+bind-key "k" up help
+bind-key "k" up podboat
+bind-key "k" up tagselection
+bind-key "k" up urlview
+
+bind-key "i" open articlelist
+bind-key "l" open dialogs
+bind-key "l" open dirbrowser
+bind-key "l" open feedlist
+bind-key "l" open filebrowser
+bind-key "l" open filterselection
+bind-key "l" open tagselection
+bind-key "l" open urlview
+
+bind-key "g" home article
+bind-key "g" home articlelist
+bind-key "g" home dialogs
+bind-key "g" home dirbrowser
+bind-key "g" home feedlist
+bind-key "g" home filebrowser
+bind-key "g" home filterselection
+bind-key "g" home help
+bind-key "g" home podboat
+bind-key "g" home tagselection
+bind-key "g" home urlview
+
+bind-key "G" end article
+bind-key "G" end articlelist
+bind-key "G" end dialogs
+bind-key "G" end dirbrowser
+bind-key "G" end feedlist
+bind-key "G" end filebrowser
+bind-key "G" end filterselection
+bind-key "G" end help
+bind-key "G" end podboat
+bind-key "G" end tagselection
+bind-key "G" end urlview
+
+bind-key "^u" pageup article
+bind-key "^u" pageup articlelist
+bind-key "^u" pageup dialogs
+bind-key "^u" pageup dirbrowser
+bind-key "^u" pageup feedlist
+bind-key "^u" pageup filebrowser
+bind-key "^u" pageup filterselection
+bind-key "^u" pageup help
+bind-key "^u" pageup podboat
+bind-key "^u" pageup tagselection
+bind-key "^u" pageup urlview
+
+bind-key "^d" pagedown article
+bind-key "^d" pagedown articlelist
+bind-key "^d" pagedown dialogs
+bind-key "^d" pagedown dirbrowser
+bind-key "^d" pagedown feedlist
+bind-key "^d" pagedown filebrowser
+bind-key "^d" pagedown filterselection
+bind-key "^d" pagedown help
+bind-key "^d" pagedown podboat
+bind-key "^d" pagedown tagselection
+bind-key "^d" pagedown urlview
+
+bind-key "q" hard-quit article
+bind-key "q" hard-quit articlelist
+bind-key "q" hard-quit dialogs
+bind-key "q" hard-quit dirbrowser
+bind-key "q" hard-quit filebrowser
+bind-key "q" hard-quit filterselection
+bind-key "q" hard-quit help
+bind-key "q" hard-quit podboat
+bind-key "q" hard-quit tagselection
+bind-key "q" hard-quit urlview
+
+bind-key "l" open-in-browser article
+bind-key "o" open-in-browser article
+bind-key "l" open-in-browser articlelist
+bind-key "o" open-in-browser articlelist
+bind-key "o" open-in-browser feedlist
+bind-key "o" open-in-browser urlview
+
+unbind-key "ENTER" articlelist
+unbind-key "ENTER" dialogs
+unbind-key "ENTER" dirbrowser
+unbind-key "ENTER" feedlist
+unbind-key "ENTER" filebrowser
+unbind-key "ENTER" filterselection
+unbind-key "ENTER" tagselection
+unbind-key "ENTER" urlview
+
+bind-key "D" purge-deleted articlelist
+
+bind-key "A" mark-feed-read articlelist
+bind-key "^A" mark-all-feeds-read feedlist
+unbind-key "C" feedlist
+
+bind-key "d" delete-article article
+bind-key "d" delete-article articlelist
+
+bind-key "E" edit-urls articlelist
+bind-key "E" edit-urls feedlist
+
+bind-key "F" set-filter articlelist
+bind-key "F" set-filter feedlist
+
+bind-key "S" rev-sort articlelist
+bind-key "S" rev-sort feedlist
+
+bind-key "m" toggle-article-read article
+bind-key "m" toggle-article-read articlelist
+bind-key "TAB" toggle-article-read article
+bind-key "TAB" toggle-article-read articlelist
+bind-key "SPACE" toggle-article-read article
+bind-key "SPACE" toggle-article-read articlelist
+
+bind-key "^s" save articlelist
+
+bind-key "R" reload-all feedlist
+
+bind-key "^B" bookmark article
+bind-key "^B" bookmark articlelist
+bind-key "^B" bookmark urlview
+
+bind-key "^F" clear-filter articlelist
+bind-key "^F" clear-filter feedlist
+bind-key "^F" clear-filter help
+
+bind-key "^R" reload-urls feedlist
+
+bind-key "^T" clear-tag feedlist
+
+bind-key "f" select-filter articlelist
+bind-key "f" select-filter feedlist
+
+bind-key "s" sort articlelist
+bind-key "s" sort feedlist
+
+bind-key "t" set-tag feedlist
+
+bind-key "u" show-urls article
+bind-key "u" show-urls articlelist
+
+###############################################################################
+# Theme
+###############################################################################
+
+color background default default
+color title green black bold
+color info green black bold
+color hint-description white black
+color listnormal default default
+color listnormal_unread yellow default bold
+color listfocus default black
+color listfocus_unread yellow black bold
+color article white default
+color end-of-text-marker black default
+
+# highlights
+highlight article "^(Feed|Link):" yellow default bold
+highlight article "^(Title|Date|Author):" yellow default bold
+highlight article "^.*\\[image\\ [0-9]+.*\\].*$" magenta default bold
+highlight article "\\[[0-9]+\\]" green default bold
+highlight article "https?://[^ ]+" cyan default underline
+
+# highlight feedlist "^─.*$" color6 color6 bold
+# highlight feedlist "[0-9]+" color3

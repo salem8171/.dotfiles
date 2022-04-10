@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Newsboat
+Exec=terminal-adapter newsboat
+TryExec=newsboat
+Icon=terminal

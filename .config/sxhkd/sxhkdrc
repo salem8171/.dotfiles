@@ -65,6 +65,8 @@ super+{o,r};l;r
   gtk-launch lf-root
 super+{o,r};m;o
   gtk-launch mount-manager
+super+{o,r};n;b
+  gtk-launch newsboat
 super+{o,r};n;v
   gtk-launch nvim
 super+{o,r};n;m
