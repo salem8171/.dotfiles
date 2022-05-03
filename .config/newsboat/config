@@ -6,7 +6,7 @@ reload-threads 4
 cleanup-on-quit yes
 scrolloff 10
 
-browser "mimeo --assoc ~/.config/newsboat/mimeo-assoc.txt %u"
+browser "setsid -f mimeo --assoc ~/.config/newsboat/mimeo-assoc.txt %u"
 
 always-display-description yes
 bookmark-interactive yes
