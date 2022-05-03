@@ -80,7 +80,7 @@ map af push :touch<space>
 
 # Open file
 cmd open ${{
-  xdg-open "$f"
+  setsid -f xdg-open "$f"
 }}
 map <enter> :open
 
@@ -89,7 +89,7 @@ cmd ask-and-open ${{
   mimeo -d "$f" --show-all |
     sed '1d; s/\.desktop$//' |
     fzf --header="Opening $(basename "$f")..." |
-    xargs -ro -I _ gtk-launch _ "$f"
+    xargs -ro -I _ setsid -f gtk-launch _ "$f"
 }}
 map o ask-and-open
 
