@@ -20,6 +20,7 @@ for_window [class="antimicrox"] floating disable
 for_window [title="Assassin's Creed.*Unity"] floating disable
 for_window [title="Assassin's Creed Rogue"] fullscreen disable
 for_window [title="Hades"] fullscreen disable
+for_window [title="FINAL FANTASY"] floating disable
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
