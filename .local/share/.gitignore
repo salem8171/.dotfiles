@@ -7,6 +7,7 @@ Steam
 Trash
 UnityHub
 antigen
+applications/anbox/*
 applications/bmark-*
 applications/mimeinfo.cache
 applications/net.lutris.*-*.desktop
