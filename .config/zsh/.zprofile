@@ -32,7 +32,7 @@ export ADOTDIR="${XDG_DATA_HOME:-$HOME/.local/share}/antigen"
 export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
 export ANDROID_AVD_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/android"
 export ANDROID_EMULATOR_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/android"
-export ADB_VENDOR_KEY="${XDG_CONFIG_HOME:-$HOME/.config}/android"
+export ADB_VENDOR_KEYS="${XDG_DATA_HOME:-$HOME/.local/share}/android"
 
 export GOPATH="$XDG_DATA_HOME/go"
 
@@ -46,8 +46,10 @@ export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export NVM_DIR="$XDG_DATA_HOME/nvm"
 
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+mkdir -p "$(dirname "$NPM_CONFIG_USERCONFIG")"
 
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+mkdir -p "$GNUPGHOME"
 
 export VAGRANT_HOME="$XDG_DATA_HOME/vagrant"
 export VAGRANT_ALIAS_FILE="$XDG_DATA_HOME/vagrant/aliases"
@@ -77,6 +79,11 @@ export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS_ARRAY[*]}"
 
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0" ] &&
   export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
+
+export IPYTHONDIR="${XDG_CONFIG_HOME:-$HOME/.config}/ipython"
+
+export HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/bash/history"
+mkdir -p "$(dirname "$HISTFILE")"
 
 export PATH="$PATH:$HOME/.local/bin"
 
