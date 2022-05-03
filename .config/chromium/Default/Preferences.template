@@ -37,6 +37,7 @@
       "exceptions": {
         "cookies": {
           "[*.]9anime.to,*": { "expiration": "0", "model": 0, "setting": 1 },
+          "[*.]9anime.id,*": { "expiration": "0", "model": 0, "setting": 1 },
           "[*.]discord.com,*": { "expiration": "0", "model": 0, "setting": 1 },
           "[*.]github.com,*": { "expiration": "0", "model": 0, "setting": 1 },
           "[*.]searx.be,*": { "expiration": "0", "model": 0, "setting": 1 },
