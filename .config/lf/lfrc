@@ -22,13 +22,15 @@ map gme cd /run/media
 map gmn cd /mnt
 map gmu cd ~/Music
 map go cd /opt
+map gp cd ~/Pictures
 map gt cd /tmp
 map gub cd /usr/bin
 map gulo cd /usr/lib
 map gulo cd /usr/local
 map gush cd /usr/share
 map gusr cd /usr
-map gv cd /var
+map gva cd /var
+map gvi cd ~/Videos
 
 cmd on-cd ${{
   # Set terminal title
