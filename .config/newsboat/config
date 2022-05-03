@@ -208,6 +208,7 @@ bind-key "u" show-urls articlelist
 # Theme
 ###############################################################################
 
+# Colorscheme
 color background default default
 color title green black bold
 color info green black bold
@@ -222,9 +223,10 @@ color end-of-text-marker black default
 # highlights
 highlight article "^(Feed|Link):" yellow default bold
 highlight article "^(Title|Date|Author):" yellow default bold
-highlight article "^.*\\[image\\ [0-9]+.*\\].*$" magenta default bold
-highlight article "\\[[0-9]+\\]" green default bold
+highlight article "\\[image\\ [0-9]+:?\s*[ 0-9a-zA-Zçéêèàûôïk’.,:%?+-]*\s*\\(link #[0-9]+\\)\\]" magenta default bold
+highlight article "image [0-9]+|\\[[0-9]+\\]" green default bold
+highlight article "link #[0-9]+" cyan default
 highlight article "https?://[^ ]+" cyan default underline
 
-# highlight feedlist "^─.*$" color6 color6 bold
-# highlight feedlist "[0-9]+" color3
+# highlight feedlist "---.*---" red default bold
+# highlight feedlist "[0-9]+/[0-9]+" blue default
