@@ -34,15 +34,15 @@ text-width 80
 
 bind-key "h" quit article
 bind-key "h" quit articlelist
-bind-key "h" quit dialogs
+bind-key "ESC" quit dialogs
 bind-key "h" quit dirbrowser
 bind-key "q" quit feedlist
 bind-key "h" quit filebrowser
 bind-key "h" quit filterselection
-bind-key "h" quit help
+bind-key "ESC" quit help
 bind-key "h" quit podboat
-bind-key "h" quit tagselection
-bind-key "h" quit urlview
+bind-key "ESC" quit tagselection
+bind-key "ESC" quit urlview
 
 bind-key "j" down article
 bind-key "j" down articlelist
@@ -69,13 +69,14 @@ bind-key "k" up tagselection
 bind-key "k" up urlview
 
 bind-key "i" open articlelist
-bind-key "l" open dialogs
+bind-key "l" open articlelist
+bind-key "ENTER" open dialogs
 bind-key "l" open dirbrowser
 bind-key "l" open feedlist
 bind-key "l" open filebrowser
-bind-key "l" open filterselection
-bind-key "l" open tagselection
-bind-key "l" open urlview
+bind-key "ENTER" open filterselection
+bind-key "ENTER" open tagselection
+bind-key "ENTER" open urlview
 
 bind-key "g" home article
 bind-key "g" home articlelist
@@ -144,18 +145,19 @@ bind-key "o" open-in-browser-noninteractively feedlist
 bind-key "o" open-in-browser-noninteractively urlview
 
 unbind-key "ENTER" articlelist
-unbind-key "ENTER" dialogs
+# unbind-key "ENTER" dialogs
 unbind-key "ENTER" dirbrowser
 unbind-key "ENTER" feedlist
 unbind-key "ENTER" filebrowser
 unbind-key "ENTER" filterselection
-unbind-key "ENTER" tagselection
-unbind-key "ENTER" urlview
+# unbind-key "ENTER" tagselection
+# unbind-key "ENTER" urlview
 
 bind-key "D" purge-deleted articlelist
 
 bind-key "A" mark-feed-read articlelist
-bind-key "^A" mark-all-feeds-read feedlist
+bind-key "SPACE" mark-feed-read feedlist
+bind-key "A" mark-all-feeds-read feedlist
 unbind-key "C" feedlist
 
 bind-key "d" delete-article article
@@ -170,8 +172,6 @@ bind-key "F" set-filter feedlist
 bind-key "S" rev-sort articlelist
 bind-key "S" rev-sort feedlist
 
-bind-key "m" toggle-article-read article
-bind-key "m" toggle-article-read articlelist
 bind-key "TAB" toggle-article-read article
 bind-key "TAB" toggle-article-read articlelist
 bind-key "SPACE" toggle-article-read article
@@ -191,7 +191,7 @@ bind-key "^F" clear-filter help
 
 bind-key "^R" reload-urls feedlist
 
-bind-key "^T" clear-tag feedlist
+bind-key "T" clear-tag feedlist
 
 bind-key "f" select-filter articlelist
 bind-key "f" select-filter feedlist
