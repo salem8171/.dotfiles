@@ -136,12 +136,12 @@ bind-key "q" hard-quit podboat
 bind-key "q" hard-quit tagselection
 bind-key "q" hard-quit urlview
 
-bind-key "l" open-in-browser article
-bind-key "o" open-in-browser article
-bind-key "l" open-in-browser articlelist
-bind-key "o" open-in-browser articlelist
-bind-key "o" open-in-browser feedlist
-bind-key "o" open-in-browser urlview
+bind-key "l" open-in-browser-noninteractively article
+bind-key "o" open-in-browser-noninteractively article
+# bind-key "l" open-in-browser-noninteractively articlelist
+bind-key "o" open-in-browser-noninteractively articlelist
+bind-key "o" open-in-browser-noninteractively feedlist
+bind-key "o" open-in-browser-noninteractively urlview
 
 unbind-key "ENTER" articlelist
 unbind-key "ENTER" dialogs
