@@ -81,8 +81,8 @@ function filter(node) {
   return ret;
 }
 
-function i3_cmd(cmd) {
-  cp.execSync(`i3-msg -t command '${cmd}'`);
+function i3_cmds(cmds) {
+  cp.execSync(`i3-msg -t command '${cmds.join(',')}'`);
 }
 
 get_tree().then((tree) => {
@@ -94,28 +94,31 @@ get_tree().then((tree) => {
       let initially_focused_window = windows.find(win => win.focused == true);
       let ref_window_1 = windows[0];
       let ref_window_2 = windows[Math.floor((windows.length + 1) / 2)];
-      i3_cmd("unmark _tab_ref");
+      let cmds = [];
+      cmds.push("unmark _tab_ref");
+      let aux_workspace = focused_workspace.num == 1 ? 2 : focused_workspace.num - 1
       windows.forEach(win => {
-        i3_cmd(`[id="${win.window}"] move window to workspace 2`);
+        cmds.push(`[id="${win.window}"] move window to workspace ${aux_workspace}`);
       });
-      i3_cmd(`[id="${ref_window_1.window}"] move window to workspace ${focused_workspace.num}`);
-      i3_cmd(`[id="${ref_window_2.window}"] move window to workspace ${focused_workspace.num}`);
-      i3_cmd(`[id="${ref_window_1.window}"] split toggle`);
-      i3_cmd(`[id="${ref_window_1.window}"] layout ${GROUP_LAYOUT}`);
-      i3_cmd(`[id="${ref_window_2.window}"] split toggle`);
-      i3_cmd(`[id="${ref_window_2.window}"] layout ${GROUP_LAYOUT}`);
+      cmds.push(`[id="${ref_window_1.window}"] move window to workspace ${focused_workspace.num}`);
+      cmds.push(`[id="${ref_window_2.window}"] move window to workspace ${focused_workspace.num}`);
+      cmds.push(`[id="${ref_window_1.window}"] split toggle`);
+      cmds.push(`[id="${ref_window_1.window}"] layout ${GROUP_LAYOUT}`);
+      cmds.push(`[id="${ref_window_2.window}"] split toggle`);
+      cmds.push(`[id="${ref_window_2.window}"] layout ${GROUP_LAYOUT}`);
       let ref_window = ref_window_1;
-      i3_cmd(`[id="${ref_window_1.window}"] mark _tab_ref`);
+      cmds.push(`[id="${ref_window_1.window}"] mark _tab_ref`);
       windows.forEach(win => {
         if (win.id != ref_window.id && win.id != ref_window_2.id) {
-          i3_cmd(`[id="${win.window}"] move window to mark _tab_ref`);
+          cmds.push(`[id="${win.window}"] move window to mark _tab_ref`);
         } else if (win.id == ref_window_2.id) {
-          i3_cmd(`unmark _tab_ref; [id="${ref_window_2.window}"] mark _tab_ref`);
+          cmds.push(`unmark _tab_ref; [id="${ref_window_2.window}"] mark _tab_ref`);
           ref_window = ref_window_2;
         }
       });
-      i3_cmd(`[id="${initially_focused_window.window}"] focus`);
-      i3_cmd("unmark _tab_ref");
+      cmds.push(`[id="${initially_focused_window.window}"] focus`);
+      cmds.push("unmark _tab_ref");
+      i3_cmds(cmds);
     }
 
     // Show workspace tree after modifications
