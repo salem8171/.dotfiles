@@ -2,6 +2,10 @@
 
 ### TABS
 
+tab --title " Downloads" ls path~Downloads \
+  -c status,seeds,ratio,size,uploaded,downloaded,%downloaded,rate-down,eta,name
+tab --title " Anime" ls path~anime \
+  -c status,seeds,ratio,size,uploaded,downloaded,%downloaded,rate-down,eta,name
 tab --title " All" ls \
   -c status,seeds,ratio,size,uploaded,downloaded,%downloaded,rate-down,eta,name
 tab --title " Downloading" ls downloading \
