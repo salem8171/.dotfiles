@@ -2,7 +2,7 @@
 # General
 ###############################################################################
 auto-reload yes
-reload-threads 4
+reload-threads 8
 cleanup-on-quit yes
 scrolloff 10
 
