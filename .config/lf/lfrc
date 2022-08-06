@@ -32,6 +32,9 @@ map gusr cd /usr
 map gva cd /var
 map gvi cd ~/Videos
 
+map <c-a> glob-select *
+map c :clear; glob-unselect *
+
 cmd on-cd ${{
   # Set terminal title
   printf "\033]0; $(pwd | sed "s|$HOME|~|") - lf\007" > /dev/tty
