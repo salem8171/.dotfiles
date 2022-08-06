@@ -8,3 +8,5 @@ auth_string="$(printf "%s" "${username}:${password}" | base64)"
 
 curl --location --request GET "$ROUTER_ADDR:80/rebootinfo.cgi" \
   --header "Authorization: Basic $auth_string" > /dev/null
+
+ping $ROUTER_ADDR
