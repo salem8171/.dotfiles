@@ -16,11 +16,15 @@ for_window [title="popup-terminal"] resize set 1000 500
 for_window [title="popup-terminal"] move position center
 
 for_window [class="antimicrox"] floating disable
+for_window [class="copyq"] floating enable
+for_window [title="copyq"] resize set 1000 500
+for_window [title="copyq"] move position center
 
 for_window [title="Assassin's Creed.*Unity"] floating disable
 for_window [title="Assassin's Creed Rogue"] fullscreen disable
 for_window [title="Hades"] fullscreen disable
 for_window [title="FINAL FANTASY"] floating disable
+for_window [title="masterduel"] floating disable
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
