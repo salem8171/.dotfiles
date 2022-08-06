@@ -2,11 +2,11 @@
     "keymap": {
         "addsearch": "a",
         "altname": "A",
-        "delete": "d",
+        "delete": "D",
         "details": "i",
         "details_exit": "i",
         "down": "j",
-        "help": "H",
+        "help": "?",
         "left": "h",
         "neweps": "N",
         "next_filter": "right",
@@ -18,15 +18,15 @@
         "play_random": "&",
         "prev_filter": "left",
         "quit": "q",
-        "reload": "c",
+        "reload": "r",
         "retrieve": "R",
         "right": "l",
         "score": "z",
         "search": "/",
         "send": "P",
-        "sort": "f3",
-        "sort_order": "r",
-        "status": "s",
+        "sort": "s",
+        "sort_order": "",
+        "status": "c",
         "switch_account": "f9",
         "up": "k",
         "update": "u"
@@ -38,27 +38,27 @@
         ],
         "button": [
             "white",
-            "black"
+            ""
         ],
         "button hilight": [
             "white",
-            "dark red"
+            "black"
         ],
         "error": [
             "light red",
-            "black"
+            ""
         ],
         "focus": [
-            "standout",
-            ""
+            "",
+            "black"
         ],
         "head": [
             "light red",
             "black"
         ],
         "header": [
-            "bold",
-            ""
+            "dark blue",
+            "black"
         ],
         "info_section": [
             "dark blue",
@@ -69,15 +69,15 @@
             ""
         ],
         "item_airing": [
-            "light blue",
+            "light green",
             ""
         ],
         "item_neweps": [
-            "white",
-            "brown"
+            "yellow",
+            ""
         ],
         "item_notaired": [
-            "yellow",
+            "black",
             ""
         ],
         "item_playing": [
@@ -90,11 +90,11 @@
         ],
         "status": [
             "white",
-            "black"
+            ""
         ],
         "window": [
             "white",
-            "black"
+            ""
         ]
     },
     "show_help": true
