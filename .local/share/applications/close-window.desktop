@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
 Name=Close Window
-Exec=xdotool getactivewindow windowclose
+Exec=xdotool getactivewindow windowquit
 Terminal=false
 StartupNotify=false
