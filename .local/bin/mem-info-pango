@@ -50,8 +50,8 @@ awk_aggregator_script='
     usage_value = round((used_raw * 100) / total_raw)
     usage_color = (usage_value > 80) ? red : (usage_value > 50) ? yellow : "default"
 
-    usage_percent = sprintf("Usage%:%s%%", usage_value)
-    usage = sprintf("Usage:%s/%s", used_human_readable, total_human_readable)
+    usage_percent = sprintf("U%:%s%%", usage_value)
+    usage = sprintf("U:%s/%s", used_human_readable, total_human_readable)
 
     usage_percent = (usage_color != "default") ?
       pango_colorize(usage_percent, usage_color) : usage_percent

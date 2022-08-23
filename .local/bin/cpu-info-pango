@@ -8,7 +8,7 @@ awk_temp_script='
   /^Pack/ {
     temp = $4
     gsub(/+|\..*/, "", temp)
-    printf("Temp: %s\n", temp)
+    printf("T: %s\n", temp)
     fflush()
   }
 '
@@ -17,7 +17,7 @@ awk_temp_script='
 awk_usage_script='
   /[0-9]/ {
     usage = 100 - $15
-    printf("Usage: %s\n", usage)
+    printf("U: %s\n", usage)
     fflush()
   }
 '
@@ -35,15 +35,15 @@ awk_aggregator_script='
     yellow = "#d4c96e"
   }
 
-  /^Usage/ { usage_value = $2 + 0 }
-  /^Temp/ { temp_value = $2 + 0 }
+  /^U:/ { usage_value = $2 + 0 }
+  /^T:/ { temp_value = $2 + 0 }
 
   /^print/ {
     usage_color = (usage_value > 80) ? red : (usage_value > 50) ? yellow : "default"
     temp_color = (temp_value > 80) ? red : (temp_value > 50) ? yellow : "default"
 
-    usage = sprintf("Usage%:%s%%", usage_value)
-    temp = sprintf("Temp:%s°C", temp_value)
+    usage = sprintf("U%:%s%%", usage_value)
+    temp = sprintf("T:%s°C", temp_value)
 
     usage = (usage_color != "default") ? pango_colorize(usage, usage_color) : usage
     temp = (temp_color != "default") ? pango_colorize(temp, temp_color) : temp

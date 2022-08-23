@@ -32,10 +32,12 @@ DEF="$(echo -e "\e[0m")"
 
 assert-exist dfc ansifilter
 
-while true; do dfc -c always; sleep 1; done |
-  awk -v def="$DEF" '/\/\s*$/ {
+while true; do dfc -c always; sleep 2; done |
+  grep --line-buffered -P "${1//\//\\/}\s*$" |
+  awk -v def="$DEF" '{
     bar = $2
     gsub("==", "=", bar)
+    gsub("--", "-", bar)
     gsub("=", "▰", bar)
     gsub("-", "▱", bar)
     sub("\\[", "", bar)
@@ -45,12 +47,12 @@ while true; do dfc -c always; sleep 1; done |
     usg_percent = m[0]
     sub("\\]", "", usg_percent)
     gsub("%", "", usg_percent)
-    sub("\\s.*\\s", "Usg%:", usg_percent)
+    sub("\\s.*\\s", "U%:", usg_percent)
     sub("\\.[0-9]", "&%", usg_percent)
 
     free = $3 " " $4 $5
     gsub(".*%", "", free)
-    sub("\\s", "Free:", free)
+    sub("\\s", "F:", free)
     gsub("G", "", free)
     gsub("\\.[0-9]", "&G" def, free)
     sub("G", "G/", free)
@@ -59,7 +61,7 @@ while true; do dfc -c always; sleep 1; done |
 
     print mount_point bar " | " usg_percent " | " free
     fflush()
-  }' | 
+  }' |
   ansifilter --pango --map=<(echo "$colors") |
   awk '{
     sub("s/<span font.*0\">", "")

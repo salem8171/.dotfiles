@@ -36,9 +36,9 @@ awk_script='
     mem_color = (mem > 80) ? red : (mem > 50) ? yellow : "default"
     temp_color = (temp > 80) ? red : (temp > 50) ? yellow : "default"
 
-    usage = sprintf("Usage%:%s%%", usage)
-    mem = sprintf("Mem%:%s%%", mem)
-    temp = sprintf("Temp:%s°C", temp)
+    usage = sprintf("U%:%s%%", usage)
+    mem = sprintf("M%:%s%%", mem)
+    temp = sprintf("T:%s°C", temp)
 
     usage = (usage_color != "default") ? pango_colorize(usage, usage_color) : usage
     mem = (mem_color != "default") ? pango_colorize(mem, mem_color) : mem
