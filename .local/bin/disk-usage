@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+error() { echo -e "$@" >&2 && exit 1; }
+
+assert-exist() {
+  for exe; do
+    [ ! -x "$(command -v "$exe")" ] && error "$exe not found in PATH";
+  done
+  return 0
+}
+
+colors="\
+0 = #48483e
+1 = #cb376b
+2 = #8fc029
+3 = #d4c96e
+4 = #4aa7b7
+5 = #9358fe
+6 = #56b7a5
+7 = #acada1
+8 = #48483e
+9 = #dc2566
+10 = #8fc029
+11 = #d4c96e
+12 = #55bcce
+13 = #9358fe
+14 = #56b7a5
+15 = #acada1
+"
+
+DEF="$(echo -e "\e[0m")"
+
+assert-exist dfc ansifilter
+
+while true; do dfc -c always; sleep 1; done |
+  awk -v def="$DEF" '/\/\s*$/ {
+    bar = $2
+    gsub("==", "=", bar)
+    gsub("=", "▰", bar)
+    gsub("-", "▱", bar)
+    sub("\\[", "", bar)
+    sub("\\].*", "", bar)
+
+    match($0, "\\].*%", m)
+    usg_percent = m[0]
+    sub("\\]", "", usg_percent)
+    gsub("%", "", usg_percent)
+    sub("\\s.*\\s", "Usg%:", usg_percent)
+    sub("\\.[0-9]", "&%", usg_percent)
+
+    free = $3 " " $4 $5
+    gsub(".*%", "", free)
+    sub("\\s", "Free:", free)
+    gsub("G", "", free)
+    gsub("\\.[0-9]", "&G" def, free)
+    sub("G", "G/", free)
+
+    mount_point = $6 ": "
+
+    print mount_point bar " | " usg_percent " | " free
+    fflush()
+  }' | 
+  ansifilter --pango --map=<(echo "$colors") |
+  awk '{
+    sub("s/<span font.*0\">", "")
+    print
+    fflush()
+  }'
