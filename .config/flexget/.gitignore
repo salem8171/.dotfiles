@@ -1,0 +1,4 @@
+.config-lock
+crash_report*
+db-config*
+flexget.log
