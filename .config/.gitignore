@@ -13,12 +13,14 @@ QtProject.conf
 Quotient
 ROSS
 Session
+Smart Code ltd
 SoundWire
 Thunar
 UnityHub
 VSCodium
 Vieb
 VirtualBox
+beekeeper-studio
 blender
 bpytop
 butterfly
@@ -29,13 +31,16 @@ configstore
 cordless
 csharp.history
 dconf
+deluge
 desmume
 draw.io
 enchant
 falkon
+freerdp
 godot
 gomuks
 inkscape
+ipython
 keepassxc
 libreoffice
 lutris
@@ -54,8 +59,10 @@ retroarch
 settings
 smplayer
 smtube
+sqlitebrowser
 termshark
 tool_state
+torbrowser
 unity3d
 user-dirs.locale
 vala-panel

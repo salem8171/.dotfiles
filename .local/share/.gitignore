@@ -1,4 +1,5 @@
 Android Open Source Project
+Bisq
 CMakeTools
 KDE
 NuGet
@@ -14,6 +15,7 @@ applications/net.lutris.*-*.desktop
 applications/wine-extension*
 barrier
 calcurse
+cargo
 citra-emu
 copyq
 desktop-directories
@@ -37,6 +39,7 @@ recently-used*
 stig
 supertux2
 tmux
+torbrowser
 trackma
 unity3d
 vimiv
